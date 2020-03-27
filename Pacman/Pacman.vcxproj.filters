@@ -13,6 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{0cce3668-2c38-4c29-b3b4-cdd83772004c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{67d15661-aab8-47fd-8afb-9f972472889c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{99f43653-7416-4c9d-a820-fec03ae9a3a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{1e38785d-d4c4-4378-8bd4-03af826e1626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ghost">
+      <UniqueIdentifier>{e672453e-fd1c-4415-aa82-021ae9d5e670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ghost">
+      <UniqueIdentifier>{350e16dd-da14-475b-bf45-9476bedcc381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ghost\States">
+      <UniqueIdentifier>{42ab33ce-0ba2-48e3-a6e6-81ac2b61afa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ghost\States">
+      <UniqueIdentifier>{b27ebecc-8c22-4032-a6b1-7053ea17e10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{400df865-b98f-4d96-afb4-a2b0495fde22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{c43e301c-588e-4593-b006-ab6066b57a54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -21,22 +51,73 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ClassicMap.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanPlayer.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyGhost.cpp">
+      <Filter>Source Files\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyChaseState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="FrightenedState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostHouseState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkyScatterState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassicOnePlayerGame.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ClassicMap.h">
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanPlayer.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyGhost.h">
+      <Filter>Header Files\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyChaseState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="FrightenedState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostHouseState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkyScatterState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassicOnePlayerGame.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

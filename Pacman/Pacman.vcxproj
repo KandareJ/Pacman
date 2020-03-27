@@ -122,14 +122,31 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BlinkyChaseState.cpp" />
+    <ClCompile Include="BlinkyScatterState.cpp" />
+    <ClCompile Include="ClassicMap.cpp" />
+    <ClCompile Include="ClassicOnePlayerGame.cpp" />
+    <ClCompile Include="FrightenedState.cpp" />
+    <ClCompile Include="GhostHouseState.cpp" />
+    <ClCompile Include="GhostState.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="BlinkyGhost.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlinkyChaseState.h" />
+    <ClInclude Include="BlinkyScatterState.h" />
+    <ClInclude Include="ClassicMap.h" />
+    <ClInclude Include="ClassicOnePlayerGame.h" />
+    <ClInclude Include="FrightenedState.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GhostHouseState.h" />
+    <ClInclude Include="GhostState.h" />
+    <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="BlinkyGhost.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
