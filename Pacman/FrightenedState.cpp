@@ -4,12 +4,19 @@
 #include <iostream>
 
 FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* player) {
-	x = startX * 40 + 20;
-	y = startY * 40 + 20;
+	Draw* draw = Draw::instance();
+	tileHeight = draw->getTileHeight();
+	tileWidth = draw->getTileWidth();
+	tileSize = draw->getTileSize();
+	width = tileSize * tileWidth;
+	height = tileSize * tileHeight;
+	speed = tileSize / 10;
+
+	x = startX * tileSize + (tileSize / 2);
+	y = startY * tileSize + (tileSize / 2);
 	map = m;
 	target = player;
 	dir = DOWN;
-	speed = 4;
 	lastTileX = -1;
 	lastTileY = -1;
 	srand(time(NULL));
@@ -20,11 +27,11 @@ FrightenedState::~FrightenedState() {
 }
 
 void FrightenedState::draw() {
-	al_draw_filled_rectangle(x - 10, y - 15, x + 10, y + 15, al_map_rgb(0, 0, 255));
+	Draw* draw = Draw::instance();
+	draw->drawGhost(x, y, dir, 0, 0, 255);
 	return;
 }
 
 int FrightenedState::choosePath(vector<int> options) {
-
 	return options.at(rand() % options.size());
 }

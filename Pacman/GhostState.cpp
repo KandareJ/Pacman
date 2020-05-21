@@ -1,11 +1,7 @@
 #include "GhostState.h"
 
-void GhostState::draw() {
-	return;
-}
-
-int GhostState::choosePath(vector<int> options) {
-	return -1;
+void GhostState::changeState(GhostState* s) {
+	context->changeState(s);
 }
 
 bool GhostState::update() {
@@ -28,31 +24,31 @@ bool GhostState::update() {
 }
 
 int GhostState::getTileX() {
-	return x / 40 % 20;
+	return x / tileSize % tileWidth;
 }
 
 int GhostState::getTileY() {
-	return y / 40 % 15;
+	return y / tileSize % tileHeight;
 }
 
 void GhostState::snapTileX() {
-	x = (int)(x / 40) * 40 + 20;
+	x = (int)(x / tileSize) * tileSize + (tileSize / 2);
 }
 
 void GhostState::snapTileY() {
-	y = (int)(y / 40) * 40 + 20;
+	y = (int)(y / tileSize) * tileSize + (tileSize / 2);
 }
 
 int GhostState::getTileOffsetX() {
-	return (x - getTileX() * 40 - 20);
+	return (x - getTileX() * tileSize - (tileSize / 2));
 }
 int GhostState::getTileOffsetY() {
-	return (y - getTileY() * 40 - 20);
+	return (y - getTileY() * tileSize - (tileSize / 2));
 }
 
 bool GhostState::moveLeft() {
 	if (isValidTile(getTileX() - 1, getTileY()) || getTileOffsetX() > 0) {
-		if (x <= 0)x = 800;
+		if (x <= 0)x = width;
 		x -= speed;
 	}
 	if (getTileX() != lastTileX && getTileOffsetX() <= 0) {
@@ -63,7 +59,7 @@ bool GhostState::moveLeft() {
 
 bool GhostState::moveRight() {
 	if (isValidTile(getTileX() + 1, getTileY()) || getTileOffsetX() < 0) {
-		if (x >= 800) x = 0;
+		if (x >= width) x = 0;
 		x += speed;
 	}
 	if (getTileX() != lastTileX && getTileOffsetX() >= 0) {
@@ -74,7 +70,7 @@ bool GhostState::moveRight() {
 
 bool GhostState::moveUp() {
 	if (isValidTile(getTileX(), getTileY() - 1) || getTileOffsetY() > 0) {
-		if (y <= 0) y = 600;
+		if (y <= 0) y = height;
 		y -= speed;
 	}
 	if (getTileY() != lastTileY && getTileOffsetY() <= 0) {
@@ -85,7 +81,7 @@ bool GhostState::moveUp() {
 
 bool GhostState::moveDown() {
 	if (isValidTile(getTileX(), getTileY() + 1) || getTileOffsetY() < 0) {
-		if (y >= 600) y = 0;
+		if (y >= height) y = 0;
 		y += speed;
 	}
 	if (getTileY() != lastTileY && getTileOffsetY() >= 0) {
@@ -104,7 +100,7 @@ void GhostState::changeDirection() {
 }
 
 bool GhostState::isValidTile(int tileX, int tileY) {
-	return (map->getMapPos((20 + tileX % 20) % 20, (15 + tileY % 15) % 15) == 0);
+	return (map->getMapPos((tileWidth + tileX % tileWidth) % tileWidth, (tileHeight + tileY % tileHeight) % tileHeight) == 0);
 }
 
 vector<int> GhostState::getOptions(int tileX, int tileY) {

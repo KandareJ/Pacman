@@ -4,10 +4,8 @@
 #include "GhostState.h"
 #include "Map.h"
 #include "HumanPlayer.h"
+#include "Draw.h"
 #include <vector>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h> 
 
 using namespace std;
 

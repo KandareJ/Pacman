@@ -5,17 +5,16 @@
 #include "Map.h"
 #include "HumanPlayer.h"
 #include <vector>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h> 
+#include "Draw.h"
 
 using namespace std;
 
 class BlinkyChaseState : public GhostState {
 public:
-	BlinkyChaseState(int x, int y, Map* map, HumanPlayer* player);
+	BlinkyChaseState(int x, int y, Map* map, HumanPlayer* player, BlinkyGhost* c);
 	~BlinkyChaseState();
 	void draw();
+	bool update();
 
 private:
 	int choosePath(vector<int> options);

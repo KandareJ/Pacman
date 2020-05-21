@@ -2,8 +2,10 @@
 #define RANDOMGHOST_H
 
 #include "Map.h"
-#include "GhostState.h"
+//#include "GhostState.h"
 #include "HumanPlayer.h"
+
+class GhostState;
 
 class BlinkyGhost {
 public:
@@ -11,9 +13,10 @@ public:
 	~BlinkyGhost();
 	bool update();
 	void draw();
-	void changeState(GhostState* state);
 
 private:
+	friend class GhostState;
+	void changeState(GhostState* s);
 	GhostState* state;
 };
 

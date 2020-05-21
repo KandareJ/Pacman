@@ -3,8 +3,8 @@
 ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	map = new ClassicMap();
 	player = new HumanPlayer(map, 1, 1);
-	ghosts = vector<BlinkyGhost>();
-	ghosts.push_back(BlinkyGhost(map, player));
+	ghosts = vector<BlinkyGhost*>();
+	ghosts.push_back(new BlinkyGhost(map, player));
 	return;
 }
 
@@ -14,8 +14,9 @@ ClassicOnePlayerGame::~ClassicOnePlayerGame() {
 
 void ClassicOnePlayerGame::draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
+	Draw::instance()->drawScore(player->getScore());
 	map->draw();
-	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i).draw();
+	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();
 	player->draw();
 	al_flip_display();
 
@@ -27,7 +28,7 @@ bool ClassicOnePlayerGame::update() {
 
 	if (map->update()) drawNeeded = true;
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		if (ghosts.at(i).update()) drawNeeded = true;
+		if (ghosts.at(i)->update()) drawNeeded = true;
 	}
 	if (player->update()) drawNeeded = true;
 

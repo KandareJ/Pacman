@@ -21,7 +21,7 @@ public:
 private:
 	Map* map;
 	HumanPlayer *player;
-	vector<BlinkyGhost> ghosts;
+	vector<BlinkyGhost*> ghosts;
 	bool update();
 	void draw();
 };

@@ -24,9 +24,6 @@ void BlinkyGhost::draw() {
 }
 
 void BlinkyGhost::changeState(GhostState* newState) {
-	//delete state;
-	cout << "states address: " << this->state << endl;
+	delete state;
 	state = newState;
-	cout << "states new address: " << this->state << endl;
-	system("pause");
 }

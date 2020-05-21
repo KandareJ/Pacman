@@ -2,6 +2,7 @@
 #define CLASSICMAP_H
 
 #include "Map.h"
+#include "Draw.h"
 
 class ClassicMap : public Map {
 public:
@@ -23,7 +24,6 @@ private:
 	int **map;
 	int **object;
 	int frame;
-	void drawWalls(int x, int y);
 };
 
 #endif

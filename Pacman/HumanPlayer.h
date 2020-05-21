@@ -2,8 +2,9 @@
 #define HUMANPLAYER_H
 
 #include "Map.h"
+#include "Draw.h"
 
-enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };
+//enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };
 
 class HumanPlayer {
 public:
@@ -14,8 +15,14 @@ public:
 	void changeDirection(int newDirection);
 	int getTileX();
 	int getTileY();
+	int getScore();
 
 private:
+	int tileSize;
+	int tileWidth;
+	int tileHeight;
+	int height;
+	int width;
 	int state;
 	int frame;
 	int score;

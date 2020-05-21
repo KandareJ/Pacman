@@ -5,9 +5,7 @@
 #include "Map.h"
 #include "HumanPlayer.h"
 #include <vector>
-#include <math.h>
-#include <stdlib.h>
-#include <time.h> 
+#include "Draw.h"
 
 using namespace std;
 

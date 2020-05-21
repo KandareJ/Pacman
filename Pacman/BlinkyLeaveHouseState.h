@@ -1,5 +1,5 @@
-#ifndef GHOSTHOUSESTATE_H
-#define GHOSTHOUSESTATE_H
+#ifndef GHOSTLEAVEHOUSESTATE_H
+#define GHOSTLEAVEHOUSESTATE_H
 
 #include "GhostState.h"
 #include "BlinkyGhost.h"
@@ -10,14 +10,15 @@
 
 using namespace std;
 
-class GhostHouseState : public GhostState {
+class BlinkyLeaveHouseState : public GhostState {
 public:
-	GhostHouseState(Map* map, HumanPlayer* player, BlinkyGhost* c);
-	~GhostHouseState();
+	BlinkyLeaveHouseState(int x, int y, Map* map, HumanPlayer* player, BlinkyGhost* c);
+	~BlinkyLeaveHouseState();
 	void draw();
 	bool update();
 private:
 	int choosePath(vector<int> options);
+	bool moveUp();
 };
 
 #endif

@@ -2,9 +2,6 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <allegro5/allegro_primitives.h>
-
-const int SQUARE_SIZE = 40;
 
 using namespace std;
 
@@ -17,6 +14,7 @@ ClassicMap::ClassicMap() {
 	getline(mapData, line);
 	istringstream is(line);
 	is >> height >> width;
+	Draw::instance()->initializeMapProportions(width, height);
 
 	map = new int*[height];
 	object = new int*[height];
@@ -71,27 +69,10 @@ bool ClassicMap::update() {
 }
 
 void ClassicMap::draw() {
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			if (map[y][x] == 1) drawWalls(x, y);
-			else if (map[y][x] == 2) al_draw_line(x * SQUARE_SIZE, y * SQUARE_SIZE, (x+1) * SQUARE_SIZE, y * SQUARE_SIZE, al_map_rgb(0, 0, 255), 3);
-			
-			if (object[y][x] == 1) al_draw_filled_circle(x * SQUARE_SIZE + (SQUARE_SIZE/2), y * SQUARE_SIZE + (SQUARE_SIZE/2), SQUARE_SIZE / 8, al_map_rgb(219, 133, 28));
-			if (object[y][x] == 2) {
-				if(frame < 15)al_draw_filled_circle(x * SQUARE_SIZE + (SQUARE_SIZE/2), y * SQUARE_SIZE + (SQUARE_SIZE/2), 5 + (frame/5), al_map_rgb(219, 133, 28));
-				else al_draw_filled_circle(x * 40 + 20, y * 40 + 20, 7 - ((frame-14) / 5), al_map_rgb(219, 133, 28));
-			}
-		}
-	}
+	Draw* draw = Draw::instance();
+	draw->drawMap(map, object, frame, height, width);
 	return;
 }
-
-void ClassicMap::drawWalls(int x, int y) {
-	float PI = 3.14159265;
-	/*if(x == 0 || x == 19 || y == 0 || y == 14) */al_draw_rectangle(x * 40, y * 40, x * 40 + 40, y * 40 + 40, al_map_rgb(0, 255, 255), 1);
-	return;
-}
-
 
 void ClassicMap::getHouseCoordinates(int &coordX, int &coordY) {
 	coordX = 9;
