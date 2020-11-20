@@ -60,6 +60,9 @@ int ClassicMap::getObjectPos(int x, int y) {
 
 void ClassicMap::eatObject(int x, int y) {
 	pelletsEaten++;
+	if (object[y][x] == 2) {
+		//turn ghosts blue
+	}
 	object[y][x] = 0;
 }
 

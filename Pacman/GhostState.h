@@ -12,7 +12,10 @@
 class GhostState {
 public:
 	virtual bool update();
+	virtual void frighten() = 0;
 	virtual void draw() = 0;
+	virtual void scatter();
+	virtual void chase();
 
 protected:
 	void changeState(GhostState* s);

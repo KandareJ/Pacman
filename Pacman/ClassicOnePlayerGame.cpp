@@ -1,10 +1,12 @@
 #include "ClassicOnePlayerGame.h"
 
 ClassicOnePlayerGame::ClassicOnePlayerGame() {
+	eq = eq->getInstance();
 	map = new ClassicMap();
 	player = new HumanPlayer(map, 1, 1);
 	ghosts = vector<BlinkyGhost*>();
 	ghosts.push_back(new BlinkyGhost(map, player));
+	scatterChase = 360;
 	return;
 }
 
@@ -25,6 +27,14 @@ void ClassicOnePlayerGame::draw() {
 
 bool ClassicOnePlayerGame::update() {
 	bool drawNeeded = false;
+	scatterChase--;
+	if (scatterChase == 150) {
+		scatter();
+	}
+	else if (scatterChase == 0) {
+		chase();
+		scatterChase = 360;
+	}
 
 	if (map->update()) drawNeeded = true;
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
@@ -32,7 +42,24 @@ bool ClassicOnePlayerGame::update() {
 	}
 	if (player->update()) drawNeeded = true;
 
+	raiseEvents();
+
 	return drawNeeded;
+}
+
+void ClassicOnePlayerGame::raiseEvents() {
+	while (!eq->empty()) {
+		cout << "Popping event" << endl;
+		Event* e = eq->pop();
+
+		switch (e->getType()) {
+		case 1:
+			frighten();
+			break;
+		}
+
+		delete e;
+	}
 }
 
 bool ClassicOnePlayerGame::run(ALLEGRO_EVENT events) {
@@ -70,4 +97,22 @@ HumanPlayer* ClassicOnePlayerGame::getPlayer() {
 
 Map* ClassicOnePlayerGame::getMap() {
 	return map;
+}
+
+void ClassicOnePlayerGame::frighten() {
+	for (unsigned int i = 0; i < ghosts.size(); i++) {
+		ghosts.at(i)->frighten();
+	}
+}
+
+void ClassicOnePlayerGame::scatter() {
+	for (unsigned int i = 0; i < ghosts.size(); i++) {
+		ghosts.at(i)->scatter();
+	}
+}
+
+void ClassicOnePlayerGame::chase() {
+	for (unsigned int i = 0; i < ghosts.size(); i++) {
+		ghosts.at(i)->chase();
+	}
 }

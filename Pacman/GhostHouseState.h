@@ -16,6 +16,7 @@ public:
 	~GhostHouseState();
 	void draw();
 	bool update();
+	void frighten();
 private:
 	int choosePath(vector<int> options);
 };

@@ -16,6 +16,7 @@ public:
 	~BlinkyLeaveHouseState();
 	void draw();
 	bool update();
+	void frighten();
 private:
 	int choosePath(vector<int> options);
 	bool moveUp();

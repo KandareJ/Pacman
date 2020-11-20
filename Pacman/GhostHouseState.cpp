@@ -17,7 +17,6 @@ GhostHouseState::GhostHouseState(Map* m, HumanPlayer* player, BlinkyGhost* c) {
 	target = player;
 	dir = UP;
 	m->getHouseCoordinates(x, y);
-	cout << "house coords: (" << x << ", " << y << ")" << endl;
 	x = x * tileSize + (tileSize / 2);
 	y = y * tileSize + (tileSize / 2);
 	return;
@@ -35,7 +34,6 @@ void GhostHouseState::draw() {
 
 bool GhostHouseState::update() {
 	if (map->getPelletPercent() > .1) {
-		cout << "changing state" << endl;
 		changeState(new BlinkyLeaveHouseState(getTileX(), getTileY(), map, target, context));
 		return true;
 	}
@@ -44,4 +42,8 @@ bool GhostHouseState::update() {
 
 int GhostHouseState::choosePath(vector<int> options) {
 	return -1;
+}
+
+void GhostHouseState::frighten() {
+
 }

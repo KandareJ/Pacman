@@ -4,6 +4,7 @@
 #include "GhostState.h"
 #include "Map.h"
 #include "HumanPlayer.h"
+#include "FrightenedState.h"
 #include <vector>
 #include "Draw.h"
 
@@ -15,6 +16,8 @@ public:
 	~BlinkyChaseState();
 	void draw();
 	bool update();
+	void frighten();
+	void scatter();
 
 private:
 	int choosePath(vector<int> options);

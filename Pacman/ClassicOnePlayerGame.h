@@ -7,6 +7,7 @@
 #include "BlinkyGhost.h"
 #include "ClassicMap.h"
 #include "Map.h"
+#include "EventQueue.h"
 #include <iostream>
 
 using namespace std;
@@ -18,12 +19,18 @@ public:
 	bool run(ALLEGRO_EVENT events);
 	HumanPlayer* getPlayer();
 	Map* getMap();
+	void frighten();
+	void scatter();
+	void chase();
 private:
 	Map* map;
 	HumanPlayer *player;
 	vector<BlinkyGhost*> ghosts;
 	bool update();
 	void draw();
+	EventQueue* eq;
+	void raiseEvents();
+	int scatterChase;
 };
 
 #endif

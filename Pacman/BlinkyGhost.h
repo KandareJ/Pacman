@@ -13,6 +13,9 @@ public:
 	~BlinkyGhost();
 	bool update();
 	void draw();
+	void frighten();
+	void scatter();
+	void chase();
 
 private:
 	friend class GhostState;

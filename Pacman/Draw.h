@@ -17,7 +17,7 @@ public:
 	void initializeProportions(int w, int h);
 	void initializeMapProportions(int tileW, int tileH);
 	void drawGhost(int x, int y, int dir, int r, int g, int b);
-	void drawPlayer(int x, int y, int dir, int frame, int r, int g, int b);
+	void drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int state);
 	void drawMap(int** map, int** object, int frame, int h, int w);
 	void drawScore(int score);
 	int getTileSize();

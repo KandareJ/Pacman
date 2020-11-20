@@ -27,3 +27,15 @@ void BlinkyGhost::changeState(GhostState* newState) {
 	delete state;
 	state = newState;
 }
+
+void BlinkyGhost::frighten() {
+	state->frighten();
+}
+
+void BlinkyGhost::chase() {
+	state->chase();
+}
+
+void BlinkyGhost::scatter() {
+	state->scatter();
+}

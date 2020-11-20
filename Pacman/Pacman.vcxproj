@@ -129,12 +129,14 @@
     <ClCompile Include="ClassicMap.cpp" />
     <ClCompile Include="ClassicOnePlayerGame.cpp" />
     <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="FrightenedState.cpp" />
     <ClCompile Include="GhostHouseState.cpp" />
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BlinkyGhost.cpp" />
+    <ClCompile Include="EventQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlinkyChaseState.h" />
@@ -143,10 +145,12 @@
     <ClInclude Include="ClassicMap.h" />
     <ClInclude Include="ClassicOnePlayerGame.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="FrightenedState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GhostHouseState.h" />
     <ClInclude Include="GhostState.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

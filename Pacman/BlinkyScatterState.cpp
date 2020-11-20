@@ -1,8 +1,9 @@
 #include "BlinkyScatterState.h"
+#include "BlinkyChaseState.h"
 #include "HumanPlayer.h"
 #include <iostream>
 
-BlinkyScatterState::BlinkyScatterState(int startX, int startY, Map* m, HumanPlayer* player) {
+BlinkyScatterState::BlinkyScatterState(int startX, int startY, Map* m, HumanPlayer* player, BlinkyGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -18,6 +19,7 @@ BlinkyScatterState::BlinkyScatterState(int startX, int startY, Map* m, HumanPlay
 	dir = DOWN;
 	lastTileX = -1;
 	lastTileY = -1;
+	context = c;
 }
 
 BlinkyScatterState::~BlinkyScatterState() {
@@ -62,4 +64,12 @@ int BlinkyScatterState::choosePath(vector<int> options) {
 	}
 
 	return options.at(index);
+}
+
+void BlinkyScatterState::frighten() {
+	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
+}
+
+void BlinkyScatterState::chase() {
+	changeState(new BlinkyChaseState(getTileX(), getTileY(), map, target, context));
 }

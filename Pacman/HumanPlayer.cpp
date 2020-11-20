@@ -5,6 +5,7 @@
 using namespace std;
 
 HumanPlayer::HumanPlayer(Map* m, int startX, int startY) {
+	eq = eq->getInstance();
 	Draw* draw = Draw::instance();
 	tileSize = draw->getTileSize();
 	tileWidth = draw->getTileWidth();
@@ -19,6 +20,7 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY) {
 	score = 0;
 	speed = tileSize / 8;
 	frame = 0;
+	state = 0;
 	return;
 }
 
@@ -28,6 +30,7 @@ HumanPlayer::~HumanPlayer() {
 
 bool HumanPlayer::update() {
 	frame = ++frame % 8;
+	if (state > 0) state--;
 	switch (dir) {
 	case NOT_MOVING:
 		return false;
@@ -71,7 +74,7 @@ int HumanPlayer::getTileOffsetY() {
 
 void HumanPlayer::draw() {
 	Draw* draw = Draw::instance();
-	draw->drawPlayer(x, y, dir, frame, 255, 255, 0);
+	draw->drawPlayer(x, y, dir, frame, 255, 255, 0, state);
 	return;
 }
 
@@ -83,10 +86,7 @@ bool HumanPlayer::moveLeft() {
 		change = true;
 	}
 	else dir = NOT_MOVING;
-	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
-		score += 10;
-		map->eatObject(getTileX(), getTileY());
-	}
+	eatPellet();
 	return change;
 }
 
@@ -98,10 +98,7 @@ bool HumanPlayer::moveRight() {
 		change = true;
 	}
 	else dir = NOT_MOVING;
-	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
-		map->eatObject(getTileX(), getTileY());
-		score += 10;
-	}
+	eatPellet();
 	return change;
 }
 
@@ -113,10 +110,7 @@ bool HumanPlayer::moveUp() {
 		change = true;
 	}
 	else dir = NOT_MOVING;
-	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
-		map->eatObject(getTileX(), getTileY());
-		score += 10;
-	}
+	eatPellet();
 	return change;
 }
 
@@ -128,10 +122,7 @@ bool HumanPlayer::moveDown() {
 		 change = true;
 	}
 	else dir = NOT_MOVING;
-	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
-		map->eatObject(getTileX(), getTileY());
-		score += 10;
-	}
+	eatPellet();
 	return change;
 }
 
@@ -169,4 +160,16 @@ void HumanPlayer::changeDirection(int newDirection) {
 
 int HumanPlayer::getScore() {
 	return score;
+}
+
+void HumanPlayer::eatPellet() {
+	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
+		map->eatObject(getTileX(), getTileY());
+		score += 10;
+	}
+	else if (map->getObjectPos(getTileX(), getTileY()) == 2) {
+		map->eatObject(getTileX(), getTileY());
+		state = 300;
+		eq->push(new Event(1));
+	}
 }

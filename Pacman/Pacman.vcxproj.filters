@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{c43e301c-588e-4593-b006-ab6066b57a54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{1cc6c33c-1a1b-430a-91de-37b202bcb074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{4cd3c99d-c4ce-4ba2-a36c-2b06f4b0cacb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -83,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="Draw.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="Draw.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

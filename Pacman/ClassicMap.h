@@ -3,6 +3,7 @@
 
 #include "Map.h"
 #include "Draw.h"
+#include "ClassicOnePlayerGame.h"
 
 class ClassicMap : public Map {
 public:

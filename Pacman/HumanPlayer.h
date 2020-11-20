@@ -3,6 +3,7 @@
 
 #include "Map.h"
 #include "Draw.h"
+#include "EventQueue.h"
 
 //enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };
 
@@ -39,6 +40,8 @@ private:
 	void snapTileY();
 	int getTileOffsetX();
 	int getTileOffsetY();
+	void eatPellet();
+	EventQueue* eq;
 };
 
 #endif

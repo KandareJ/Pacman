@@ -47,3 +47,7 @@ void BlinkyLeaveHouseState::draw() {
 	draw->drawGhost(x, y, dir, 255, 0, 0);
 	return;
 }
+
+void BlinkyLeaveHouseState::frighten() {
+
+}

@@ -1,4 +1,5 @@
 #include "BlinkyChaseState.h"
+#include "BlinkyScatterState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
@@ -67,4 +68,12 @@ int BlinkyChaseState::choosePath(vector<int> options) {
 	}
 	
 	return options.at(index);
+}
+
+void BlinkyChaseState::frighten() {
+	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
+}
+
+void BlinkyChaseState::scatter() {
+	changeState(new BlinkyScatterState(getTileX(), getTileY(), map, target, context));
 }

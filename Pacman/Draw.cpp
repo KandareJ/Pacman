@@ -106,9 +106,9 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 	};
 }
 
-void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
+void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int state) {
 	if (!initialized) return;
-	int playerSize = tileSize * 0.40; // use .55 for big pac man
+	int playerSize = (state) ? tileSize* 0.55 : tileSize * 0.40; // if state is not zero, pacman will be big
 	float mouth = 1.5 / (frame + 1.0);
 	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
 	float startTheta = (dir * .5 * PI) + mouth / 2.0;
@@ -129,8 +129,8 @@ void Draw::drawMap(int **map, int **object, int frame, int h, int w) {
 			if (object[y][x] == 1) al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, tileSize / 8, al_map_rgb(219, 133, 28));
 			// draw power-up pellets that animate
 			if (object[y][x] == 2) {
-				if (frame < 15)al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 5 + (frame / 5), al_map_rgb(219, 133, 28));
-				else al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 7 - ((frame - 14) / 5), al_map_rgb(219, 133, 28));
+				if (frame < 15)al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 7 + (frame / 7), al_map_rgb(80, 200, 28));
+				else al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 9 - ((frame - 14) / 7), al_map_rgb(80, 200, 28));
 			}
 		}
 	}

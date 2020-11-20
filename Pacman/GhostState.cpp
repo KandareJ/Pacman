@@ -124,3 +124,11 @@ vector<int> GhostState::getOptions(int tileX, int tileY) {
 double GhostState::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) {
 	return sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
 }
+
+void GhostState::scatter() {
+
+}
+
+void GhostState::chase() {
+
+}
