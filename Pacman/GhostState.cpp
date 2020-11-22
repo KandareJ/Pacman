@@ -23,6 +23,14 @@ bool GhostState::update() {
 	};
 }
 
+int GhostState::getPosX() {
+	return getTileX() * tileSize + getTileOffsetX();
+}
+
+int GhostState::getPosY() {
+	return getTileY() * tileSize + getTileOffsetY();
+}
+
 int GhostState::getTileX() {
 	return x / tileSize % tileWidth;
 }
@@ -131,4 +139,9 @@ void GhostState::scatter() {
 
 void GhostState::chase() {
 
+}
+
+//returns 0 normally. Frightened State returns 1.
+int GhostState::collision() {
+	return 0;
 }

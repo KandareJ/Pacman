@@ -16,6 +16,9 @@ public:
 	void frighten();
 	void scatter();
 	void chase();
+	int getPosX();
+	int getPosY();
+	int collision();
 
 private:
 	friend class GhostState;

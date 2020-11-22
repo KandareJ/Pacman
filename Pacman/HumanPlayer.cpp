@@ -172,4 +172,21 @@ void HumanPlayer::eatPellet() {
 		state = 300;
 		eq->push(new Event(1));
 	}
+	else if (map->getObjectPos(getTileX(), getTileY()) == 4) {
+		map->eatObject(getTileX(), getTileY());
+		score += 30;
+		eq->push(new Event(2));
+	}
+}
+
+int HumanPlayer::getPosX() {
+	return getTileX() * tileSize + getTileOffsetX();
+}
+
+int HumanPlayer::getPosY() {
+	return getTileY() * tileSize + getTileOffsetY();
+}
+
+void HumanPlayer::ghostCollision(int ghostState) {
+	if (ghostState == 0 && state == 0) state = -1;
 }

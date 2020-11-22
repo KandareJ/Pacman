@@ -17,6 +17,9 @@ public:
 	int getTileX();
 	int getTileY();
 	int getScore();
+	int getPosX();
+	int getPosY();
+	void ghostCollision(int ghostState);
 
 private:
 	int tileSize;

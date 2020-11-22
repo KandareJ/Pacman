@@ -39,3 +39,15 @@ void BlinkyGhost::chase() {
 void BlinkyGhost::scatter() {
 	state->scatter();
 }
+
+int BlinkyGhost::getPosX() {
+	return state->getPosX();
+}
+
+int BlinkyGhost::getPosY() {
+	return state->getPosY();
+}
+
+int BlinkyGhost::collision() {
+	return state->collision();
+}

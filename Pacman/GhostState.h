@@ -16,6 +16,9 @@ public:
 	virtual void draw() = 0;
 	virtual void scatter();
 	virtual void chase();
+	int getPosX();
+	int getPosY();
+	virtual int collision();
 
 protected:
 	void changeState(GhostState* s);

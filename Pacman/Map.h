@@ -14,6 +14,7 @@ public:
 	virtual void eatObject(int x, int y) = 0;
 	virtual void getHouseCoordinates(int &x, int &y) = 0;
 	virtual double getPelletPercent() = 0;
+	virtual void switchObjectMap() = 0;
 };
 
 #endif

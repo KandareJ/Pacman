@@ -146,5 +146,8 @@
     <ClInclude Include="Event.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Coordinate.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

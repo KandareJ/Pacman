@@ -1,5 +1,6 @@
 #include "FrightenedState.h"
 #include "BlinkyChaseState.h"
+#include "GhostHouseState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
@@ -50,4 +51,9 @@ bool FrightenedState::update() {
 		changeState(new BlinkyChaseState(getTileX(), getTileY(), map, target, context));
 		return true;
 	}
+}
+
+int FrightenedState::collision() {
+	changeState(new GhostHouseState(map, target, context));
+	return 1;
 }

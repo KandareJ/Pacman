@@ -43,21 +43,24 @@ bool ClassicOnePlayerGame::update() {
 	if (player->update()) drawNeeded = true;
 
 	raiseEvents();
+	detectCollisions();
 
 	return drawNeeded;
 }
 
 void ClassicOnePlayerGame::raiseEvents() {
 	while (!eq->empty()) {
-		cout << "Popping event" << endl;
 		Event* e = eq->pop();
 
 		switch (e->getType()) {
 		case 1:
 			frighten();
 			break;
+		case 2:
+			map->switchObjectMap();
+			break;
 		}
-
+		
 		delete e;
 	}
 }
@@ -115,4 +118,19 @@ void ClassicOnePlayerGame::chase() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
 		ghosts.at(i)->chase();
 	}
+}
+
+void ClassicOnePlayerGame::detectCollisions() {
+	Draw* draw = Draw::instance();
+	double distance = 0.0;
+	for (unsigned int i = 0; i < ghosts.size(); i++) {
+		distance = getDistance(player->getPosX(), player->getPosY(), ghosts.at(i)->getPosX(), ghosts.at(i)->getPosY());
+		if (distance <= draw->getTileSize() * .6) {
+			player->ghostCollision(ghosts.at(i)->collision());
+		}
+	}
+}
+
+double ClassicOnePlayerGame::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) {
+	return sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
 }

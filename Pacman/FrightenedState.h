@@ -16,6 +16,7 @@ public:
 	void draw();
 	bool update();
 	void frighten();
+	int collision();
 private:
 	int choosePath(vector<int> options);
 	int frame;

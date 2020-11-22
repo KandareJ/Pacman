@@ -31,6 +31,8 @@ private:
 	EventQueue* eq;
 	void raiseEvents();
 	int scatterChase;
+	void detectCollisions();
+	double getDistance(int tileX1, int tileY1, int tileX2, int tileY2);
 };
 
 #endif
