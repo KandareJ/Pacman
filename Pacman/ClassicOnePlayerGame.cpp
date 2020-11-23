@@ -4,8 +4,13 @@ ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	eq = eq->getInstance();
 	map = new ClassicMap();
 	player = new HumanPlayer(map, 1, 1);
-	ghosts = vector<BlinkyGhost*>();
-	ghosts.push_back(new BlinkyGhost(map, player));
+	ghosts = vector<BasicGhost*>();
+	int numGhosts = 4;
+
+	for (int i = 0; i < numGhosts; i++) {
+		ghosts.push_back(new BasicGhost(map, player, .5 / (i + 1)));
+	}
+
 	scatterChase = 360;
 	return;
 }
@@ -109,14 +114,29 @@ void ClassicOnePlayerGame::frighten() {
 }
 
 void ClassicOnePlayerGame::scatter() {
+	int h = map->getHeight();
+	int w = map->getWidth();
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		ghosts.at(i)->scatter();
+		switch (i % 4) {
+		case 0:
+			ghosts.at(i)->scatter(0, 0);
+			break;
+		case 1:
+			ghosts.at(i)->scatter(0, h);
+			break;
+		case 2:
+			ghosts.at(i)->scatter(w, 0);
+			break;
+		case 3:
+			ghosts.at(i)->scatter(w, h);
+			break;
+		}
 	}
 }
 
 void ClassicOnePlayerGame::chase() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		ghosts.at(i)->chase();
+		ghosts.at(i)->chase(player);
 	}
 }
 

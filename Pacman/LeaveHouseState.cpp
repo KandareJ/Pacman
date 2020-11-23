@@ -1,10 +1,10 @@
-#include "BlinkyLeaveHouseState.h"
-#include "BlinkyChaseState.h"
+#include "LeaveHouseState.h"
+#include "ChaseState.h"
 #include <iostream>
 
 using namespace std;
 
-BlinkyLeaveHouseState::BlinkyLeaveHouseState(int startX, int startY, Map* m, HumanPlayer* player, BlinkyGhost* c) {
+LeaveHouseState::LeaveHouseState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -23,31 +23,27 @@ BlinkyLeaveHouseState::BlinkyLeaveHouseState(int startX, int startY, Map* m, Hum
 	context = c;
 }
 
-BlinkyLeaveHouseState::~BlinkyLeaveHouseState() {
+LeaveHouseState::~LeaveHouseState() {
 	return;
 }
 
-bool BlinkyLeaveHouseState::update() {
+bool LeaveHouseState::update(double pelletPercent) {
 	if (map->getMapPos(getTileX(),getTileY()) != 0) return moveUp();
-	else changeState(new BlinkyChaseState(getTileX(), getTileY(), map, target, context));
+	else changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
 	return true;
 }
 
-bool BlinkyLeaveHouseState::moveUp() {
+bool LeaveHouseState::moveUp() {
 		y -= speed;
 	return true;
 }
 
-int BlinkyLeaveHouseState::choosePath(vector<int> options) {
+int LeaveHouseState::choosePath(vector<int> options) {
 	return 0;
 }
 
-void BlinkyLeaveHouseState::draw() {
+void LeaveHouseState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
-	draw->drawGhost(x, y, dir, 255, 0, 0);
+	draw->drawGhost(x, y, dir, r, g, b);
 	return;
-}
-
-void BlinkyLeaveHouseState::frighten() {
-
 }

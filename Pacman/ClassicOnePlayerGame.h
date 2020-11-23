@@ -4,7 +4,7 @@
 #include <allegro5/allegro.h>
 #include <vector>
 #include "HumanPlayer.h"
-#include "BlinkyGhost.h"
+#include "BasicGhost.h"
 #include "ClassicMap.h"
 #include "Map.h"
 #include "EventQueue.h"
@@ -25,7 +25,7 @@ public:
 private:
 	Map* map;
 	HumanPlayer *player;
-	vector<BlinkyGhost*> ghosts;
+	vector<BasicGhost*> ghosts;
 	bool update();
 	void draw();
 	EventQueue* eq;

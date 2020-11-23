@@ -1,10 +1,10 @@
-#include "BlinkyChaseState.h"
-#include "BlinkyScatterState.h"
+#include "ChaseState.h"
+#include "ScatterState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
 
-BlinkyChaseState::BlinkyChaseState(int startX, int startY, Map* m, HumanPlayer* player, BlinkyGhost* c) {
+ChaseState::ChaseState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -23,22 +23,17 @@ BlinkyChaseState::BlinkyChaseState(int startX, int startY, Map* m, HumanPlayer* 
 	context = c;
 }
 
-BlinkyChaseState::~BlinkyChaseState() {
+ChaseState::~ChaseState() {
 	return;
 }
 
-bool BlinkyChaseState::update() {
-	
-	return GhostState::update();
-}
-
-void BlinkyChaseState::draw() {
+void ChaseState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
-	draw->drawGhost(x, y, dir, 255, 0, 0);
+	draw->drawGhost(x, y, dir, r, g, b);
 	return;
 }
 
-int BlinkyChaseState::choosePath(vector<int> options) {
+int ChaseState::choosePath(vector<int> options) {
 	vector<double> distances = vector<double>();
 	int index = 0;
 	double min = 1000000000000;
@@ -70,10 +65,10 @@ int BlinkyChaseState::choosePath(vector<int> options) {
 	return options.at(index);
 }
 
-void BlinkyChaseState::frighten() {
+void ChaseState::frighten() {
 	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
 }
 
-void BlinkyChaseState::scatter() {
-	changeState(new BlinkyScatterState(getTileX(), getTileY(), map, target, context));
+void ChaseState::scatter(int targetX, int targetY) {
+	changeState(new ScatterState(getTileX(), getTileY(), map, target, targetX, targetY, context));
 }

@@ -3,7 +3,7 @@
 
 #include "Map.h"
 #include "HumanPlayer.h"
-#include "BlinkyGhost.h"
+#include "BasicGhost.h"
 #include <vector>
 #include <math.h>
 #include <stdlib.h>
@@ -11,11 +11,11 @@
 
 class GhostState {
 public:
-	virtual bool update();
-	virtual void frighten() = 0;
-	virtual void draw() = 0;
-	virtual void scatter();
-	virtual void chase();
+	virtual bool update(double pelletPercent);
+	virtual void draw(int r, int g, int b) = 0;
+	virtual void frighten();
+	virtual void scatter(int targetX, int targetY);
+	virtual void chase(HumanPlayer* target);
 	int getPosX();
 	int getPosY();
 	virtual int collision();
@@ -45,7 +45,7 @@ protected:
 	double getDistance(int tileX, int tileY, int tileX2, int tileY2);
 	bool isValidTile(int tileX, int tileY);
 	vector<int> getOptions(int tileX, int tileY);
-	BlinkyGhost* context;
+	BasicGhost* context;
 	int height;
 	int width;
 	int tileHeight;

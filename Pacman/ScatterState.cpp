@@ -1,9 +1,9 @@
-#include "BlinkyScatterState.h"
-#include "BlinkyChaseState.h"
+#include "ScatterState.h"
+#include "ChaseState.h"
 #include "HumanPlayer.h"
 #include <iostream>
 
-BlinkyScatterState::BlinkyScatterState(int startX, int startY, Map* m, HumanPlayer* player, BlinkyGhost* c) {
+ScatterState::ScatterState(int startX, int startY, Map* m, HumanPlayer* target, int targetX, int targetY, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -15,26 +15,26 @@ BlinkyScatterState::BlinkyScatterState(int startX, int startY, Map* m, HumanPlay
 	x = startX * tileSize + (tileSize / 2);
 	y = startY * tileSize + (tileSize / 2);
 	map = m;
-	target = player;
+	this->targetX = targetX;
+	this->targetY = targetY;
 	dir = DOWN;
 	lastTileX = -1;
 	lastTileY = -1;
 	context = c;
+	this->target = target;
 }
 
-BlinkyScatterState::~BlinkyScatterState() {
+ScatterState::~ScatterState() {
 	return;
 }
 
-void BlinkyScatterState::draw() {
+void ScatterState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
-	draw->drawGhost(x, y, dir, 255, 0, 0);
+	draw->drawGhost(x, y, dir, r, g, b);
 	return;
 }
 
-
-
-int BlinkyScatterState::choosePath(vector<int> options) {
+int ScatterState::choosePath(vector<int> options) {
 	vector<double> distances = vector<double>();
 	int index = 0;
 	double min = 1000000000000;
@@ -42,16 +42,16 @@ int BlinkyScatterState::choosePath(vector<int> options) {
 	for (unsigned int i = 0; i < options.size(); i++) {
 		switch (options.at(i)) {
 		case RIGHT:
-			distances.push_back(getDistance(getTileX() + 1, getTileY(), 0, 0));
+			distances.push_back(getDistance(getTileX() + 1, getTileY(), targetX, targetY));
 			break;
 		case LEFT:
-			distances.push_back(getDistance(getTileX() - 1, getTileY(), 0, 0));
+			distances.push_back(getDistance(getTileX() - 1, getTileY(), targetX, targetY));
 			break;
 		case UP:
-			distances.push_back(getDistance(getTileX(), getTileY() - 1, 0, 0));
+			distances.push_back(getDistance(getTileX(), getTileY() - 1, targetX, targetY));
 			break;
 		case DOWN:
-			distances.push_back(getDistance(getTileX(), getTileY() + 1, 0, 0));
+			distances.push_back(getDistance(getTileX(), getTileY() + 1, targetX, targetY));
 			break;
 		}
 	}
@@ -66,10 +66,10 @@ int BlinkyScatterState::choosePath(vector<int> options) {
 	return options.at(index);
 }
 
-void BlinkyScatterState::frighten() {
+void ScatterState::frighten() {
 	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
 }
 
-void BlinkyScatterState::chase() {
-	changeState(new BlinkyChaseState(getTileX(), getTileY(), map, target, context));
+void ScatterState::chase(HumanPlayer* target) {
+	changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
 }

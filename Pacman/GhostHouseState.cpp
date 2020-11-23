@@ -1,10 +1,10 @@
 #include "GhostHouseState.h"
 #include <iostream>
-#include "BlinkyLeaveHouseState.h"
+#include "LeaveHouseState.h"
 
 using namespace std;
 
-GhostHouseState::GhostHouseState(Map* m, HumanPlayer* player, BlinkyGhost* c) {
+GhostHouseState::GhostHouseState(Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -19,6 +19,7 @@ GhostHouseState::GhostHouseState(Map* m, HumanPlayer* player, BlinkyGhost* c) {
 	m->getHouseCoordinates(x, y);
 	x = x * tileSize + (tileSize / 2);
 	y = y * tileSize + (tileSize / 2);
+	time = 0;
 	return;
 }
 
@@ -26,15 +27,16 @@ GhostHouseState::~GhostHouseState() {
 	return;
 }
 
-void GhostHouseState::draw() {
+void GhostHouseState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
-	draw->drawGhost(x, y, dir, 255, 0, 0);
+	draw->drawGhost(x, y, dir, r, g, b);
 	return;
 }
 
-bool GhostHouseState::update() {
-	if (map->getPelletPercent() > .1) {
-		changeState(new BlinkyLeaveHouseState(getTileX(), getTileY(), map, target, context));
+bool GhostHouseState::update(double pelletPercent) {
+	time++;
+	if (time > 60 && map->getPelletPercent() > pelletPercent) {
+		changeState(new LeaveHouseState(getTileX(), getTileY(), map, target, context));
 		return true;
 	}
 	return false;

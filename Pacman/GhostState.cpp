@@ -4,7 +4,7 @@ void GhostState::changeState(GhostState* s) {
 	context->changeState(s);
 }
 
-bool GhostState::update() {
+bool GhostState::update(double pelletPercent) {
 
 	switch (dir) {
 	case NOT_MOVING:
@@ -133,11 +133,15 @@ double GhostState::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) {
 	return sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
 }
 
-void GhostState::scatter() {
+void GhostState::frighten() {
 
 }
 
-void GhostState::chase() {
+void GhostState::scatter(int targetX, int targetY) {
+
+}
+
+void GhostState::chase(HumanPlayer* target) {
 
 }
 

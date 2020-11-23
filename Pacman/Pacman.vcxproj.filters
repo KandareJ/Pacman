@@ -63,12 +63,6 @@
     <ClCompile Include="HumanPlayer.cpp">
       <Filter>Source Files\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BlinkyGhost.cpp">
-      <Filter>Source Files\Ghost</Filter>
-    </ClCompile>
-    <ClCompile Include="BlinkyChaseState.cpp">
-      <Filter>Source Files\Ghost\States</Filter>
-    </ClCompile>
     <ClCompile Include="FrightenedState.cpp">
       <Filter>Source Files\Ghost\States</Filter>
     </ClCompile>
@@ -78,14 +72,8 @@
     <ClCompile Include="GhostHouseState.cpp">
       <Filter>Source Files\Ghost\States</Filter>
     </ClCompile>
-    <ClCompile Include="BlinkyScatterState.cpp">
-      <Filter>Source Files\Ghost\States</Filter>
-    </ClCompile>
     <ClCompile Include="ClassicOnePlayerGame.cpp">
       <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="BlinkyLeaveHouseState.cpp">
-      <Filter>Source Files\Ghost\States</Filter>
     </ClCompile>
     <ClCompile Include="Draw.cpp">
       <Filter>Source Files</Filter>
@@ -95,6 +83,18 @@
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="ScatterState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaveHouseState.cpp">
+      <Filter>Source Files\Ghost\States</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicGhost.cpp">
+      <Filter>Source Files\Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,12 +110,6 @@
     <ClInclude Include="HumanPlayer.h">
       <Filter>Header Files\Player</Filter>
     </ClInclude>
-    <ClInclude Include="BlinkyGhost.h">
-      <Filter>Header Files\Ghost</Filter>
-    </ClInclude>
-    <ClInclude Include="BlinkyChaseState.h">
-      <Filter>Header Files\Ghost\States</Filter>
-    </ClInclude>
     <ClInclude Include="FrightenedState.h">
       <Filter>Header Files\Ghost\States</Filter>
     </ClInclude>
@@ -125,17 +119,11 @@
     <ClInclude Include="GhostState.h">
       <Filter>Header Files\Ghost\States</Filter>
     </ClInclude>
-    <ClInclude Include="BlinkyScatterState.h">
-      <Filter>Header Files\Ghost\States</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="ClassicOnePlayerGame.h">
       <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="BlinkyLeaveHouseState.h">
-      <Filter>Header Files\Ghost\States</Filter>
     </ClInclude>
     <ClInclude Include="Draw.h">
       <Filter>Header Files</Filter>
@@ -148,6 +136,21 @@
     </ClInclude>
     <ClInclude Include="Coordinate.h">
       <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ScatterState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaveHouseState.h">
+      <Filter>Header Files\Ghost\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicGhost.h">
+      <Filter>Header Files\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="ReturnHouseState.h">
+      <Filter>Header Files\Ghost\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

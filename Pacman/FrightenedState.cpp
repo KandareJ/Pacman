@@ -1,11 +1,11 @@
 #include "FrightenedState.h"
-#include "BlinkyChaseState.h"
+#include "ChaseState.h"
 #include "GhostHouseState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
 
-FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* player, BlinkyGhost* c) {
+FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -30,7 +30,7 @@ FrightenedState::~FrightenedState() {
 	return;
 }
 
-void FrightenedState::draw() {
+void FrightenedState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
 	draw->drawGhost(x, y, dir, 0, 0, 255);
 	return;
@@ -44,11 +44,11 @@ void FrightenedState::frighten() {
 	frame = 0;
 }
 
-bool FrightenedState::update() {
+bool FrightenedState::update(double pelletPercent) {
 	frame++;
-	if (frame <= 300) return GhostState::update();
+	if (frame <= 300) return GhostState::update(pelletPercent);
 	else {
-		changeState(new BlinkyChaseState(getTileX(), getTileY(), map, target, context));
+		changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
 		return true;
 	}
 }

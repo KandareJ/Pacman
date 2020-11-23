@@ -123,9 +123,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BlinkyChaseState.cpp" />
-    <ClCompile Include="BlinkyLeaveHouseState.cpp" />
-    <ClCompile Include="BlinkyScatterState.cpp" />
+    <ClCompile Include="ChaseState.cpp" />
+    <ClCompile Include="LeaveHouseState.cpp" />
+    <ClCompile Include="ScatterState.cpp" />
     <ClCompile Include="ClassicMap.cpp" />
     <ClCompile Include="ClassicOnePlayerGame.cpp" />
     <ClCompile Include="Draw.cpp" />
@@ -135,13 +135,14 @@
     <ClCompile Include="GhostState.cpp" />
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="BlinkyGhost.cpp" />
+    <ClCompile Include="BasicGhost.cpp" />
     <ClCompile Include="EventQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BlinkyChaseState.h" />
-    <ClInclude Include="BlinkyLeaveHouseState.h" />
-    <ClInclude Include="BlinkyScatterState.h" />
+    <ClInclude Include="ChaseState.h" />
+    <ClInclude Include="LeaveHouseState.h" />
+    <ClInclude Include="ReturnHouseState.h" />
+    <ClInclude Include="ScatterState.h" />
     <ClInclude Include="ClassicMap.h" />
     <ClInclude Include="ClassicOnePlayerGame.h" />
     <ClInclude Include="Coordinate.h" />
@@ -155,7 +156,7 @@
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="BlinkyGhost.h" />
+    <ClInclude Include="BasicGhost.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

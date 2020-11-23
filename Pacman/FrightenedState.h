@@ -11,10 +11,10 @@ using namespace std;
 
 class FrightenedState : public GhostState {
 public:
-	FrightenedState(int x, int y, Map* map, HumanPlayer* player, BlinkyGhost* c);
+	FrightenedState(int x, int y, Map* map, HumanPlayer* player, BasicGhost* c);
 	~FrightenedState();
-	void draw();
-	bool update();
+	void draw(int r, int g, int b);
+	bool update(double pelletPercent);
 	void frighten();
 	int collision();
 private:

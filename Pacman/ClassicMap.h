@@ -22,6 +22,8 @@ public:
 	void getHouseCoordinates(int &x, int &y);
 	double getPelletPercent();
 	void switchObjectMap();
+	int getHeight();
+	int getWidth();
 
 private:
 	int height;
@@ -32,6 +34,8 @@ private:
 	int **object;
 	int ***objectOptions;
 	std::vector<Coordinate*> fruitCoords;
+	std::vector<Coordinate*> houseCoords;
+	int lastHouseCoord;
 	int numOptions;
 	int option;
 	int frame;

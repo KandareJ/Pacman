@@ -10,6 +10,7 @@ ClassicMap::ClassicMap() {
 	pellets = 0.0;
 	pelletsEaten = 0.0;
 	option = 0;
+	lastHouseCoord = -1;
 	srand(time(NULL));
 
 	string line;
@@ -31,6 +32,7 @@ ClassicMap::ClassicMap() {
 		istringstream is(line);
 		for (int x = 0; x < width; x++) {
 			is >> map[y][x];
+			if (map[y][x] == 3 || map[y][x] == 2) houseCoords.push_back(new Coordinate(x, y));
 		}
 	}
 
@@ -109,8 +111,9 @@ void ClassicMap::draw() {
 }
 
 void ClassicMap::getHouseCoordinates(int &coordX, int &coordY) {
-	coordX = 9;
-	coordY = 6;
+	lastHouseCoord = (lastHouseCoord + 1) % houseCoords.size();
+	coordX = houseCoords.at(lastHouseCoord)->x;
+	coordY = houseCoords.at(lastHouseCoord)->y;
 	return;
 }
 
@@ -127,4 +130,12 @@ void ClassicMap::switchObjectMap() {
 			if (object[y][x] == 1) pellets++;
 		}
 	}
+}
+
+int ClassicMap::getHeight() {
+	return height;
+}
+
+int ClassicMap::getWidth() {
+	return width;
 }

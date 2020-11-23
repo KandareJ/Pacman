@@ -115,8 +115,6 @@ void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int
 	float deltaTheta = 2.0 * PI - mouth;
 	al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, startTheta, deltaTheta, al_map_rgb(r, g, b), playerSize);
 	if (mouth == 0 || dir == NOT_MOVING) al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, 0, 2 * PI, al_map_rgb(r, g, b), playerSize);
-
-	al_draw_rectangle(x + xOffset - playerSize, y + yOffset - playerSize, x + xOffset + playerSize, y + yOffset + playerSize, al_map_rgb(0, 255, 0), 1);
 }
 
 void Draw::drawMap(int **map, int **object, int frame, int h, int w) {

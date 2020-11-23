@@ -15,6 +15,8 @@ public:
 	virtual void getHouseCoordinates(int &x, int &y) = 0;
 	virtual double getPelletPercent() = 0;
 	virtual void switchObjectMap() = 0;
+	virtual int getHeight() = 0;
+	virtual int getWidth() = 0;
 };
 
 #endif
