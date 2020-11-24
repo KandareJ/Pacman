@@ -1,5 +1,5 @@
 #ifndef EVENT_H
-#define EVENT
+#define EVENT_H
 
 class Event {
 public:
