@@ -20,6 +20,8 @@ public:
 	int getObjectPos(int x, int y);
 	void eatObject(int x, int y);
 	void getHouseCoordinates(int &x, int &y);
+	void getHouseGate(int &x, int &y);
+	void getPlayerSpawnCoordinates(int& x, int& y);
 	double getPelletPercent();
 	void switchObjectMap();
 	int getHeight();
@@ -35,6 +37,8 @@ private:
 	int ***objectOptions;
 	std::vector<Coordinate*> fruitCoords;
 	std::vector<Coordinate*> houseCoords;
+	std::vector<Coordinate*> playerSpawnCoords;
+	int lastSpawnCoord;
 	int lastHouseCoord;
 	int numOptions;
 	int option;

@@ -1,4 +1,5 @@
 #include "FrightenedState.h"
+#include "ReturnHouseState.h"
 #include "ChaseState.h"
 #include "GhostHouseState.h"
 #include "HumanPlayer.h"
@@ -54,6 +55,6 @@ bool FrightenedState::update(double pelletPercent) {
 }
 
 int FrightenedState::collision() {
-	changeState(new GhostHouseState(map, target, context));
+	changeState(new ReturnHouseState(getTileX(), getTileY(), map, target, context));
 	return 1;
 }

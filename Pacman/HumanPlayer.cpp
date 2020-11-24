@@ -189,4 +189,5 @@ int HumanPlayer::getPosY() {
 
 void HumanPlayer::ghostCollision(int ghostState) {
 	if (ghostState == 0 && state == 0) system("pause");
+	if (ghostState == 1 && state != 0) score += 100;
 }

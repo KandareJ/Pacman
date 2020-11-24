@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="LeaveHouseState.cpp" />
+    <ClCompile Include="ReturnHouseState.cpp" />
     <ClCompile Include="ScatterState.cpp" />
     <ClCompile Include="ClassicMap.cpp" />
     <ClCompile Include="ClassicOnePlayerGame.cpp" />

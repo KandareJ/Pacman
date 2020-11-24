@@ -9,8 +9,9 @@ ClassicMap::ClassicMap() {
 	ifstream mapData("levels/level1.pac");
 	pellets = 0.0;
 	pelletsEaten = 0.0;
-	option = 0;
+	option = -1;
 	lastHouseCoord = -1;
+	lastSpawnCoord = -1;
 	srand(time(NULL));
 
 	string line;
@@ -68,6 +69,18 @@ ClassicMap::ClassicMap() {
 		istringstream is(line);
 		int tempX, tempY;
 		is >> tempX >> tempY;
+		playerSpawnCoords.push_back(new Coordinate(tempX, tempY));
+	}
+
+	getline(mapData, line);
+	istringstream is4(line);
+	is4 >> coords;
+
+	for (int i = 0; i < coords; i++) {
+		getline(mapData, line);
+		istringstream is(line);
+		int tempX, tempY;
+		is >> tempX >> tempY;
 		fruitCoords.push_back(new Coordinate(tempX, tempY));
 	}
 
@@ -114,6 +127,19 @@ void ClassicMap::getHouseCoordinates(int &coordX, int &coordY) {
 	lastHouseCoord = (lastHouseCoord + 1) % houseCoords.size();
 	coordX = houseCoords.at(lastHouseCoord)->x;
 	coordY = houseCoords.at(lastHouseCoord)->y;
+	return;
+}
+
+void ClassicMap::getHouseGate(int &coordX, int &coordY) {
+	coordX = houseCoords.at(0)->x;
+	coordY = houseCoords.at(0)->y;
+	return;
+}
+
+void ClassicMap::getPlayerSpawnCoordinates(int& x, int& y) {
+	lastSpawnCoord = (lastSpawnCoord + 1) % playerSpawnCoords.size();
+	x = playerSpawnCoords.at(lastSpawnCoord)->x;
+	y = playerSpawnCoords.at(lastSpawnCoord)->y;
 	return;
 }
 

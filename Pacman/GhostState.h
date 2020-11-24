@@ -43,7 +43,7 @@ protected:
 	int getTileOffsetY();
 	void changeDirection();
 	double getDistance(int tileX, int tileY, int tileX2, int tileY2);
-	bool isValidTile(int tileX, int tileY);
+	virtual bool isValidTile(int tileX, int tileY);
 	vector<int> getOptions(int tileX, int tileY);
 	BasicGhost* context;
 	int height;

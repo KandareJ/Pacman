@@ -5,12 +5,14 @@ ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	map = new ClassicMap();
 	ghosts = vector<BasicGhost*>();
 	int numGhosts = 4;
-	int numPlayers = 2;
+	int numPlayers = 1;
 	int r, g, b;
 	int hue = 300 / numGhosts;
+	int playerX, playerY;
 
 	for (int i = 0; i < numPlayers; i++) {
-		players.push_back(new HumanPlayer(map, 1, 1 + i));
+		map->getPlayerSpawnCoordinates(playerX, playerY);
+		players.push_back(new HumanPlayer(map, playerX, playerY));
 	}
 
 	for (int i = 0; i < numGhosts; i++) {

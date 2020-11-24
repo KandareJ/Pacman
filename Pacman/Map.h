@@ -17,6 +17,8 @@ public:
 	virtual void switchObjectMap() = 0;
 	virtual int getHeight() = 0;
 	virtual int getWidth() = 0;
+	virtual void getPlayerSpawnCoordinates(int& x, int& y) = 0;
+	virtual void getHouseGate(int &x, int &y) = 0;
 };
 
 #endif

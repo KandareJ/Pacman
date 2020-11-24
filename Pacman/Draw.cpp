@@ -129,8 +129,10 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 	if (!initialized) return;
 	int third = tileSize * 0.15;
 
-	al_draw_filled_circle(x + xOffset, y - third + yOffset, 2*third, al_map_rgb(r, g, b));
-	al_draw_filled_rectangle(x - 2*third + xOffset, y - third + yOffset, x + 2*third + xOffset, y + 2*third + yOffset, al_map_rgb(r, g, b));
+	if (r || g || b) {
+		al_draw_filled_circle(x + xOffset, y - third + yOffset, 2 * third, al_map_rgb(r, g, b));
+		al_draw_filled_rectangle(x - 2 * third + xOffset, y - third + yOffset, x + 2 * third + xOffset, y + 2 * third + yOffset, al_map_rgb(r, g, b));
+	}
 	//al_draw_filled_triangle(x - 12, y + 12, x - 6, y + 12, x - 9, y + 15, al_map_rgb(r, g, b));
 	//al_draw_filled_triangle(x - 6, y + 12, x, y + 12, x - 3, y + 15, al_map_rgb(r, g, b));
 	//al_draw_filled_triangle(x, y + 12, x + 6, y + 12, x + 3, y + 15, al_map_rgb(r, g, b));
