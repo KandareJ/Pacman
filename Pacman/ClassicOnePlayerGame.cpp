@@ -3,11 +3,15 @@
 ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	eq = eq->getInstance();
 	map = new ClassicMap();
-	players.push_back(new HumanPlayer(map, 1, 1));
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 8;
+	int numGhosts = 4;
+	int numPlayers = 2;
 	int r, g, b;
 	int hue = 300 / numGhosts;
+
+	for (int i = 0; i < numPlayers; i++) {
+		players.push_back(new HumanPlayer(map, 1, 1 + i));
+	}
 
 	for (int i = 0; i < numGhosts; i++) {
 		Draw::generateGhostColor(r, g, b, hue * i);
@@ -23,11 +27,21 @@ ClassicOnePlayerGame::~ClassicOnePlayerGame() {
 }
 
 void ClassicOnePlayerGame::draw() {
+	/* // Uncomment this for party mode.
+	// You'll need to uncomment the counter variable in the header file too
+	// Also, comment out other al_clear_to_color
+	int r, g, b;
+	counter = (counter + 1) % 300;
+	Draw::generateGhostColor(r, g, b, counter);
+	al_clear_to_color(al_map_rgb(r, g, b));*/
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	Draw::instance()->drawScore(players.at(0)->getScore());
 	map->draw();
 	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();
-	players.at(0)->draw();
+	for (unsigned int i = 0; i < players.size(); i++) {
+		Draw::instance()->drawScore(players.at(i)->getScore(), i, players.size());
+		players.at(i)->draw();
+	}
+
 	al_flip_display();
 
 	return;

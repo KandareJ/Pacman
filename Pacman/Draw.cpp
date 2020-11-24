@@ -75,7 +75,6 @@ void Draw::generateGhostColor(int& r, int& g, int& b, int hue) {
 	double s = 0.99;
 	double v = 0.99;
 	hsv_to_rgb(h, s, v);
-	cout << h << s << v << endl;
 	r = (int)h;
 	g = (int)s;
 	b = (int)v;
@@ -120,7 +119,6 @@ void Draw::hsv_to_rgb(double& h, double& s, double& v) {
 		g = 0;
 		b = x;
 	};
-	cout << "rgb: " << r << g << b << endl;
 
 	h = (r + m) * 255;
 	s = (g + m) * 255;
@@ -263,9 +261,11 @@ void Draw::drawRightWall(int x, int y, int w, int h, int** map) {
 	return;
 }
 
-void Draw::drawScore(int score) {
+void Draw::drawScore(int score, int player, int totalPlayers) {
 	char *text = (char*)malloc(20);
-	sprintf(text, "Player 1: %d", score);
-	al_draw_text(font, al_map_rgb(255, 255, 255), xOffset+tileSize*corner, yOffsetScore, NULL, text);
+	int col = (tileWidth - 3) * tileSize / 3;
+	int row = player / 4 * tileSize / 2;
+	sprintf(text, "Player %d: %d", player + 1, score);
+	al_draw_text(font, al_map_rgb(255, 255, 255), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, NULL, text);
 	free(text);
 }
