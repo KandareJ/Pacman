@@ -7,11 +7,11 @@
 #include "allegro5/allegro_primitives.h"
 #include <iostream>
 
-BasicGhost::BasicGhost(Map* map, HumanPlayer* player, double pelletPercent) {
+BasicGhost::BasicGhost(Map* map, HumanPlayer* player, double pelletPercent, int r, int g, int b) {
 	state = new GhostHouseState(map, player, this);
-	r = rand() % 255;
-	g = rand() % 255;
-	b = rand() % 255;
+	this->r = r;
+	this->g = g;
+	this->b = b;
 	this->pelletPercent = pelletPercent;
 	return;
 }
@@ -56,3 +56,5 @@ int BasicGhost::getPosY() {
 int BasicGhost::collision() {
 	return state->collision();
 }
+
+

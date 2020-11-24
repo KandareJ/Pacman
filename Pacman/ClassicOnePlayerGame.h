@@ -24,7 +24,7 @@ public:
 	void chase();
 private:
 	Map* map;
-	HumanPlayer *player;
+	vector<HumanPlayer*> players;
 	vector<BasicGhost*> ghosts;
 	bool update();
 	void draw();

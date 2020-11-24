@@ -14,6 +14,7 @@ enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };
 class Draw {
 public:
 	static Draw* instance();
+	void static generateGhostColor(int& r, int& g, int& b, int hue);
 	void initializeProportions(int w, int h);
 	void initializeMapProportions(int tileW, int tileH);
 	void drawGhost(int x, int y, int dir, int r, int g, int b);
@@ -29,6 +30,7 @@ protected:
 	Draw();
 private:
 	static Draw* _instance;
+	static void hsv_to_rgb(double& h, double& s, double& v);
 	int width;
 	int height;
 	int tileWidth;

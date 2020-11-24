@@ -10,7 +10,7 @@ const double FPS = 30.0;
 int HEIGHT = 900;
 int WIDTH = 1200;
 
-int main() {
+int main(int argc, char** argv) {
 	bool quit = false;
 	al_init();
 	al_install_joystick();

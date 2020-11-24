@@ -2,6 +2,7 @@
 #include "Draw.h"
 #include <iostream>
 #include <stdio.h>
+#include <math.h>
 
 using namespace std;
 
@@ -66,6 +67,64 @@ int Draw::getHeight() {
 
 int Draw::getWidth() {
 	return width;
+}
+
+void Draw::generateGhostColor(int& r, int& g, int& b, int hue) {
+	double h = hue;
+	if (h > 210) h += 60; //skip blue colors
+	double s = 0.99;
+	double v = 0.99;
+	hsv_to_rgb(h, s, v);
+	cout << h << s << v << endl;
+	r = (int)h;
+	g = (int)s;
+	b = (int)v;
+}
+
+//we map h to r, s to g, and v to b
+void Draw::hsv_to_rgb(double& h, double& s, double& v) {
+	double r, g, b;
+	double c = (v * s);
+	int h_i = h / 60;
+	double x = c * (1 - abs(fmod(h/60.0, 2) - 1));
+	double m = v - c;
+
+	switch (h_i) {
+	case 0:
+		r = c;
+		g = x;
+		b = 0;
+		break;
+	case 1:
+		r = x;
+		g = c;
+		b = 0;
+		break;
+	case 2:
+		r = 0;
+		g = c;
+		b = x;
+		break;
+	case 3:
+		r = 0;
+		g = x;
+		b = c;
+		break;
+	case 4:
+		r = x;
+		g = 0;
+		b = c;
+		break;
+	default:
+		r = c;
+		g = 0;
+		b = x;
+	};
+	cout << "rgb: " << r << g << b << endl;
+
+	h = (r + m) * 255;
+	s = (g + m) * 255;
+	v = (b + m) * 255;
 }
 
 void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {

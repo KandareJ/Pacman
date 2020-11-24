@@ -8,7 +8,7 @@ class GhostState;
 
 class BasicGhost {
 public:
-	BasicGhost(Map* map, HumanPlayer* player, double pelletPercent);
+	BasicGhost(Map* map, HumanPlayer* player, double pelletPercent, int r, int g, int b);
 	~BasicGhost();
 	bool update();
 	void draw();
@@ -21,6 +21,8 @@ public:
 
 private:
 	friend class GhostState;
+	void generateGhostColor();
+	void hsv_to_rgb(int h, int s, int v);
 	void changeState(GhostState* s);
 	GhostState* state;
 	int r;

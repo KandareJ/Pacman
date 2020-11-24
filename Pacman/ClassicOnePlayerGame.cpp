@@ -3,12 +3,15 @@
 ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	eq = eq->getInstance();
 	map = new ClassicMap();
-	player = new HumanPlayer(map, 1, 1);
+	players.push_back(new HumanPlayer(map, 1, 1));
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 4;
+	int numGhosts = 8;
+	int r, g, b;
+	int hue = 300 / numGhosts;
 
 	for (int i = 0; i < numGhosts; i++) {
-		ghosts.push_back(new BasicGhost(map, player, .5 / (i + 1)));
+		Draw::generateGhostColor(r, g, b, hue * i);
+		ghosts.push_back(new BasicGhost(map, players.at(0), .5 / (i + 1), r, g, b));
 	}
 
 	scatterChase = 360;
@@ -21,10 +24,10 @@ ClassicOnePlayerGame::~ClassicOnePlayerGame() {
 
 void ClassicOnePlayerGame::draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	Draw::instance()->drawScore(player->getScore());
+	Draw::instance()->drawScore(players.at(0)->getScore());
 	map->draw();
 	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();
-	player->draw();
+	players.at(0)->draw();
 	al_flip_display();
 
 	return;
@@ -45,7 +48,7 @@ bool ClassicOnePlayerGame::update() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
 		if (ghosts.at(i)->update()) drawNeeded = true;
 	}
-	if (player->update()) drawNeeded = true;
+	if (players.at(0)->update()) drawNeeded = true;
 
 	raiseEvents();
 	detectCollisions();
@@ -81,16 +84,16 @@ bool ClassicOnePlayerGame::run(ALLEGRO_EVENT events) {
 	if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_W:
-			player->changeDirection(UP);
+			players.at(0)->changeDirection(UP);
 			break;
 		case ALLEGRO_KEY_A:
-			player->changeDirection(LEFT);
+			players.at(0)->changeDirection(LEFT);
 			break;
 		case ALLEGRO_KEY_S:
-			player->changeDirection(DOWN);
+			players.at(0)->changeDirection(DOWN);
 			break;
 		case ALLEGRO_KEY_D:
-			player->changeDirection(RIGHT);
+			players.at(0)->changeDirection(RIGHT);
 			break;
 		case ALLEGRO_KEY_ESCAPE:
 			return true;
@@ -100,7 +103,7 @@ bool ClassicOnePlayerGame::run(ALLEGRO_EVENT events) {
 }
 
 HumanPlayer* ClassicOnePlayerGame::getPlayer() {
-	return player;
+	return players.at(0);
 }
 
 Map* ClassicOnePlayerGame::getMap() {
@@ -136,7 +139,7 @@ void ClassicOnePlayerGame::scatter() {
 
 void ClassicOnePlayerGame::chase() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		ghosts.at(i)->chase(player);
+		ghosts.at(i)->chase(players.at(0));
 	}
 }
 
@@ -144,9 +147,9 @@ void ClassicOnePlayerGame::detectCollisions() {
 	Draw* draw = Draw::instance();
 	double distance = 0.0;
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		distance = getDistance(player->getPosX(), player->getPosY(), ghosts.at(i)->getPosX(), ghosts.at(i)->getPosY());
+		distance = getDistance(players.at(0)->getPosX(), players.at(0)->getPosY(), ghosts.at(i)->getPosX(), ghosts.at(i)->getPosY());
 		if (distance <= draw->getTileSize() * .6) {
-			player->ghostCollision(ghosts.at(i)->collision());
+			players.at(0)->ghostCollision(ghosts.at(i)->collision());
 		}
 	}
 }
