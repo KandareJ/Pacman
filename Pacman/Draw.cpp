@@ -23,6 +23,9 @@ Draw::Draw() {
 void Draw::initializeProportions(int w, int h) {
 	width = w;
 	height = h;
+	titleFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 7, NULL);
+	menuFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 15, NULL);
+	menu = al_load_bitmap("assets/images/menu.png");
 	return;
 }
 
@@ -46,7 +49,6 @@ void Draw::initializeTileSize() {
 	thickness = 3;
 	font = al_load_font("assets/fonts/SpaceObsessed.ttf", tileSize/2, NULL);
 	initialized = true;
-	cout << "Tile size: " << tileSize << endl;
 }
 
 int Draw::getTileHeight() {
@@ -270,4 +272,59 @@ void Draw::drawScore(int score, int player, int totalPlayers) {
 	sprintf(text, "Player %d: %d", player + 1, score);
 	al_draw_text(font, al_map_rgb(255, 255, 255), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, NULL, text);
 	free(text);
+}
+
+void Draw::drawMenu(int frame) {
+	if (menu) {
+		int imageHeight = al_get_bitmap_height(menu);
+		int imageWidth = al_get_bitmap_width(menu);
+		al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
+		int alpha = (frame < 45) ? frame * 255 / 45 : (45 - frame % 45) * 255 / 45;
+
+		char title[8] = "PAC-MAN";
+		char menuText[26] = "Press any key to continue";
+		al_draw_text(titleFont, al_map_rgba(0, 0, 0, 255), width/2, height/2-(height/7*2), ALLEGRO_ALIGN_CENTRE, title);
+		al_draw_text(menuFont, al_map_rgba(0, 0, 0, alpha), width / 2, height-(height/15*3), ALLEGRO_ALIGN_CENTRE, menuText);
+	}
+	return;
+}
+
+void Draw::drawLevelSelect(std::vector<std::string> levels, int selected) {
+	if (menu) {
+		int imageHeight = al_get_bitmap_height(menu);
+		int imageWidth = al_get_bitmap_width(menu);
+		int offset = 0;
+		al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
+
+		char title[14] = "Level Select:";
+		al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
+		al_draw_filled_rectangle(width * .25, height / 15 * 2, width * .75, height - height / 15 * 2 + height / 50, al_map_rgba(0, 0, 0, 190));
+
+		if (selected >= 11) offset = (selected+1) % 11;
+		for (unsigned int i = 0; i < levels.size() && i < 11; i++) {
+			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100) , width * .25 + height / 40, height / 15 * (2 + i), NULL, levels.at(i + offset).c_str());
+		}
+	}
+	return;
+}
+
+void Draw::drawScoreboard(std::vector<int> scores, int selected) {
+	if (menu) {
+		int imageHeight = al_get_bitmap_height(menu);
+		int imageWidth = al_get_bitmap_width(menu);
+		int offset = 0;
+		al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
+
+		char title[14] = "Scoreboard:";
+		al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
+		al_draw_filled_rectangle(width * .25, height / 15 * 2, width * .75, height - height / 15 * 2 + height / 50, al_map_rgba(0, 0, 0, 190));
+
+		if (selected >= 11) offset = (selected + 1) % 11;
+		for (unsigned int i = 0; i < scores.size() && i < 11; i++) {
+			char label[50];
+			sprintf(label, "Player %d.........................%d", i + offset + 1, scores.at(i + offset));
+			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (2 + i), NULL, label);
+		}
+	}
+	return;
 }

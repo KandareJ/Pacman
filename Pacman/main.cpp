@@ -1,10 +1,10 @@
-#include <iostream>
-#include "ClassicOnePlayerGame.h"
+#include "GameEngine.h"
 #include "Draw.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 
 const double FPS = 30.0;
 int HEIGHT = 900;
@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
 	al_install_keyboard();
 	al_init_font_addon();
 	al_init_ttf_addon();
+	al_init_image_addon();
 
 	ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
 	ALLEGRO_EVENT events;
@@ -29,20 +30,21 @@ int main(int argc, char** argv) {
 	al_get_monitor_info(0, &info);
 	WIDTH = info.x2 - info.x1;
 	HEIGHT = info.y2 - info.y1;
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	ALLEGRO_DISPLAY* display = al_create_display(WIDTH, HEIGHT);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	ALLEGRO_DISPLAY* display = al_create_display(WIDTH/2, HEIGHT/2);
 
 	Draw* draw = Draw::instance();
-	draw->initializeProportions(WIDTH, HEIGHT);
+	draw->initializeProportions(WIDTH/2, HEIGHT/2);
 	al_start_timer(timer);
 
-	ClassicOnePlayerGame game = ClassicOnePlayerGame();
+	GameEngine* game = new GameEngine();
 
 	while (!quit) {
 		al_wait_for_event(queue, &events);
-		quit = game.run(events);
+		quit = game->run(events);
 	}
 
+	al_destroy_timer(timer);
 	al_destroy_display(display);
 
 	return 0;

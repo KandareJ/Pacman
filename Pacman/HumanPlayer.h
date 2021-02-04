@@ -20,6 +20,7 @@ public:
 	int getPosX();
 	int getPosY();
 	void ghostCollision(int ghostState);
+	bool isAlive();
 
 private:
 	int tileSize;
@@ -30,6 +31,7 @@ private:
 	int state;
 	int frame;
 	int score;
+	bool alive;
 	int x;
 	int y;
 	int dir;

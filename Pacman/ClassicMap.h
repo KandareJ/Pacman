@@ -3,16 +3,16 @@
 
 #include "Map.h"
 #include "Draw.h"
-#include "ClassicOnePlayerGame.h"
 #include "Coordinate.h"
 #include <vector>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
 
 class ClassicMap : public Map {
 public:
-	ClassicMap();
+	ClassicMap(std::string level);
 	~ClassicMap();
 	void draw();
 	bool update();

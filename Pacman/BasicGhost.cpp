@@ -17,6 +17,7 @@ BasicGhost::BasicGhost(Map* map, HumanPlayer* player, double pelletPercent, int 
 }
 
 BasicGhost::~BasicGhost() {
+	delete state;
 	return;
 }
 

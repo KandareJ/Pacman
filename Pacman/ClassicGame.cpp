@@ -1,11 +1,15 @@
-#include "ClassicOnePlayerGame.h"
+#include "ClassicGame.h"
+#include "Scoreboard.h"
 
-ClassicOnePlayerGame::ClassicOnePlayerGame() {
+ClassicGame::ClassicGame(GameEngine* c, std::string level) {
+	over = false;
+	context = c;
+	lastChasePlayer = -1;
 	eq = eq->getInstance();
-	map = new ClassicMap();
+	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
 	int numGhosts = 4;
-	int numPlayers = 1;
+	int numPlayers = 2;
 	int r, g, b;
 	int hue = 300 / numGhosts;
 	int playerX, playerY;
@@ -24,11 +28,21 @@ ClassicOnePlayerGame::ClassicOnePlayerGame() {
 	return;
 }
 
-ClassicOnePlayerGame::~ClassicOnePlayerGame() {
+ClassicGame::~ClassicGame() {
+	for (unsigned int i = 0; i < players.size(); i++) {
+		delete players.at(i);
+	}
+
+	for (unsigned int i = 0; i < ghosts.size(); i++) {
+		delete ghosts.at(i);
+	}
+
+	delete map;
+
 	return;
 }
 
-void ClassicOnePlayerGame::draw() {
+void ClassicGame::draw() {
 	/* // Uncomment this for party mode.
 	// You'll need to uncomment the counter variable in the header file too
 	// Also, comment out other al_clear_to_color
@@ -49,7 +63,7 @@ void ClassicOnePlayerGame::draw() {
 	return;
 }
 
-bool ClassicOnePlayerGame::update() {
+bool ClassicGame::update() {
 	bool drawNeeded = false;
 	scatterChase--;
 	if (scatterChase == 150) {
@@ -64,7 +78,13 @@ bool ClassicOnePlayerGame::update() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
 		if (ghosts.at(i)->update()) drawNeeded = true;
 	}
-	if (players.at(0)->update()) drawNeeded = true;
+
+	over = true;
+	for (unsigned int i = 0; i < players.size(); i++) {
+		if (players.at(i)->update()) drawNeeded = true;
+		if (players.at(i)->isAlive()) over = false;
+	}
+
 
 	raiseEvents();
 	detectCollisions();
@@ -72,7 +92,7 @@ bool ClassicOnePlayerGame::update() {
 	return drawNeeded;
 }
 
-void ClassicOnePlayerGame::raiseEvents() {
+void ClassicGame::raiseEvents() {
 	while (!eq->empty()) {
 		Event* e = eq->pop();
 
@@ -89,7 +109,7 @@ void ClassicOnePlayerGame::raiseEvents() {
 	}
 }
 
-bool ClassicOnePlayerGame::run(ALLEGRO_EVENT events) {
+bool ClassicGame::run(ALLEGRO_EVENT events) {
 	bool drawNeeded = false;
 
 	if (events.type == ALLEGRO_EVENT_TIMER) {
@@ -115,24 +135,32 @@ bool ClassicOnePlayerGame::run(ALLEGRO_EVENT events) {
 			return true;
 		}
 	}
+
+	vector<int> scores;
+	for (unsigned int i = 0; i < players.size(); i++) {
+		scores.push_back(players.at(i)->getScore());
+	}
+
+	if (over) context->changeState(new Scoreboard(context, scores));
+
 	return false;
 }
 
-HumanPlayer* ClassicOnePlayerGame::getPlayer() {
-	return players.at(0);
+HumanPlayer* ClassicGame::getPlayer() {
+	return players.at(getChasePlayer());
 }
 
-Map* ClassicOnePlayerGame::getMap() {
+Map* ClassicGame::getMap() {
 	return map;
 }
 
-void ClassicOnePlayerGame::frighten() {
+void ClassicGame::frighten() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
 		ghosts.at(i)->frighten();
 	}
 }
 
-void ClassicOnePlayerGame::scatter() {
+void ClassicGame::scatter() {
 	int h = map->getHeight();
 	int w = map->getWidth();
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
@@ -153,23 +181,41 @@ void ClassicOnePlayerGame::scatter() {
 	}
 }
 
-void ClassicOnePlayerGame::chase() {
+void ClassicGame::chase() {
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		ghosts.at(i)->chase(players.at(0));
+		ghosts.at(i)->chase(players.at(getChasePlayer()));
 	}
 }
 
-void ClassicOnePlayerGame::detectCollisions() {
+void ClassicGame::detectCollisions() {
 	Draw* draw = Draw::instance();
 	double distance = 0.0;
 	for (unsigned int i = 0; i < ghosts.size(); i++) {
-		distance = getDistance(players.at(0)->getPosX(), players.at(0)->getPosY(), ghosts.at(i)->getPosX(), ghosts.at(i)->getPosY());
-		if (distance <= draw->getTileSize() * .6) {
-			players.at(0)->ghostCollision(ghosts.at(i)->collision());
+		for (unsigned int j = 0; j < players.size(); j++) {
+			if (players.at(j)->isAlive()) {
+				distance = getDistance(players.at(j)->getPosX(), players.at(j)->getPosY(), ghosts.at(i)->getPosX(), ghosts.at(i)->getPosY());
+				if (distance <= draw->getTileSize() * .6) {
+					players.at(j)->ghostCollision(ghosts.at(i)->collision());
+				}
+			}
 		}
 	}
 }
 
-double ClassicOnePlayerGame::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) {
+double ClassicGame::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) {
 	return sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
+}
+
+int ClassicGame::getChasePlayer() {
+	vector<int> living;
+
+	for (unsigned int i = 0; i < players.size(); i++) {
+		if (players.at(i)->isAlive()) living.push_back(i);
+	}
+
+	if (living.size() == 0) return 0;
+	else {
+		lastChasePlayer = ++lastChasePlayer % living.size();
+		return living.at(lastChasePlayer);
+	}
 }

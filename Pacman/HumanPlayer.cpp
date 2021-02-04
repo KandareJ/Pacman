@@ -21,6 +21,7 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY) {
 	speed = tileSize / 8;
 	frame = 0;
 	state = 0;
+	alive = true;
 	return;
 }
 
@@ -29,6 +30,7 @@ HumanPlayer::~HumanPlayer() {
 }
 
 bool HumanPlayer::update() {
+	if (!alive) return false;
 	frame = ++frame % 8;
 	if (state > 0) state--;
 	switch (dir) {
@@ -73,6 +75,7 @@ int HumanPlayer::getTileOffsetY() {
 }
 
 void HumanPlayer::draw() {
+	if (!alive) return;
 	Draw* draw = Draw::instance();
 	draw->drawPlayer(x, y, dir, frame, 255, 255, 0, state);
 	return;
@@ -188,6 +191,10 @@ int HumanPlayer::getPosY() {
 }
 
 void HumanPlayer::ghostCollision(int ghostState) {
-	if (ghostState == 0 && state == 0) system("pause");
+	if (ghostState == 0 && state == 0) alive = false;
 	if (ghostState == 1 && state != 0) score += 100;
+}
+
+bool HumanPlayer::isAlive() {
+	return alive;
 }

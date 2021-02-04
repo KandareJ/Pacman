@@ -1,21 +1,24 @@
-#ifndef CLASSICONEPLAYERGAME_H
-#define CLASSICONEPLAYERGAME_H
+#ifndef CLASSICGAME_H
+#define CLASSICGAME_H
 
 #include <allegro5/allegro.h>
 #include <vector>
+#include "Game.h"
+#include "GameEngine.h"
 #include "HumanPlayer.h"
 #include "BasicGhost.h"
 #include "ClassicMap.h"
 #include "Map.h"
 #include "EventQueue.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-class ClassicOnePlayerGame {
+class ClassicGame : public Game {
 public:
-	ClassicOnePlayerGame();
-	~ClassicOnePlayerGame();
+	ClassicGame(GameEngine* c, string level);
+	~ClassicGame();
 	bool run(ALLEGRO_EVENT events);
 	HumanPlayer* getPlayer();
 	Map* getMap();
@@ -23,6 +26,8 @@ public:
 	void scatter();
 	void chase();
 private:
+	GameEngine* context;
+	bool over;
 	Map* map;
 	vector<HumanPlayer*> players;
 	vector<BasicGhost*> ghosts;
@@ -33,6 +38,8 @@ private:
 	int scatterChase;
 	void detectCollisions();
 	double getDistance(int tileX1, int tileY1, int tileX2, int tileY2);
+	int getChasePlayer();
+	int lastChasePlayer;
 	//int counter;
 };
 

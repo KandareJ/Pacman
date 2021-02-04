@@ -5,8 +5,8 @@
 
 using namespace std;
 
-ClassicMap::ClassicMap() {
-	ifstream mapData("levels/level1.pac");
+ClassicMap::ClassicMap(string level) {
+	ifstream mapData("levels/" + level + ".pac");
 	pellets = 0.0;
 	pelletsEaten = 0.0;
 	option = -1;
@@ -86,11 +86,27 @@ ClassicMap::ClassicMap() {
 
 	frame = 0;
 	switchObjectMap();
+	mapData.close();
 
 	return;
 }
 
 ClassicMap::~ClassicMap() {
+	for (int i = 0; i < height; i++) {
+		delete map[i];
+		delete object[i];
+	}
+	delete map;
+	delete object;
+
+	for (int i = 0; i < numOptions; i++) {
+		for (int j = 0; j < height; j++) {
+			delete objectOptions[i][j];
+		}
+		delete objectOptions[i];
+	}
+	delete objectOptions;
+
 	return;
 }
 

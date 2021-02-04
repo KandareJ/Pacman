@@ -4,7 +4,9 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -26,6 +28,9 @@ public:
 	int getTileHeight();
 	int getHeight();
 	int getWidth();
+	void drawMenu(int frame);
+	void drawLevelSelect(std::vector<std::string> levels, int selected);
+	void drawScoreboard(std::vector<int> scores, int selected);
 protected:
 	Draw();
 private:
@@ -49,6 +54,9 @@ private:
 	int thickness;
 	void initializeTileSize();
 	ALLEGRO_FONT *font;
+	ALLEGRO_BITMAP* menu;
+	ALLEGRO_FONT* titleFont;
+	ALLEGRO_FONT* menuFont;
 };
 
 #endif
