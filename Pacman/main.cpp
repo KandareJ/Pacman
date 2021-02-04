@@ -19,7 +19,6 @@ int main(int argc, char** argv) {
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
-
 	ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
 	ALLEGRO_EVENT events;
 	ALLEGRO_TIMER *timer = al_create_timer(1 / FPS);
@@ -31,10 +30,10 @@ int main(int argc, char** argv) {
 	WIDTH = info.x2 - info.x1;
 	HEIGHT = info.y2 - info.y1;
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	ALLEGRO_DISPLAY* display = al_create_display(WIDTH/2, HEIGHT/2);
+	ALLEGRO_DISPLAY* display = al_create_display(WIDTH, HEIGHT);
 
 	Draw* draw = Draw::instance();
-	draw->initializeProportions(WIDTH/2, HEIGHT/2);
+	draw->initializeProportions(WIDTH, HEIGHT);
 	al_start_timer(timer);
 
 	GameEngine* game = new GameEngine();

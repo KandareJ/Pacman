@@ -9,7 +9,7 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
 	int numGhosts = 4;
-	int numPlayers = 2;
+	int numPlayers = 1;
 	int r, g, b;
 	int hue = 300 / numGhosts;
 	int playerX, playerY;
