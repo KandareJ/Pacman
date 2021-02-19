@@ -8,11 +8,15 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	eq = eq->getInstance();
 	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 16;
-	int numPlayers = 1;
+	int numGhosts = 4;
+	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
 	int hue = 300 / numGhosts;
 	int playerX, playerY;
+
+	for (int i = 0; i < numPlayers; i++) {
+		joysticks.push_back(al_get_joystick(i));
+	}
 
 	for (int i = 0; i < numPlayers; i++) {
 		map->getPlayerSpawnCoordinates(playerX, playerY);
@@ -115,9 +119,19 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 		drawNeeded = update();
 		if (drawNeeded) draw();
+
+		for (unsigned int i = 0; i < joysticks.size(); i++) {
+			ALLEGRO_JOYSTICK_STATE joystick_state;
+			al_get_joystick_state(joysticks.at(i), &joystick_state);
+			if (joystick_state.stick[0].axis[0] > 0.95) players.at(i)->changeDirection(RIGHT);
+			if (joystick_state.stick[0].axis[0] < -0.95) players.at(i)->changeDirection(LEFT);
+			if (joystick_state.stick[0].axis[1] > 0.95) players.at(i)->changeDirection(DOWN);
+			if (joystick_state.stick[0].axis[1] < -0.95) players.at(i)->changeDirection(UP);
+
+		}
 	}
 
-	if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
+	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_W:
 			players.at(0)->changeDirection(UP);

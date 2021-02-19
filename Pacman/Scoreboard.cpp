@@ -37,6 +37,32 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 		}
 	}
 
+
+	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
+		switch (events.joystick.button) {
+			case 0:
+				context->changeState(new MainMenu(context));
+				break;
+		}
+	}
+
+	else if (events.type == ALLEGRO_EVENT_JOYSTICK_AXIS) {
+		/*
+		if (events.joystick.axis == 0 && events.joystick.pos > 0.9) cout << "Right" << endl;
+		else if (events.joystick.axis == 0 && events.joystick.pos < -0.9) cout << "Left" << endl;
+		else if (events.joystick.axis == 1 && events.joystick.pos > 0.9) cout << "Down" << endl;
+		else if (events.joystick.axis == 1 && events.joystick.pos < -0.9) cout << "Up" << endl;
+		*/
+		if (events.joystick.axis == 1 && events.joystick.pos < -0.95) {
+			selected = (--selected + scores.size()) % scores.size();
+			changed = true;
+		}
+		else if (events.joystick.axis == 1 && events.joystick.pos > 0.95) {
+			selected = ++selected % scores.size();
+			changed = true;
+		}
+	}
+
 	return false;
 }
 

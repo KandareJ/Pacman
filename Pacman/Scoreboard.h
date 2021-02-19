@@ -1,5 +1,5 @@
 #ifndef SCOREBOARD_H
-#define SCORE_BOARD_H
+#define SCOREBOARD_H
 
 #include "Game.h"
 #include "GameEngine.h"

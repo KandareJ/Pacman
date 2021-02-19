@@ -38,7 +38,15 @@ bool MainMenu::run(ALLEGRO_EVENT events) {
 		}
 	}
 
+	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
+		switch (events.joystick.button) {
+			case 0:
+				context->changeState(new LevelSelect(context));
+				return false;
+			case 1:
+				return true;
+		}
+	}
+
 	return false;
 }
-
-

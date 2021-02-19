@@ -40,6 +40,7 @@ private:
 	double getDistance(int tileX1, int tileY1, int tileX2, int tileY2);
 	int getChasePlayer();
 	int lastChasePlayer;
+	vector<ALLEGRO_JOYSTICK*> joysticks;
 	//int counter;
 };
 
