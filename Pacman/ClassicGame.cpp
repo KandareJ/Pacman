@@ -8,7 +8,7 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	eq = eq->getInstance();
 	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 4;
+	int numGhosts = 64;
 	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
 	int hue = 300 / numGhosts;

@@ -127,9 +127,23 @@ void Draw::hsv_to_rgb(double& h, double& s, double& v) {
 	v = (b + m) * 255;
 }
 
+ALLEGRO_COLOR premul_alpha(ALLEGRO_COLOR color) {
+    float r, g, b, a;
+    al_unmap_rgba_f(color, &r, &g, &b, &a);
+    return al_map_rgba_f(r * a, g * a, b * a, a);
+}
+
+void Draw::drawGlow(int x, int y, int r, int g, int b, int radius, int vibrance) {
+	for (int size = tileSize / 2 + radius; size > tileSize / 2 - 50; size -= 5) {
+		al_draw_filled_circle(x + xOffset, y + yOffset, size, premul_alpha(al_map_rgba(r, g, b, vibrance)));
+	}
+}
+
 void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 	if (!initialized) return;
 	int third = tileSize * 0.15;
+
+	if (r || g || b) drawGlow(x, y, r, g, b, 20, 10);
 
 	if (r || g || b) {
 		al_draw_filled_circle(x + xOffset, y - third + yOffset, 2 * third, al_map_rgb(r, g, b));
@@ -169,6 +183,9 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 
 void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int state) {
 	if (!initialized) return;
+
+	if (r || g || b) (state) ? drawGlow(x, y, r, g, b, 45, 7) : drawGlow(x, y, r, g, b, 30, 7);
+
 	int playerSize = (state) ? tileSize* 0.55 : tileSize * 0.40; // if state is not zero, pacman will be big
 	float mouth = 1.5 / (frame + 1.0);
 	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);

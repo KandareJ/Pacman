@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
 	al_get_monitor_info(0, &info);
 	WIDTH = info.x2 - info.x1;
 	HEIGHT = info.y2 - info.y1;
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	ALLEGRO_DISPLAY* display = al_create_display(WIDTH, HEIGHT);
 
 	Draw* draw = Draw::instance();
