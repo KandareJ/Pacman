@@ -1,12 +1,11 @@
+#include "FrightenedEndState.h"
 #include "FrightenedState.h"
 #include "ReturnHouseState.h"
-#include "FrightenedEndState.h"
-#include "GhostHouseState.h"
+#include "ChaseState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 
-FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
+FrightenedEndState::FrightenedEndState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
 	tileHeight = draw->getTileHeight();
 	tileWidth = draw->getTileWidth();
@@ -27,34 +26,35 @@ FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* pl
 	frame = 0;
 }
 
-FrightenedState::~FrightenedState() {
+FrightenedEndState::~FrightenedEndState() {
 	return;
 }
 
-void FrightenedState::draw(int r, int g, int b) {
+void FrightenedEndState::draw(int r, int g, int b) {
 	Draw* draw = Draw::instance();
-	draw->drawGhost(x, y, dir, 0, 0, 255);
+    if ((frame / 10) % 2 == 0) draw->drawGhost(x, y, dir, 255, 255, 255);
+    else draw->drawGhost(x, y, dir, 0, 0, 255);
 	return;
 }
 
-int FrightenedState::choosePath(vector<int> options) {
+int FrightenedEndState::choosePath(vector<int> options) {
 	return options.at(rand() % options.size());
 }
 
-void FrightenedState::frighten() {
-	frame = 0;
+void FrightenedEndState::frighten() {
+	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
 }
 
-bool FrightenedState::update(double pelletPercent) {
+bool FrightenedEndState::update(double pelletPercent) {
 	frame++;
-	if (frame <= 300) return GhostState::update(pelletPercent);
+	if (frame <= 50) return GhostState::update(pelletPercent);
 	else {
-		changeState(new FrightenedEndState(getTileX(), getTileY(), map, target, context));
+		changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
 		return true;
 	}
 }
 
-int FrightenedState::collision() {
+int FrightenedEndState::collision() {
 	changeState(new ReturnHouseState(getTileX(), getTileY(), map, target, context));
 	return 1;
 }

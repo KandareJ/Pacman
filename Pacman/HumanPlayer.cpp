@@ -198,3 +198,11 @@ void HumanPlayer::ghostCollision(int ghostState) {
 bool HumanPlayer::isAlive() {
 	return alive;
 }
+
+bool HumanPlayer::isBig() {
+	return state != 0;
+}
+
+void HumanPlayer::die() {
+	alive = false;
+}

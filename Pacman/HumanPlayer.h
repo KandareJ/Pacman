@@ -21,6 +21,8 @@ public:
 	int getPosY();
 	void ghostCollision(int ghostState);
 	bool isAlive();
+	bool isBig();
+	void die();
 
 private:
 	int tileSize;

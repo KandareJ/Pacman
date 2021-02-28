@@ -8,7 +8,7 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	eq = eq->getInstance();
 	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 64;
+	int numGhosts = 4;
 	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
 	int hue = 300 / numGhosts;
@@ -211,6 +211,15 @@ void ClassicGame::detectCollisions() {
 				if (distance <= draw->getTileSize() * .6) {
 					players.at(j)->ghostCollision(ghosts.at(i)->collision());
 				}
+			}
+		}
+	}
+	for (unsigned int i = 0; i < players.size(); i++) {
+		for (unsigned int j = i + 1; j < players.size(); j++) {
+			distance = getDistance(players.at(i)->getPosX(), players.at(i)->getPosY(), players.at(j)->getPosX(), players.at(j)->getPosY());
+			if (distance <= draw->getTileSize() * .6 && players.at(i)->isAlive() && players.at(j)->isAlive()) {
+				if (players.at(i)->isBig() && !players.at(j)->isBig()) players.at(j)->die();
+				else if (players.at(j)->isBig() && !players.at(i)->isBig()) players.at(i)->die();
 			}
 		}
 	}
