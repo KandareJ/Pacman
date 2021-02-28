@@ -1,7 +1,6 @@
 #include "FrightenedState.h"
 #include "ReturnHouseState.h"
 #include "FrightenedEndState.h"
-#include "GhostHouseState.h"
 #include "HumanPlayer.h"
 #include <allegro5/allegro_primitives.h>
 #include <iostream>

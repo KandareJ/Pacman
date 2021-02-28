@@ -184,7 +184,7 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int state) {
 	if (!initialized) return;
 
-	if (r || g || b) (state) ? drawGlow(x, y, r, g, b, 45, 7) : drawGlow(x, y, r, g, b, 30, 7);
+	if (r || g || b) (state) ? drawGlow(x, y, r, g, b, 65, 3) : drawGlow(x, y, r, g, b, 50, 5);
 
 	int playerSize = (state) ? tileSize* 0.55 : tileSize * 0.40; // if state is not zero, pacman will be big
 	float mouth = 1.5 / (frame + 1.0);
