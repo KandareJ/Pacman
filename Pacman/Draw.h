@@ -51,6 +51,7 @@ private:
 	void drawLeftWall(int x, int y, int w, int h, int**map);
 	void drawRightWall(int x, int y, int w, int h, int**map);
 	void drawGlow(int x, int y, int r, int g, int b, int radius, int vibrance);
+	void drawCherry(int x, int y);
 	double corner;
 	int thickness;
 	void initializeTileSize();

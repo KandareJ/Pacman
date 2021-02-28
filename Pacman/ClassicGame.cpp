@@ -18,6 +18,8 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 		joysticks.push_back(al_get_joystick(i));
 	}
 
+	if (!numPlayers) numPlayers = 1;
+
 	for (int i = 0; i < numPlayers; i++) {
 		map->getPlayerSpawnCoordinates(playerX, playerY);
 		players.push_back(new HumanPlayer(map, playerX, playerY));

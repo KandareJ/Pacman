@@ -206,13 +206,38 @@ void Draw::drawMap(int **map, int **object, int frame, int h, int w) {
 			//draw normal pellets
 			if (object[y][x] == 1) al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, tileSize / 8, al_map_rgb(219, 133, 28));
 			// draw power-up pellets that animate
-			if (object[y][x] == 2) {
+			else if (object[y][x] == 2) {
 				if (frame < 15)al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 7 + (frame / 7), al_map_rgb(80, 200, 28));
 				else al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 9 - ((frame - 14) / 7), al_map_rgb(80, 200, 28));
 			}
-			if (object[y][x] == 4) al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, tileSize / 8, al_map_rgb(255, 0, 255));
+			else if (object[y][x] == 4) drawCherry(x, y);
 		}
 	}
+	return;
+}
+
+void Draw::drawCherry(int x, int y) {
+	float cherry1x = x * tileSize + (tileSize / 2) + xOffset - tileSize * .1;
+	float cherryY = y * tileSize + (tileSize / 2) + yOffset + tileSize * .2;
+	float cherry2x = x * tileSize + (tileSize / 2) + xOffset + tileSize * .1;
+
+	// draw stems
+	al_draw_line(cherry2x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .4, al_map_rgb(75, 57, 41), 4);
+	al_draw_line(cherry1x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .4, al_map_rgb(75, 57, 41), 4);
+
+	// draw cherry1
+	al_draw_filled_circle(cherry1x, cherryY, tileSize / 8, al_map_rgb(255, 0, 0));
+	// draw cherry1 highlight
+	al_draw_arc(cherry1x, cherryY, tileSize / 10, 3.53, .785, al_map_rgb(255, 255, 255), 4);
+	// draw cherry2
+	al_draw_filled_circle(cherry2x, cherryY, tileSize / 8, al_map_rgb(255, 0, 0));
+	// draw cherry2 highlight
+	al_draw_arc(cherry2x, cherryY, tileSize / 10, 3.53, .785, al_map_rgb(255, 255, 255), 4);
+	// draw arc between two cherries. 0.644 was calculated on whiteboard. using law of cosines, I found that to be correct angle
+	al_draw_arc(cherry1x, cherryY, tileSize / 8, 0, 0.644, al_map_rgb(64, 0, 0), 2);
+	al_draw_arc(cherry1x, cherryY, tileSize / 8, 0, -0.644, al_map_rgb(64, 0, 0), 2);
+
+	drawGlow(cherry1x - xOffset - 2, cherryY - yOffset - 2, 255, 0, 0, 8, 5);
 	return;
 }
 
