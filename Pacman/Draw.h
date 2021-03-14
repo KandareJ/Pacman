@@ -36,6 +36,7 @@ protected:
 private:
 	static Draw* _instance;
 	static void hsv_to_rgb(double& h, double& s, double& v);
+	void drawGlowingLine(float x1, float y1, float x2, float y2, ALLEGRO_COLOR color, float glowThickness, int vibrance);
 	int width;
 	int height;
 	int tileWidth;
@@ -52,6 +53,8 @@ private:
 	void drawRightWall(int x, int y, int w, int h, int**map);
 	void drawGlow(int x, int y, int r, int g, int b, int radius, int vibrance);
 	void drawCherry(int x, int y);
+	void drawPellet(int x, int y);
+	void drawPowerup(int x, int y, int frame);
 	double corner;
 	int thickness;
 	void initializeTileSize();

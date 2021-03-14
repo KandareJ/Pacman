@@ -199,31 +199,58 @@ void Draw::drawMap(int **map, int **object, int frame, int h, int w) {
 	if (!initialized) return;
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			// draw wall
+			// draw level
 			if (map[y][x] == 1) drawWalls(x, y, h, w, map);
-			// draw ghost house gate
 			else if (map[y][x] == 2) al_draw_line(x * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 0, 255), 3);
-			//draw normal pellets
-			if (object[y][x] == 1) al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, tileSize / 8, al_map_rgb(219, 133, 28));
-			// draw power-up pellets that animate
-			else if (object[y][x] == 2) {
-				if (frame < 15)al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 7 + (frame / 7), al_map_rgb(80, 200, 28));
-				else al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 9 - ((frame - 14) / 7), al_map_rgb(80, 200, 28));
-			}
+			
+			//draw objects
+			if (object[y][x] == 1) drawPellet(x, y);
+			else if (object[y][x] == 2) drawPowerup(x, y, frame);
 			else if (object[y][x] == 4) drawCherry(x, y);
 		}
 	}
 	return;
 }
 
+void Draw::drawPowerup(int x, int y, int frame) {
+	if (frame < 15) al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 7 + (frame / 7), al_map_rgb(80, 200, 28));
+	else al_draw_filled_circle(x * tileSize + (tileSize / 2) + xOffset, y * tileSize + (tileSize / 2) + yOffset, 9 - ((frame - 14) / 7), al_map_rgb(80, 200, 28));
+	return;	
+}
+
+void Draw::drawPellet(int x, int y) {
+	double pelletX = x * tileSize + (tileSize / 2) + xOffset;
+	double pelletY = y * tileSize + (tileSize / 2) + yOffset;
+	ALLEGRO_COLOR pelletColor = al_map_rgb(219, 133, 28);
+	ALLEGRO_COLOR pelletShade = premul_alpha(al_map_rgba(252, 226, 5, 100));
+	double pelletRadius = tileSize / 12;
+
+
+	// draw original circle
+	al_draw_filled_circle(pelletX, pelletY, pelletRadius, pelletColor);
+
+	double shadeX = pelletX;
+	double shadeY = pelletY;
+	
+	//draw inner gradient color
+	while (pelletRadius > 3.0) {
+		pelletRadius -= 2;
+		shadeX--;
+		shadeY--;
+		al_draw_filled_circle(shadeX, shadeY, pelletRadius, pelletShade);
+	}
+
+	return;
+}
+
 void Draw::drawCherry(int x, int y) {
 	float cherry1x = x * tileSize + (tileSize / 2) + xOffset - tileSize * .1;
-	float cherryY = y * tileSize + (tileSize / 2) + yOffset + tileSize * .2;
+	float cherryY = y * tileSize + (tileSize / 2) + yOffset + tileSize * .22;
 	float cherry2x = x * tileSize + (tileSize / 2) + xOffset + tileSize * .1;
 
 	// draw stems
-	al_draw_line(cherry2x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .4, al_map_rgb(75, 57, 41), 4);
-	al_draw_line(cherry1x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .4, al_map_rgb(75, 57, 41), 4);
+	al_draw_line(cherry2x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .44, al_map_rgb(75, 57, 41), 6);
+	al_draw_line(cherry1x, cherryY, (cherry1x + cherry2x) / 2, cherryY - tileSize * .44, al_map_rgb(75, 57, 41), 6);
 
 	// draw cherry1
 	al_draw_filled_circle(cherry1x, cherryY, tileSize / 8, al_map_rgb(255, 0, 0));
@@ -238,6 +265,17 @@ void Draw::drawCherry(int x, int y) {
 	al_draw_arc(cherry1x, cherryY, tileSize / 8, 0, -0.644, al_map_rgb(64, 0, 0), 2);
 
 	drawGlow(cherry1x - xOffset - 2, cherryY - yOffset - 2, 255, 0, 0, 8, 5);
+	return;
+}
+
+void Draw::drawGlowingLine(float x1, float y1, float x2, float y2, ALLEGRO_COLOR color, float thickness, int vibrance) {
+	unsigned char r, g, b;
+	al_unmap_rgb(color, &r, &g, &b);
+	
+	for (float f = 1; f < thickness * 8; f+= (tileSize / 16)) al_draw_line(x1, y1, x2, y2, premul_alpha(al_map_rgba(r, g, b, vibrance)), f);
+	al_draw_line(x1, y1, x2, y2, color, thickness);
+	al_draw_line(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 1);
+	
 	return;
 }
 
@@ -275,6 +313,7 @@ void Draw::drawTopWall(int x, int y, int w, int h, int** map) {
 	if (y == 0 || map[y - 1][x] != 1) {
 		if (x != 0 && map[y][x - 1] == 1)al_draw_line(x * tileSize + xOffset, y * tileSize + (tileSize*corner) + yOffset, x * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 255, 255), thickness);
 		if (map[y][x + 1] == 1)al_draw_line((x + 1) * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 255, 255), thickness);
+		//drawGlowingLine(x * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 255, 255), thickness, 25);
 		al_draw_line(x * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 255, 255), thickness);
 	}
 	return;
