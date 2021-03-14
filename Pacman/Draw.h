@@ -37,6 +37,7 @@ private:
 	static Draw* _instance;
 	static void hsv_to_rgb(double& h, double& s, double& v);
 	void drawGlowingLine(float x1, float y1, float x2, float y2, ALLEGRO_COLOR color, float glowThickness, int vibrance);
+	void drawGlowingWall(float x1, float y1, float x2, float y2, ALLEGRO_COLOR color, float thickness);
 	int width;
 	int height;
 	int tileWidth;
