@@ -8,7 +8,7 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	eq = eq->getInstance();
 	map = new ClassicMap(level);
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 8;
+	int numGhosts = 4;
 	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
 	int hue = 300 / numGhosts;
@@ -49,13 +49,6 @@ ClassicGame::~ClassicGame() {
 }
 
 void ClassicGame::draw() {
-	/* // Uncomment this for party mode.
-	// You'll need to uncomment the counter variable in the header file too
-	// Also, comment out other al_clear_to_color
-	int r, g, b;
-	counter = (counter + 1) % 300;
-	Draw::generateGhostColor(r, g, b, counter);
-	al_clear_to_color(al_map_rgb(r, g, b));*/
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	map->draw();
 	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();

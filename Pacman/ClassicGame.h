@@ -41,7 +41,6 @@ private:
 	int getChasePlayer();
 	int lastChasePlayer;
 	vector<ALLEGRO_JOYSTICK*> joysticks;
-	//int counter;
 };
 
 #endif

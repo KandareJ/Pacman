@@ -134,6 +134,13 @@ bool ClassicMap::update() {
 }
 
 void ClassicMap::draw() {
+	/* // Uncomment this for party mode.
+	// You'll need to uncomment the counter variable in the header file too
+	// Also, comment out other al_clear_to_color
+	int r, g, b;
+	counter = (counter + 1) % 300;
+	Draw::generateGhostColor(r, g, b, counter);
+	al_clear_to_color(al_map_rgb(r, g, b));*/
 	Draw* draw = Draw::instance();
 	draw->drawMap(map, object, frame, height, width);
 	return;
