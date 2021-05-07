@@ -9,7 +9,7 @@
 
 class HumanPlayer {
 public:
-	HumanPlayer(Map* m, int startX, int startY);
+	HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue);
 	~HumanPlayer();
 	bool update();
 	void draw();
@@ -38,6 +38,9 @@ private:
 	int y;
 	int dir;
 	int speed;
+	int r;
+	int g;
+	int b;
 	Map* map;
 	bool moveLeft();
 	bool moveRight();

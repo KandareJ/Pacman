@@ -23,8 +23,8 @@ Draw::Draw() {
 void Draw::initializeProportions(int w, int h) {
 	width = w;
 	height = h;
-	titleFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 7, NULL);
-	menuFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 15, NULL);
+	titleFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 7, 0);
+	menuFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 15, 0);
 	menu = al_load_bitmap("assets/images/menu.png");
 	return;
 }
@@ -47,7 +47,7 @@ void Draw::initializeTileSize() {
 	yOffset = 0;
 	corner = 0.1;
 	thickness = 3;
-	font = al_load_font("assets/fonts/SpaceObsessed.ttf", tileSize/2, NULL);
+	font = al_load_font("assets/fonts/SpaceObsessed.ttf", tileSize/2, 0);
 	initialized = true;
 }
 
@@ -74,6 +74,17 @@ int Draw::getWidth() {
 void Draw::generateGhostColor(int& r, int& g, int& b, int hue) {
 	double h = hue;
 	if (h > 210) h += 60; //skip blue colors
+	double s = 0.99;
+	double v = 0.99;
+	hsv_to_rgb(h, s, v);
+	r = (int)h;
+	g = (int)s;
+	b = (int)v;
+}
+
+
+void Draw::generatePlayerColor(int& r, int& g, int& b, int hue) {
+	double h = hue;
 	double s = 0.99;
 	double v = 0.99;
 	hsv_to_rgb(h, s, v);
@@ -181,12 +192,26 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 	};
 }
 
-void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b, int state) {
+void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 	if (!initialized) return;
 
-	if (r || g || b) (state) ? drawGlow(x, y, r, g, b, 65, 3) : drawGlow(x, y, r, g, b, 50, 5);
+	if (r || g || b) drawGlow(x, y, r, g, b, 50, 5);
 
-	int playerSize = (state) ? tileSize* 0.55 : tileSize * 0.40; // if state is not zero, pacman will be big
+	int playerSize = tileSize * 0.40;
+	float mouth = 1.5 / (frame + 1.0);
+	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
+	float startTheta = (dir * .5 * PI) + mouth / 2.0;
+	float deltaTheta = 2.0 * PI - mouth;
+	al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, startTheta, deltaTheta, al_map_rgb(r, g, b), playerSize);
+	if (mouth == 0 || dir == NOT_MOVING) al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, 0, 2 * PI, al_map_rgb(r, g, b), playerSize);
+}
+
+void Draw::drawBigPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
+	if (!initialized) return;
+
+	if (r || g || b) drawGlow(x, y, r, g, b, 65, 3);
+
+	int playerSize = tileSize* 0.55;
 	float mouth = 1.5 / (frame + 1.0);
 	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
 	float startTheta = (dir * .5 * PI) + mouth / 2.0;
@@ -354,7 +379,7 @@ void Draw::drawScore(int score, int player, int totalPlayers) {
 	int col = (tileWidth - 3) * tileSize / 3;
 	int row = player / 4 * tileSize / 2;
 	sprintf(text, "Player %d: %d", player + 1, score);
-	al_draw_text(font, al_map_rgb(255, 255, 255), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, NULL, text);
+	al_draw_text(font, al_map_rgb(255, 255, 255), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, 0, text);
 	free(text);
 }
 
@@ -386,7 +411,7 @@ void Draw::drawLevelSelect(std::vector<std::string> levels, int selected) {
 
 		if (selected >= 11) offset = (selected+1) % 11;
 		for (unsigned int i = 0; i < levels.size() && i < 11; i++) {
-			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100) , width * .25 + height / 40, height / 15 * (2 + i), NULL, levels.at(i + offset).c_str());
+			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100) , width * .25 + height / 40, height / 15 * (2 + i), 0, levels.at(i + offset).c_str());
 		}
 	}
 	return;
@@ -407,7 +432,7 @@ void Draw::drawScoreboard(std::vector<int> scores, int selected) {
 		for (unsigned int i = 0; i < scores.size() && i < 11; i++) {
 			char label[50];
 			sprintf(label, "Player %d.........................%d", i + offset + 1, scores.at(i + offset));
-			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (2 + i), NULL, label);
+			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (2 + i), 0, label);
 		}
 	}
 	return;

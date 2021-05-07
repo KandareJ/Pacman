@@ -7,6 +7,7 @@
 class Game {
 public:
 	virtual bool run(ALLEGRO_EVENT events) = 0;
+	virtual ~Game();
 };
 
 #endif

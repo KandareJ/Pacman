@@ -19,6 +19,7 @@ public:
 	int getPosX();
 	int getPosY();
 	virtual int collision();
+	virtual ~GhostState();
 
 protected:
 	void changeState(GhostState* s);
