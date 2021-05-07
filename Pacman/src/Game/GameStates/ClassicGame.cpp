@@ -12,6 +12,7 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
 	int hue = 300 / numGhosts;
+	int playerHue = 60;
 	int playerX, playerY;
 
 	for (int i = 0; i < numPlayers; i++) {
@@ -21,8 +22,10 @@ ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	if (!numPlayers) numPlayers = 1;
 
 	for (int i = 0; i < numPlayers; i++) {
+		Draw::generatePlayerColor(r, g, b, playerHue);
+		playerHue = playerHue + (360 / numPlayers) % 360;
 		map->getPlayerSpawnCoordinates(playerX, playerY);
-		players.push_back(new HumanPlayer(map, playerX, playerY));
+		players.push_back(new HumanPlayer(map, playerX, playerY, r, g, b));
 	}
 
 	for (int i = 0; i < numGhosts; i++) {

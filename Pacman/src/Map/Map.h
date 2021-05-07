@@ -19,6 +19,7 @@ public:
 	virtual int getWidth() = 0;
 	virtual void getPlayerSpawnCoordinates(int& x, int& y) = 0;
 	virtual void getHouseGate(int &x, int &y) = 0;
+	virtual ~Map() = 0;
 };
 
 #endif

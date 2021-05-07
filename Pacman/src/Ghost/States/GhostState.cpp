@@ -1,5 +1,9 @@
 #include "GhostState.h"
 
+GhostState::~GhostState() {
+	return;
+}
+
 void GhostState::changeState(GhostState* s) {
 	context->changeState(s);
 }

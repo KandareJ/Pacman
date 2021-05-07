@@ -4,7 +4,7 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer(Map* m, int startX, int startY) {
+HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue) {
 	eq = eq->getInstance();
 	Draw* draw = Draw::instance();
 	tileSize = draw->getTileSize();
@@ -22,6 +22,10 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY) {
 	frame = 0;
 	state = 0;
 	alive = true;
+	r = red;
+	g = green;
+	b = blue;
+
 	return;
 }
 
@@ -77,7 +81,8 @@ int HumanPlayer::getTileOffsetY() {
 void HumanPlayer::draw() {
 	if (!alive) return;
 	Draw* draw = Draw::instance();
-	draw->drawPlayer(x, y, dir, frame, 255, 255, 0, state);
+	if (state) draw->drawBigPlayer(x, y, dir, frame, r, g, b);
+	else draw->drawPlayer(x, y, dir, frame, r, g, b);
 	return;
 }
 
@@ -205,4 +210,5 @@ bool HumanPlayer::isBig() {
 
 void HumanPlayer::die() {
 	alive = false;
+	dir = NOT_MOVING;
 }
