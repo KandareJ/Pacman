@@ -6,7 +6,8 @@ src = $(wildcard src/main.cpp) \
 	  $(wildcard src/Ghost/*.cpp) \
 	  $(wildcard src/Graphics/*.cpp) \
 	  $(wildcard src/Map/*.cpp) \
-	  $(wildcard src/Player/*.cpp)
+	  $(wildcard src/Player/*.cpp) \
+	  $(wildcard src/Player/States/*.cpp)
 
 obj = $(src:.cpp=.o)
 

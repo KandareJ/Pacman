@@ -1,6 +1,5 @@
 #include "HumanPlayer.h"
-#include "allegro5/allegro_primitives.h"
-#include <iostream>
+#include "States/PlayerState.h"
 
 using namespace std;
 
@@ -12,6 +11,7 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 	tileHeight = draw->getTileHeight();
 	height = tileHeight * tileSize;
 	width = tileWidth * tileSize;
+	state = new PlayerState(this);
 
 	map = m;
 	x = startX * tileSize + (tileSize / 2);
@@ -19,9 +19,6 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 	dir = NOT_MOVING;
 	score = 0;
 	speed = tileSize / 8;
-	frame = 0;
-	state = 0;
-	alive = true;
 	r = red;
 	g = green;
 	b = blue;
@@ -30,26 +27,26 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 }
 
 HumanPlayer::~HumanPlayer() {
+	delete state;
 	return;
 }
 
 bool HumanPlayer::update() {
-	if (!alive) return false;
-	frame = ++frame % 8;
-	if (state > 0) state--;
+	bool stateUpdate = state->update();
+	if (!state->canMove()) dir = NOT_MOVING;
 	switch (dir) {
 	case NOT_MOVING:
-		return false;
+		return stateUpdate;
 	case UP:
-		return moveUp();
+		return moveUp() || stateUpdate;
 	case DOWN:
-		return moveDown();
+		return moveDown() || stateUpdate;
 	case LEFT:
-		return moveLeft();
+		return moveLeft() || stateUpdate;
 	case RIGHT:
-		return moveRight();
+		return moveRight() || stateUpdate;
 	default:
-		return false;
+		return stateUpdate;
 	};
 }
 
@@ -79,10 +76,7 @@ int HumanPlayer::getTileOffsetY() {
 }
 
 void HumanPlayer::draw() {
-	if (!alive) return;
-	Draw* draw = Draw::instance();
-	if (state) draw->drawBigPlayer(x, y, dir, frame, r, g, b);
-	else draw->drawPlayer(x, y, dir, frame, r, g, b);
+	state->draw(x, y, dir, r, g, b);
 	return;
 }
 
@@ -177,7 +171,7 @@ void HumanPlayer::eatPellet() {
 	}
 	else if (map->getObjectPos(getTileX(), getTileY()) == 2) {
 		map->eatObject(getTileX(), getTileY());
-		state = 300;
+		state->powerUp();
 		eq->push(new Event(1));
 	}
 	else if (map->getObjectPos(getTileX(), getTileY()) == 4) {
@@ -196,19 +190,23 @@ int HumanPlayer::getPosY() {
 }
 
 void HumanPlayer::ghostCollision(int ghostState) {
-	if (ghostState == 0 && state == 0) alive = false;
-	if (ghostState == 1 && state != 0) score += 100;
+	if (ghostState == 1) score += 100;
+	state->ghostCollision(ghostState);
 }
 
 bool HumanPlayer::isAlive() {
-	return alive;
+	return state->isAlive();
 }
 
 bool HumanPlayer::isBig() {
-	return state != 0;
+	return state->isBig();
 }
 
 void HumanPlayer::die() {
-	alive = false;
-	dir = NOT_MOVING;
+	state->die();
+}
+
+void HumanPlayer::changeState(PlayerState* newState) {
+	delete state;
+	state = newState;
 }

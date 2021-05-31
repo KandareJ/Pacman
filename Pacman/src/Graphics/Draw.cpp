@@ -206,12 +206,40 @@ void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 	if (mouth == 0 || dir == NOT_MOVING) al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, 0, 2 * PI, al_map_rgb(r, g, b), playerSize);
 }
 
+void Draw::drawDyingPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
+	if (!initialized) return;
+
+	if (r || g || b) drawGlow(x, y, r, g, b, 50, 5);
+
+	int playerSize = tileSize * 0.40;
+	float mouth = 1.5 / (frame + 1.0);
+	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
+	float startTheta = (dir * .5 * PI);
+	float deltaTheta = 2.0 * PI - 2.0 * PI * frame / 32.0;
+	al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, startTheta, deltaTheta, al_map_rgb(r, g, b), playerSize);
+	//if (mouth == 0 || dir == NOT_MOVING) al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, 0, 2 * PI, al_map_rgb(r, g, b), playerSize);
+}
+
 void Draw::drawBigPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 	if (!initialized) return;
 
 	if (r || g || b) drawGlow(x, y, r, g, b, 65, 3);
 
-	int playerSize = tileSize* 0.55;
+	int playerSize = tileSize * 0.55;
+	float mouth = 1.5 / (frame + 1.0);
+	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
+	float startTheta = (dir * .5 * PI) + mouth / 2.0;
+	float deltaTheta = 2.0 * PI - mouth;
+	al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, startTheta, deltaTheta, al_map_rgb(r, g, b), playerSize);
+	if (mouth == 0 || dir == NOT_MOVING) al_draw_arc(x + xOffset, y + yOffset, playerSize / 2, 0, 2 * PI, al_map_rgb(r, g, b), playerSize);
+}
+
+void Draw::drawShrinkingPlayer(int x, int y, int dir, int frame, int r, int g, int b, int size) {
+	if (!initialized) return;
+
+	if (r || g || b) drawGlow(x, y, r, g, b, 65, 3);
+
+	int playerSize = tileSize * (0.40 + size * .015);
 	float mouth = 1.5 / (frame + 1.0);
 	if (frame >= 4.0)mouth = 1.0 / (8.0 - frame);
 	float startTheta = (dir * .5 * PI) + mouth / 2.0;
