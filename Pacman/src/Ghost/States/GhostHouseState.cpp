@@ -36,7 +36,7 @@ void GhostHouseState::draw(int r, int g, int b) {
 bool GhostHouseState::update(double pelletPercent) {
 	time++;
 	if (time > 60 && map->getPelletPercent() > pelletPercent) {
-		changeState(new LeaveHouseState(getTileX(), getTileY(), map, target, context));
+		changeState(new LeaveHouseState(x, y, map, target, context));
 		return true;
 	}
 	return false;

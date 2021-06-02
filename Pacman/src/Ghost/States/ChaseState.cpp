@@ -12,8 +12,8 @@ ChaseState::ChaseState(int startX, int startY, Map* m, HumanPlayer* player, Basi
 	height = tileSize * tileHeight;
 	speed = tileSize / 10;
 
-	x = startX * tileSize + (tileSize / 2);
-	y = startY * tileSize + (tileSize / 2);
+	x = startX;
+	y = startY;
 	map = m;
 	target = player;
 	dir = DOWN;
@@ -65,9 +65,9 @@ int ChaseState::choosePath(vector<int> options) {
 }
 
 void ChaseState::frighten() {
-	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
+	changeState(new FrightenedState(x, y, map, target, context));
 }
 
 void ChaseState::scatter(int targetX, int targetY) {
-	changeState(new ScatterState(getTileX(), getTileY(), map, target, targetX, targetY, context));
+	changeState(new ScatterState(x, y, map, target, targetX, targetY, context));
 }

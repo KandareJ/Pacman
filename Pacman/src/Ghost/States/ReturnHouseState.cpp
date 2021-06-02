@@ -9,8 +9,8 @@ ReturnHouseState::ReturnHouseState(int x, int y, Map* map, HumanPlayer* player, 
 	height = tileSize * tileHeight;
 	speed = tileSize / 5;
 
-	this->x = x * tileSize + (tileSize / 2);
-	this->y = y * tileSize + (tileSize / 2);
+	this->x = x;
+	this->y = y;
 	this->map = map;
 	target = player;
 	dir = UP;

@@ -11,8 +11,8 @@ ScatterState::ScatterState(int startX, int startY, Map* m, HumanPlayer* target, 
 	height = tileSize * tileHeight;
 	speed = tileSize / 10;
 
-	x = startX * tileSize + (tileSize / 2);
-	y = startY * tileSize + (tileSize / 2);
+	x = startX;
+	y = startY;
 	map = m;
 	this->targetX = targetX;
 	this->targetY = targetY;
@@ -66,9 +66,9 @@ int ScatterState::choosePath(vector<int> options) {
 }
 
 void ScatterState::frighten() {
-	changeState(new FrightenedState(getTileX(), getTileY(), map, target, context));
+	changeState(new FrightenedState(x, y, map, target, context));
 }
 
 void ScatterState::chase(HumanPlayer* target) {
-	changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
+	changeState(new ChaseState(x, y, map, target, context));
 }

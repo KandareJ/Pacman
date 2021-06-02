@@ -13,8 +13,8 @@ FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* pl
 	height = tileSize * tileHeight;
 	speed = tileSize / 10;
 
-	x = startX * tileSize + (tileSize / 2);
-	y = startY * tileSize + (tileSize / 2);
+	x = startX;
+	y = startY;
 	map = m;
 	target = player;
 	dir = DOWN;
@@ -47,12 +47,12 @@ bool FrightenedState::update(double pelletPercent) {
 	frame++;
 	if (frame <= 300) return GhostState::update(pelletPercent);
 	else {
-		changeState(new FrightenedEndState(getTileX(), getTileY(), map, target, context));
+		changeState(new FrightenedEndState(x, y, map, target, context));
 		return true;
 	}
 }
 
 int FrightenedState::collision() {
-	changeState(new ReturnHouseState(getTileX(), getTileY(), map, target, context));
+	changeState(new ReturnHouseState(x, y, map, target, context));
 	return 1;
 }

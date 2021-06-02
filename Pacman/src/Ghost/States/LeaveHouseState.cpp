@@ -13,8 +13,8 @@ LeaveHouseState::LeaveHouseState(int startX, int startY, Map* m, HumanPlayer* pl
 	height = tileSize * tileHeight;
 	speed = tileSize / 10;
 
-	x = startX * tileSize + (tileSize / 2);
-	y = startY * tileSize + (tileSize / 2);
+	x = startX;
+	y = startY;
 	map = m;
 	target = player;
 	dir = UP;
@@ -29,7 +29,7 @@ LeaveHouseState::~LeaveHouseState() {
 
 bool LeaveHouseState::update(double pelletPercent) {
 	if (map->getMapPos(getTileX(),getTileY()) != 0) return moveUp();
-	else changeState(new ChaseState(getTileX(), getTileY(), map, target, context));
+	else changeState(new ChaseState(getTileX() * tileSize + (tileSize / 2), getTileY() * tileSize + (tileSize / 2), map, target, context));
 	return true;
 }
 

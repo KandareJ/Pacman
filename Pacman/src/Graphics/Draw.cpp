@@ -459,8 +459,11 @@ void Draw::drawScoreboard(std::vector<int> scores, int selected) {
 		if (selected >= 11) offset = (selected + 1) % 11;
 		for (unsigned int i = 0; i < scores.size() && i < 11; i++) {
 			char label[50];
-			sprintf(label, "Player %d.........................%d", i + offset + 1, scores.at(i + offset));
+			char score[50];
+			sprintf(label, "Player %d", i + offset + 1);
+			sprintf(score, "%d", scores.at(i + offset));
 			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (2 + i), 0, label);
+			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .75 - height / 40, height / 15 * (2 + i), ALLEGRO_ALIGN_RIGHT, score);
 		}
 	}
 	return;
