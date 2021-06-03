@@ -1,5 +1,6 @@
 #include "HumanPlayer.h"
 #include "States/PlayerState.h"
+#include "../Graphics/Audio/Audio.h"
 
 using namespace std;
 
@@ -168,6 +169,7 @@ void HumanPlayer::eatPellet() {
 	if (map->getObjectPos(getTileX(), getTileY()) == 1) {
 		map->eatObject(getTileX(), getTileY());
 		score += 10;
+		Audio::instance()->chomp();
 	}
 	else if (map->getObjectPos(getTileX(), getTileY()) == 2) {
 		map->eatObject(getTileX(), getTileY());

@@ -11,7 +11,9 @@ public:
     void eatFruit();
     void eatGhost();
     void powerUp();
-    void endPowerUp();
+    void powerDown();
+    void chomp();
+
     void menuMove();
     void menuSelect();
 protected:
@@ -23,9 +25,14 @@ private:
     ALLEGRO_SAMPLE* eatGhostSound;
     ALLEGRO_SAMPLE* eatFruitSound;
     ALLEGRO_SAMPLE* powerUpSound;
-    ALLEGRO_SAMPLE* endPowerUpSound;
+    ALLEGRO_SAMPLE* powerDownSound;
+    ALLEGRO_SAMPLE* chompSound;
+
     ALLEGRO_SAMPLE* menuMoveSound;
     ALLEGRO_SAMPLE* menuSelectSound;
+
+    ALLEGRO_SAMPLE* backgroundMusic;
+    ALLEGRO_SAMPLE_INSTANCE* backgroundMusicInstance;
 };
 
 #endif

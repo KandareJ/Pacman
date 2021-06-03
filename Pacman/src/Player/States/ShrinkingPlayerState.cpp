@@ -1,6 +1,8 @@
 #include "ShrinkingPlayerState.h"
+#include "../../Graphics/Audio/Audio.h"
 
 ShrinkingPlayerState::ShrinkingPlayerState(HumanPlayer* c) : PlayerState(c) {
+    Audio::instance()->powerDown();
     counter = 0;
     shrinking = true;
     return;
@@ -9,7 +11,7 @@ ShrinkingPlayerState::ShrinkingPlayerState(HumanPlayer* c) : PlayerState(c) {
 bool ShrinkingPlayerState::update() {
     frame = ++frame % 8;
     ++counter;
-    if (counter >= 90) context->changeState(new PlayerState(context)); // change state
+    if (counter >= 30) context->changeState(new PlayerState(context)); // change state
     else if (counter % 10 == 0) shrinking = !shrinking;
     return true;
 }
