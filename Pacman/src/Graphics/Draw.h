@@ -35,6 +35,7 @@ public:
 	void drawMenu(int frame);
 	void drawLevelSelect(std::vector<std::string> levels, int selected);
 	void drawScoreboard(std::vector<int> scores, int selected);
+	void highlightTile(int x, int y);
 protected:
 	Draw();
 private:

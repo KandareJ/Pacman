@@ -375,6 +375,12 @@ void Draw::drawTopWall(int x, int y, int w, int h, int** map) {
 	return;
 }
 
+void Draw::highlightTile(int x, int y) {
+	al_draw_rectangle(x * tileSize + xOffset, y * tileSize + yOffset, (x+1) * tileSize + xOffset, (y+1) * tileSize + yOffset, al_map_rgb(255,255,255), 5);
+	//al_draw_rectangle(10, 10, 110, 110, al_map_rgb(255, 255, 255), 4);
+	return;
+}
+
 void Draw::drawBottomWall(int x, int y, int w, int h, int** map) {
 	if (y == h - 1 || map[y + 1][x] != 1) {
 		if (x != 0 && map[y][x - 1] == 1)drawGlowingWall(x * tileSize + xOffset, (y + 1) * tileSize - (tileSize*corner) + yOffset, x * tileSize + (tileSize*corner) + xOffset, (y + 1) * tileSize - (tileSize*corner) + yOffset, al_map_rgb(0, 255, 255), thickness);
