@@ -1,5 +1,6 @@
 #include "BigPlayerState.h"
 #include "ShrinkingPlayerState.h"
+#include "../../Graphics/Audio/Audio.h"
 
 BigPlayerState::BigPlayerState(HumanPlayer* c) :  PlayerState(c) {
     counter = 0;
@@ -23,6 +24,7 @@ bool BigPlayerState::isBig() {
 
 void BigPlayerState::powerUp() {
     counter = 0;
+    Audio::instance()->powerUp();
     return;
 }
 

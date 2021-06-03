@@ -1,6 +1,7 @@
 #include "PlayerState.h"
 #include "BigPlayerState.h"
 #include "DyingState.h"
+#include "../../Graphics/Audio/Audio.h"
 
 PlayerState::PlayerState(HumanPlayer* c) {
     frame = 0;
@@ -24,6 +25,7 @@ void PlayerState::draw(int x, int y, int dir, int r, int g, int b) {
 
 void PlayerState::ghostCollision(int ghostState) {
     if (ghostState == 0) die(); // change state to dead
+    else if (ghostState == 1) Audio::instance()->eatGhost();
     return;
 }
 
@@ -36,13 +38,14 @@ bool PlayerState::isBig() {
 }
 
 void PlayerState::die() {
+    Audio::instance()->death();
     context->changeState(new DyingState(context));
     return;
-    //change state to dead
 }
 
 void PlayerState::powerUp() {
     // change state to power up
+    Audio::instance()->powerUp();
     context->changeState(new BigPlayerState(context));
     return;
 }

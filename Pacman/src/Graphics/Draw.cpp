@@ -195,7 +195,7 @@ void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
 void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 	if (!initialized) return;
 
-	if (r || g || b) drawGlow(x, y, r, g, b, 50, 5);
+	if (r || g || b) drawGlow(x, y, r, g, b, 40, 4);
 
 	int playerSize = tileSize * 0.40;
 	float mouth = 1.5 / (frame + 1.0);
@@ -209,7 +209,7 @@ void Draw::drawPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 void Draw::drawDyingPlayer(int x, int y, int dir, int frame, int r, int g, int b) {
 	if (!initialized) return;
 
-	if (r || g || b) drawGlow(x, y, r, g, b, 50, 5);
+	if (r || g || b) drawGlow(x, y, r, g, b, 40, 4);
 
 	int playerSize = tileSize * 0.40;
 	float mouth = 1.5 / (frame + 1.0);

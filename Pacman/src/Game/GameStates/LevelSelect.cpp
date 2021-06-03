@@ -1,6 +1,7 @@
 #include "LevelSelect.h"
 #include "ClassicGame.h"
 #include "MainMenu.h"
+#include "../../Graphics/Audio/Audio.h"
 #include <iostream>
 using namespace std;
 
@@ -38,15 +39,18 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_ENTER:
+			Audio::instance()->menuSelect();
 			context->changeState(new ClassicGame(context, levels.at(selected)));
 			break;
 		case ALLEGRO_KEY_S:
 			selected = ++selected % levels.size();
 			changed = true;
+			Audio::instance()->menuMove();
 			break;
 		case ALLEGRO_KEY_W:
 			selected = (--selected + levels.size()) % levels.size();
 			changed = true;
+			Audio::instance()->menuMove();
 			break;
 		case ALLEGRO_KEY_ESCAPE:
 			return true;
@@ -54,6 +58,7 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 	}
 
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
+		Audio::instance()->menuSelect();
 		switch (events.joystick.button) {
 			case 0:
 				context->changeState(new ClassicGame(context, levels.at(selected)));
@@ -72,10 +77,12 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 		else if (events.joystick.axis == 1 && events.joystick.pos < -0.9) cout << "Up" << endl;
 		*/
 		if (events.joystick.axis == 1 && events.joystick.pos < -0.95) {
+			Audio::instance()->menuMove();
 			selected = (--selected + levels.size()) % levels.size();
 			changed = true;
 		}
 		else if (events.joystick.axis == 1 && events.joystick.pos > 0.95) {
+			Audio::instance()->menuMove();
 			selected = ++selected % levels.size();
 			changed = true;
 		}

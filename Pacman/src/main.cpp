@@ -5,6 +5,10 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
+#include "Graphics/Audio/Audio.h"
 
 const double FPS = 30.0;
 int HEIGHT = 900;
@@ -19,12 +23,17 @@ int main(int argc, char** argv) {
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
+	al_install_audio();
+	al_init_acodec_addon();
+
 	ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
 	ALLEGRO_EVENT events;
 	ALLEGRO_TIMER *timer = al_create_timer(1 / FPS);
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_joystick_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer));
+
+	Audio* audio = Audio::instance();
 
 	ALLEGRO_MONITOR_INFO info;
 	al_get_monitor_info(0, &info);

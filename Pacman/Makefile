@@ -5,6 +5,7 @@ src = $(wildcard src/main.cpp) \
 	  $(wildcard src/Ghost/States/*.cpp) \
 	  $(wildcard src/Ghost/*.cpp) \
 	  $(wildcard src/Graphics/*.cpp) \
+	  $(wildcard src/Graphics/Audio/*.cpp) \
 	  $(wildcard src/Map/*.cpp) \
 	  $(wildcard src/Player/*.cpp) \
 	  $(wildcard src/Player/States/*.cpp)
@@ -12,7 +13,7 @@ src = $(wildcard src/main.cpp) \
 obj = $(src:.cpp=.o)
 
 CC = g++
-FLAGS = -lallegro -lallegro_main -lallegro_primitives -lallegro_color -lallegro_font -lallegro_ttf -lallegro_image
+FLAGS = -lallegro -lallegro_main -lallegro_primitives -lallegro_color -lallegro_font -lallegro_ttf -lallegro_image -lallegro_audio -lallegro_acodec
 
 PACMAN: $(obj)
 	$(CC) -o $@ $^ $(FLAGS)

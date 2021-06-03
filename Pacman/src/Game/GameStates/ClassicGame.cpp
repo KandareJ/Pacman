@@ -1,5 +1,6 @@
 #include "ClassicGame.h"
 #include "Scoreboard.h"
+#include "../../Graphics/Audio/Audio.h"
 
 ClassicGame::ClassicGame(GameEngine* c, std::string level) {
 	over = false;
@@ -103,6 +104,7 @@ void ClassicGame::raiseEvents() {
 			frighten();
 			break;
 		case 2:
+			Audio::instance()->eatFruit();
 			map->switchObjectMap();
 			break;
 		}

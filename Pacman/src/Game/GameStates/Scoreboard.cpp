@@ -1,6 +1,7 @@
 #include "Scoreboard.h"
 #include "../../Graphics/Draw.h"
 #include "MainMenu.h"
+#include "../../Graphics/Audio/Audio.h"
 
 Scoreboard::Scoreboard(GameEngine* c, std::vector<int> s) {
 	context = c;
@@ -22,13 +23,16 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_ENTER:
+			Audio::instance()->menuSelect();
 			context->changeState(new MainMenu(context));
 			break;
 		case ALLEGRO_KEY_S:
+			Audio::instance()->menuMove();
 			selected = ++selected % scores.size();
 			changed = true;
 			break;
 		case ALLEGRO_KEY_W:
+			Audio::instance()->menuMove();
 			selected = (--selected + scores.size()) % scores.size();
 			changed = true;
 			break;
@@ -41,6 +45,7 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
 		switch (events.joystick.button) {
 			case 0:
+				Audio::instance()->menuSelect();
 				context->changeState(new MainMenu(context));
 				break;
 		}
@@ -54,10 +59,12 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 		else if (events.joystick.axis == 1 && events.joystick.pos < -0.9) cout << "Up" << endl;
 		*/
 		if (events.joystick.axis == 1 && events.joystick.pos < -0.95) {
+			Audio::instance()->menuMove();
 			selected = (--selected + scores.size()) % scores.size();
 			changed = true;
 		}
 		else if (events.joystick.axis == 1 && events.joystick.pos > 0.95) {
+			Audio::instance()->menuMove();
 			selected = ++selected % scores.size();
 			changed = true;
 		}
