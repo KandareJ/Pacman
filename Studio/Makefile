@@ -12,4 +12,4 @@ Studio: $(obj)
 
 .PHONY: clean
 clean:
-	rm -f $(obj) PACMAN
+	rm -f $(obj) Studio

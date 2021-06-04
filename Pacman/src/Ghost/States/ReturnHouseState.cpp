@@ -48,16 +48,16 @@ int ReturnHouseState::choosePath(vector<int> options) {
 	for (unsigned int i = 0; i < options.size(); i++) {
 		switch (options.at(i)) {
 		case RIGHT:
-			distances.push_back(getDistance(getTileX() + 1, getTileY(), targetX, targetY));
+			distances.push_back(map->getDistance(getTileX() + 1, getTileY()));
 			break;
 		case LEFT:
-			distances.push_back(getDistance(getTileX() - 1, getTileY(), targetX, targetY));
+			distances.push_back(map->getDistance(getTileX() - 1, getTileY()));
 			break;
 		case UP:
-			distances.push_back(getDistance(getTileX(), getTileY() - 1, targetX, targetY));
+			distances.push_back(map->getDistance(getTileX(), getTileY() - 1));
 			break;
 		case DOWN:
-			distances.push_back(getDistance(getTileX(), getTileY() + 1, targetX, targetY));
+			distances.push_back(map->getDistance(getTileX(), getTileY() + 1));
 			break;
 		}
 	}
