@@ -10,6 +10,7 @@
 #include "../../Map/ClassicMap.h"
 #include "../../Map/Map.h"
 #include "../../Events/EventQueue.h"
+#include "../GameInfo.h"
 #include <iostream>
 #include <string>
 
@@ -17,7 +18,7 @@ using namespace std;
 
 class ClassicGame : public Game {
 public:
-	ClassicGame(GameEngine* c, string level);
+	ClassicGame(GameEngine* c, GameInfo s);
 	~ClassicGame();
 	bool run(ALLEGRO_EVENT events);
 	HumanPlayer* getPlayer();
@@ -41,6 +42,7 @@ private:
 	int getChasePlayer();
 	int lastChasePlayer;
 	vector<ALLEGRO_JOYSTICK*> joysticks;
+	GameInfo settings;
 };
 
 #endif

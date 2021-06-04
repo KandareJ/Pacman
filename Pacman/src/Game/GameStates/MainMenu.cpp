@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-#include "LevelSelect.h"
+#include "GameSettings.h"
 #include "../../Graphics/Audio/Audio.h"
 #include <iostream>
 
@@ -33,7 +33,7 @@ bool MainMenu::run(ALLEGRO_EVENT events) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_ENTER:
 			Audio::instance()->menuSelect();
-			context->changeState(new LevelSelect(context));
+			context->changeState(new GameSettings(context));
 			return false;
 		case ALLEGRO_KEY_ESCAPE:
 			return true;
@@ -44,7 +44,7 @@ bool MainMenu::run(ALLEGRO_EVENT events) {
 		switch (events.joystick.button) {
 			case 0:
 				Audio::instance()->menuSelect();
-				context->changeState(new LevelSelect(context));
+				context->changeState(new GameSettings(context));
 				return false;
 			case 1:
 				return true;

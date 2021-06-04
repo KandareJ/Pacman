@@ -29,7 +29,6 @@ void ReturnHouseState::draw(int r, int g, int b) {
 	draw->drawGhost(x, y, dir, 0, 0, 0);
 }
 
-
 bool ReturnHouseState::update(double pelletPercent) {
 	if (getTileX() == targetX && getTileY() == targetY) changeState(new GhostHouseState(map, target, context));
 	return GhostState::update(pelletPercent);

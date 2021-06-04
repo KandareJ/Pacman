@@ -474,3 +474,22 @@ void Draw::drawScoreboard(std::vector<int> scores, int selected) {
 	}
 	return;
 }
+
+void Draw::drawSettings(int numGhosts, std::string gameMode, int selected) {
+	int imageHeight = al_get_bitmap_height(menu);
+	int imageWidth = al_get_bitmap_width(menu);
+	int offset = 0;
+	al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
+
+	char title[15] = "Game Settings:";
+	al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
+	al_draw_filled_rectangle(width * .25, height / 15 * 2, width * .75, height - height / 15 * 2 + height / 50, al_map_rgba(0, 0, 0, 190));
+
+	char label[50];
+
+	sprintf(label, "Ghosts:    < %d >", numGhosts);
+	al_draw_text(menuFont, (selected == 0) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 2, 0, label);
+	sprintf(label, "Game mode: < %s >", gameMode.c_str());
+	al_draw_text(menuFont, (selected == 1) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 3, 0, label);
+	return;
+}

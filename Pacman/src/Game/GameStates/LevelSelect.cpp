@@ -5,9 +5,10 @@
 #include <iostream>
 using namespace std;
 
-LevelSelect::LevelSelect(GameEngine* c) {
+LevelSelect::LevelSelect(GameEngine* c, GameInfo settings) {
 	context = c;
 	int numLevels;
+	this->settings = settings;
 	ifstream registry("levels/REGISTRY.pacr");
 	string line;
 	getline(registry, line);
@@ -19,6 +20,8 @@ LevelSelect::LevelSelect(GameEngine* c) {
 		getline(registry, line);
 		levels.push_back(line);
 	}
+
+	levels.push_back("random");
 
 	registry.close();
 
@@ -40,7 +43,9 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_ENTER:
 			Audio::instance()->menuSelect();
-			context->changeState(new ClassicGame(context, levels.at(selected)));
+			if (selected != levels.size() - 1) settings.levels.push_back(levels.at(selected));
+			else settings.levels.push_back(levels.at(rand() % (levels.size() - 1)));
+			context->changeState(new ClassicGame(context, settings));
 			break;
 		case ALLEGRO_KEY_S:
 			selected = ++selected % levels.size();
@@ -56,19 +61,19 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 			return true;
 		}
 	}
-
+/*
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
 		Audio::instance()->menuSelect();
 		switch (events.joystick.button) {
 			case 0:
-				context->changeState(new ClassicGame(context, levels.at(selected)));
+				context->changeState(new ClassicGame(context, settings));
 				break;
 			case 1:
 				context->changeState(new MainMenu(context));
 				break;
 		}
 	}
-
+*/
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_AXIS) {
 		/*
 		if (events.joystick.axis == 0 && events.joystick.pos > 0.9) cout << "Right" << endl;

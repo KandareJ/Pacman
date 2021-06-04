@@ -2,17 +2,17 @@
 #include "Scoreboard.h"
 #include "../../Graphics/Audio/Audio.h"
 
-ClassicGame::ClassicGame(GameEngine* c, std::string level) {
+ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 	over = false;
 	context = c;
 	lastChasePlayer = -1;
 	eq = eq->getInstance();
-	map = new ClassicMap(level);
+	map = new ClassicMap(settings.levels.at(0));
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = 4;
+	int numGhosts = settings.numGhosts;
 	int numPlayers = al_get_num_joysticks();
 	int r, g, b;
-	int hue = 300 / numGhosts;
+	int hue = (numGhosts) ? 300 / numGhosts : 300;
 	int playerHue = 60;
 	int playerX, playerY;
 
