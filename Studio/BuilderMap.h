@@ -14,7 +14,7 @@ enum STATE {MAP, OBJ, SPAWN, CHERRY};
 
 class BuilderMap : public Map {
     public:
-	BuilderMap(int w, int h, int options, std::string filename);
+	BuilderMap(int h, int w, int options, std::string filename);
 	~BuilderMap();
 	void draw();
 	bool run(ALLEGRO_EVENT events);

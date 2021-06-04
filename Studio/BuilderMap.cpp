@@ -5,7 +5,7 @@
 
 using namespace std;
 
-BuilderMap::BuilderMap(int w, int h, int options, string level) {
+BuilderMap::BuilderMap(int h, int w, int options, string level) {
 	pellets = 0.0;
 	pelletsEaten = 0.0;
 	option = -1;
@@ -38,7 +38,8 @@ BuilderMap::BuilderMap(int w, int h, int options, string level) {
 
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			map[y][x] = 0;
+            if (x == 0 || y == 0 || x == width - 1 || y == height - 1) map[y][x] = 1;
+			else map[y][x] = 0;
             object[y][x] = 0;
             spawns[y][x] = 0;
 		}

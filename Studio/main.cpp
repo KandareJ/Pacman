@@ -16,13 +16,19 @@ int WIDTH = 1200;
 
 int main(int argc, char** argv) {
     if (argc < 5) {
-        std::cout << "Please include dimensions and output args" << std::endl;
+        std::cout << "Usage: Studio <height> <width> <depth> <filename>" << std::endl;
         return 1;
     }
 
     int w = atoi(argv[1]);
     int h = atoi(argv[2]);
     int d = atoi(argv[3]);
+
+	if (w < 2 || w > 100 || h < 2 || h > 100 || d < 1 || d > 10) {
+		std::cout << "Usage: Studio <width> <height> <depth> <filename>" << std::endl;
+		std::cout << "width and height must be less than 100 and depth must be less than 10" << std::endl;
+        return 1;
+	}
     char* filename = argv[4];
 
 	bool quit = false;
