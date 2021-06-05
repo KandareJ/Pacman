@@ -19,6 +19,7 @@ private:
     void decrement();
     void increment();
     int numGhosts;
+    int numPlayers;
     int playmode;
     int selected;
     std::vector<std::string> playmodes;

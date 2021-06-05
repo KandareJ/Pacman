@@ -36,7 +36,7 @@ public:
 	void drawMenu(int frame);
 	void drawLevelSelect(std::vector<std::string> levels, int selected);
 	void drawScoreboard(std::vector<int> scores, int selected);
-	void drawSettings(int numGhosts, std::string gameMode, int selected);
+	void drawSettings(int numGhosts, int numPlayers, std::string gameMode, int selected);
 
 	void highlightTile(int x, int y);
 protected:

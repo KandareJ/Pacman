@@ -7,6 +7,7 @@ const int MAX_NUM_GHOSTS = 20;
 GameSettings::GameSettings(GameEngine* c) {
     context = c;
     numGhosts = 4;
+    numPlayers = 1;
     selected = 0;
     playmode = 0;
     playmodes.push_back("classic");
@@ -38,9 +39,13 @@ bool GameSettings::run(ALLEGRO_EVENT events) {
             draw();
             return false;
         case ALLEGRO_KEY_S:
+			Audio::instance()->menuMove();
+            selected = ++selected % 3;
+            draw();
+            return false;
         case ALLEGRO_KEY_W:
 			Audio::instance()->menuMove();
-            selected = (selected == 0) ? 1 : 0;
+            if (--selected < 0) selected = 2;
             draw();
             return false;
 		case ALLEGRO_KEY_ESCAPE:
@@ -53,7 +58,7 @@ bool GameSettings::run(ALLEGRO_EVENT events) {
 
 void GameSettings::draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-    Draw::instance()->drawSettings(numGhosts, playmodes.at(playmode), selected);
+    Draw::instance()->drawSettings(numGhosts, numPlayers, playmodes.at(playmode), selected);
 	al_flip_display();
 
     return;

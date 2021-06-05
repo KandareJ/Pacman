@@ -475,7 +475,7 @@ void Draw::drawScoreboard(std::vector<int> scores, int selected) {
 	return;
 }
 
-void Draw::drawSettings(int numGhosts, std::string gameMode, int selected) {
+void Draw::drawSettings(int numGhosts, int numPlayers, std::string gameMode, int selected) {
 	int imageHeight = al_get_bitmap_height(menu);
 	int imageWidth = al_get_bitmap_width(menu);
 	int offset = 0;
@@ -489,7 +489,9 @@ void Draw::drawSettings(int numGhosts, std::string gameMode, int selected) {
 
 	sprintf(label, "Ghosts:    < %d >", numGhosts);
 	al_draw_text(menuFont, (selected == 0) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 2, 0, label);
-	sprintf(label, "Game mode: < %s >", gameMode.c_str());
+	sprintf(label, "Players:    < %d >", numPlayers);
 	al_draw_text(menuFont, (selected == 1) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 3, 0, label);
+	sprintf(label, "Game mode: < %s >", gameMode.c_str());
+	al_draw_text(menuFont, (selected == 2) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 4, 0, label);
 	return;
 }
