@@ -233,7 +233,7 @@ int BuilderMap::getWidth() {
 }
 
 void BuilderMap::writeFile() {
-    ofstream file(filename);
+    ofstream file(filename + ".pac");
     file << height << " " << width << endl;
 
     for (int y = 0; y < height; y++) {

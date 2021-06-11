@@ -13,7 +13,6 @@ public:
     }
     
     int numGhosts;
-    int numPlayers;
     std::vector<std::string> levels;
     std::vector<PlayerInfo> players;
     std::string playmode;

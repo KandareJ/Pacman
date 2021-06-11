@@ -10,23 +10,21 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 	map = new ClassicMap(settings.levels.at(0));
 	ghosts = vector<BasicGhost*>();
 	int numGhosts = settings.numGhosts;
-	int numPlayers = al_get_num_joysticks();
+	int numPlayers = settings.players.size();
 	int r, g, b;
 	int hue = (numGhosts) ? 300 / numGhosts : 300;
 	int playerHue = 60;
 	int playerX, playerY;
 
+	/*
 	for (int i = 0; i < numPlayers; i++) {
 		joysticks.push_back(al_get_joystick(i));
 	}
-
-	if (!numPlayers) numPlayers = 1;
+	*/
 
 	for (int i = 0; i < numPlayers; i++) {
-		Draw::generatePlayerColor(r, g, b, playerHue);
-		playerHue = playerHue + (360 / numPlayers) % 360;
 		map->getPlayerSpawnCoordinates(playerX, playerY);
-		players.push_back(new HumanPlayer(map, playerX, playerY, r, g, b));
+		players.push_back(new HumanPlayer(map, playerX, playerY, settings.players.at(i).r, settings.players.at(i).g, settings.players.at(i).b));
 	}
 
 	for (int i = 0; i < numGhosts; i++) {

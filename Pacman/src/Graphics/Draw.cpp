@@ -25,6 +25,7 @@ void Draw::initializeProportions(int w, int h) {
 	height = h;
 	titleFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 7, 0);
 	menuFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 15, 0);
+	characterFont = al_load_font("assets/fonts/SpaceObsessed.ttf", h / 20, 0);
 	menu = al_load_bitmap("assets/images/menu.png");
 	return;
 }
@@ -481,17 +482,77 @@ void Draw::drawSettings(int numGhosts, int numPlayers, std::string gameMode, int
 	int offset = 0;
 	al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
 
-	char title[15] = "Game Settings:";
+	char title[] = "Game Options:";
 	al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
 	al_draw_filled_rectangle(width * .25, height / 15 * 2, width * .75, height - height / 15 * 2 + height / 50, al_map_rgba(0, 0, 0, 190));
 
 	char label[50];
 
-	sprintf(label, "Ghosts:    < %d >", numGhosts);
-	al_draw_text(menuFont, (selected == 0) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 2, 0, label);
-	sprintf(label, "Players:    < %d >", numPlayers);
-	al_draw_text(menuFont, (selected == 1) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 3, 0, label);
+	int i = 0;
+
 	sprintf(label, "Game mode: < %s >", gameMode.c_str());
-	al_draw_text(menuFont, (selected == 2) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * 4, 0, label);
+	al_draw_text(menuFont, (selected == i) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (i + 2), 0, label);
+	i++;
+	
+	sprintf(label, "Ghosts:    < %d >", numGhosts);
+	al_draw_text(menuFont, (selected == i) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (i + 2), 0, label);
+	i++;
+	
+	sprintf(label, "Players:    < %d >", numPlayers);
+	al_draw_text(menuFont, (selected == i) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (i + 2), 0, label);
+	i++;
+	
 	return;
 }
+
+void Draw::drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std::vector<std::string> nameOptions) {
+	int imageHeight = al_get_bitmap_height(menu);
+	int imageWidth = al_get_bitmap_width(menu);
+	al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
+	float x1 = width * .25;
+	float y1 = height / 15 * 2;
+	float x2 = width * .75;
+	float y2 = height - height / 15 * 2 + height / 50;
+
+	char title[] = "Player Select:";
+	al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
+	al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgba(0, 0, 0, 190));
+
+	drawCharacter(players.at(0), x1, y1, (x2 - x1) / 2 + x1, (y2 - y1) / 2 + y1, nameOptions);
+
+
+	return;
+}
+
+void Draw::drawCharacter(PlayerInfo player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions) {
+	//char buf[50];
+	//sprintf(buf, "<   %s   >", nameOptions.at(player.nameSelection).c_str());
+	int i = 0;
+	int j = 0;
+	int w = (x2 - x1) / 2;
+
+	generatePlayerColor(player.r, player.g, player.b, 20 * player.colorSelection);
+
+	// name
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "name:");
+	i++;
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, nameOptions.at(player.nameSelection).c_str());
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
+	i+=2;
+	j++;
+
+	// color
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "color:");
+	i++;
+	al_draw_filled_rectangle( x1 + w * .40, y1 + height / 20 * i + 15, x2 - w * .40, y1 + height / 20 * (i + 1), al_map_rgb(player.r, player.g, player.b));
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
+	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
+
+
+	//al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 0), 5);
+	
+
+	return;
+}
+

@@ -1,6 +1,6 @@
 #include "GameSettings.h"
 #include "../../Graphics/Audio/Audio.h"
-#include "LevelSelect.h"
+#include "CharacterSelect.h"
 
 const int MAX_NUM_GHOSTS = 20;
 
@@ -26,7 +26,15 @@ bool GameSettings::run(ALLEGRO_EVENT events) {
 			Audio::instance()->menuSelect();
             settings.numGhosts = numGhosts;
             settings.playmode = playmodes.at(playmode);
-            context->changeState(new LevelSelect(context, settings));
+
+            for (int i = 0; i < numPlayers; i++) {
+                PlayerInfo p = PlayerInfo();
+                p.nameSelection = 0;
+                p.colorSelection = i % 18;
+                settings.players.push_back(p);
+            }
+
+            context->changeState(new CharacterSelect(context, settings));
 			return false;
         case ALLEGRO_KEY_A:
 			Audio::instance()->menuMove();
@@ -65,13 +73,13 @@ void GameSettings::draw() {
 }
 
 void GameSettings::decrement() {
-    if (selected == 0) {
+    if (selected == 1) {
         if (--numGhosts < 0) numGhosts = MAX_NUM_GHOSTS;
     }
 }
 
 void GameSettings::increment() {
-    if (selected == 0) {
+    if (selected == 1) {
         numGhosts = ++ numGhosts % (MAX_NUM_GHOSTS + 1);
     }
 }

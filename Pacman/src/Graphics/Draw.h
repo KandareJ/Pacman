@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+#include "../Game/PlayerInfo.h"
+
 using namespace std;
 
 const float PI = 3.1415927;
@@ -37,6 +39,7 @@ public:
 	void drawLevelSelect(std::vector<std::string> levels, int selected);
 	void drawScoreboard(std::vector<int> scores, int selected);
 	void drawSettings(int numGhosts, int numPlayers, std::string gameMode, int selected);
+	void drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std::vector<std::string> nameOptions);
 
 	void highlightTile(int x, int y);
 protected:
@@ -64,6 +67,7 @@ private:
 	void drawCherry(int x, int y);
 	void drawPellet(int x, int y);
 	void drawPowerup(int x, int y, int frame);
+	void drawCharacter(PlayerInfo player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions);
 	double corner;
 	int thickness;
 	void initializeTileSize();
@@ -71,6 +75,7 @@ private:
 	ALLEGRO_BITMAP* menu;
 	ALLEGRO_FONT* titleFont;
 	ALLEGRO_FONT* menuFont;
+	ALLEGRO_FONT* characterFont;
 };
 
 #endif
