@@ -28,7 +28,7 @@ public:
 	void drawShrinkingPlayer(int x, int y, int dir, int frame, int r, int g, int b, int size);
 	void drawDyingPlayer(int x, int y, int dir, int frame, int r, int g, int b);
 	void drawMap(int** map, int** object, int frame, int h, int w);
-	void drawScore(int score, int player, int totalPlayers);
+	void drawScore(int score, int player, int totalPlayers, PlayerInfo p);
 	int getTileSize();
 	int getTileWidth();
 	int getTileHeight();

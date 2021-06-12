@@ -3,6 +3,7 @@
 #include "../../Graphics/Audio/Audio.h"
 
 ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
+	this->settings = settings;
 	over = false;
 	context = c;
 	lastChasePlayer = -1;
@@ -55,7 +56,7 @@ void ClassicGame::draw() {
 	map->draw();
 	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();
 	for (unsigned int i = 0; i < players.size(); i++) {
-		Draw::instance()->drawScore(players.at(i)->getScore(), i, players.size());
+		Draw::instance()->drawScore(players.at(i)->getScore(), i, players.size(), settings.players.at(i));
 		players.at(i)->draw();
 	}
 

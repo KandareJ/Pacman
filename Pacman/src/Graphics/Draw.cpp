@@ -409,12 +409,12 @@ void Draw::drawRightWall(int x, int y, int w, int h, int** map) {
 	return;
 }
 
-void Draw::drawScore(int score, int player, int totalPlayers) {
+void Draw::drawScore(int score, int player, int totalPlayers, PlayerInfo p) {
 	char *text = (char*)malloc(20);
 	int col = (tileWidth - 3) * tileSize / 3;
 	int row = player / 4 * tileSize / 2;
-	sprintf(text, "Player %d: %d", player + 1, score);
-	al_draw_text(font, al_map_rgb(255, 255, 255), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, 0, text);
+	sprintf(text, "%s: %d", p.name.c_str(), score);
+	al_draw_text(font, al_map_rgb(p.r, p.g, p.b), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, 0, text);
 	free(text);
 }
 
