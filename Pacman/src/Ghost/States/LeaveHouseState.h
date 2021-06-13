@@ -19,6 +19,7 @@ public:
 private:
 	int choosePath(vector<int> options);
 	bool moveUp();
+	bool isValidTile(int tileX, int tileY);
 };
 
 #endif
