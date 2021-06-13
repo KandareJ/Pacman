@@ -130,6 +130,13 @@ vector<int> GhostState::getOptions(int tileX, int tileY) {
 		options.push_back(DOWN);
 	}
 
+	if (options.size() == 0) {
+		if (isValidTile(tileX + 1, tileY)) options.push_back(RIGHT);
+		if (isValidTile(tileX - 1, tileY)) options.push_back(LEFT);
+		if (isValidTile(tileX, tileY - 1)) options.push_back(UP);
+		if (isValidTile(tileX, tileY + 1)) options.push_back(DOWN);
+	}
+
 	return options;
 }
 
