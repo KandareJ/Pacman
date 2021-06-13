@@ -452,7 +452,7 @@ void Draw::drawLevelSelect(std::vector<std::string> levels, int selected) {
 	return;
 }
 
-void Draw::drawScoreboard(std::vector<int> scores, int selected) {
+void Draw::drawScoreboard(std::vector<PlayerInfo> players, int selected) {
 	if (menu) {
 		int imageHeight = al_get_bitmap_height(menu);
 		int imageWidth = al_get_bitmap_width(menu);
@@ -464,13 +464,15 @@ void Draw::drawScoreboard(std::vector<int> scores, int selected) {
 		al_draw_filled_rectangle(width * .25, height / 15 * 2, width * .75, height - height / 15 * 2 + height / 50, al_map_rgba(0, 0, 0, 190));
 
 		if (selected >= 11) offset = (selected + 1) % 11;
-		for (unsigned int i = 0; i < scores.size() && i < 11; i++) {
-			char label[50];
+		for (unsigned int i = 0; i < players.size() && i < 11; i++) {
 			char score[50];
-			sprintf(label, "Player %d", i + offset + 1);
-			sprintf(score, "%d", scores.at(i + offset));
-			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .25 + height / 40, height / 15 * (2 + i), 0, label);
-			al_draw_text(menuFont, (i + offset == selected) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), width * .75 - height / 40, height / 15 * (2 + i), ALLEGRO_ALIGN_RIGHT, score);
+			ALLEGRO_COLOR color = (i + offset == selected) 
+				? al_map_rgb(players.at(i).r, players.at(i).g, players.at(i).b)
+				: al_map_rgba(players.at(i).r, players.at(i).g, players.at(i).b, 200);
+
+			sprintf(score, "%d", players.at(i + offset).score);
+			al_draw_text(menuFont, color, width * .25 + height / 40, height / 15 * (2 + i), 0, players.at(i+offset).name.c_str());
+			al_draw_text(menuFont, color, width * .75 - height / 40, height / 15 * (2 + i), ALLEGRO_ALIGN_RIGHT, score);
 		}
 	}
 	return;

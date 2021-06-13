@@ -3,12 +3,13 @@
 
 #include "Game.h"
 #include "../GameEngine.h"
+#include "../GameInfo.h"
 #include <vector>
 #include <allegro5/allegro.h>
 
 class Scoreboard : public Game {
 public:
-	Scoreboard(GameEngine* c, std::vector<int> s);
+	Scoreboard(GameEngine* c, GameInfo g);
 	~Scoreboard();
 	bool run(ALLEGRO_EVENT events);
 
@@ -17,7 +18,7 @@ private:
 	void draw();
 	bool changed;
 	GameEngine* context;
-	std::vector<int> scores;
+	GameInfo gameInfo;
 	int selected;
 };
 

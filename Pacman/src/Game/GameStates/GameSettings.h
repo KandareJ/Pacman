@@ -11,6 +11,7 @@
 class GameSettings : public Game {
 public:
     GameSettings(GameEngine* c);
+    GameSettings(GameEngine* c, GameInfo g);
     ~GameSettings();
     bool run(ALLEGRO_EVENT events);
 

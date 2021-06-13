@@ -37,7 +37,7 @@ public:
 
 	void drawMenu(int frame);
 	void drawLevelSelect(std::vector<std::string> levels, int selected);
-	void drawScoreboard(std::vector<int> scores, int selected);
+	void drawScoreboard(std::vector<PlayerInfo> players, int selected);
 	void drawSettings(int numGhosts, int numPlayers, std::string gameMode, int selected);
 	void drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std::vector<std::string> nameOptions);
 

@@ -149,12 +149,11 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 		}
 	}
 
-	vector<int> scores;
 	for (unsigned int i = 0; i < players.size(); i++) {
-		scores.push_back(players.at(i)->getScore());
+		settings.players.at(i).score = players.at(i)->getScore();
 	}
 
-	if (over) context->changeState(new Scoreboard(context, scores));
+	if (over) context->changeState(new Scoreboard(context, settings));
 
 	return false;
 }

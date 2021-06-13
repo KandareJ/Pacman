@@ -1,13 +1,14 @@
 #include "Scoreboard.h"
 #include "../../Graphics/Draw.h"
 #include "MainMenu.h"
+#include "GameSettings.h"
 #include "../../Graphics/Audio/Audio.h"
 
-Scoreboard::Scoreboard(GameEngine* c, std::vector<int> s) {
+Scoreboard::Scoreboard(GameEngine* c, GameInfo g) {
 	context = c;
 	changed = true;
 	selected = 0;
-	scores = s;
+	gameInfo = g;
 	return;
 }
 
@@ -22,18 +23,22 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
-		case ALLEGRO_KEY_ENTER:
+		case ALLEGRO_KEY_RSHIFT:
 			Audio::instance()->menuSelect();
 			context->changeState(new MainMenu(context));
 			break;
+		case ALLEGRO_KEY_ENTER:
+			Audio::instance()->menuSelect();
+			context->changeState(new GameSettings(context, gameInfo));
+			break;
 		case ALLEGRO_KEY_S:
 			Audio::instance()->menuMove();
-			selected = ++selected % scores.size();
+			selected = ++selected % gameInfo.players.size();
 			changed = true;
 			break;
 		case ALLEGRO_KEY_W:
 			Audio::instance()->menuMove();
-			selected = (--selected + scores.size()) % scores.size();
+			selected = (--selected + gameInfo.players.size()) % gameInfo.players.size();
 			changed = true;
 			break;
 		case ALLEGRO_KEY_ESCAPE:
@@ -60,12 +65,12 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 		*/
 		if (events.joystick.axis == 1 && events.joystick.pos < -0.95) {
 			Audio::instance()->menuMove();
-			selected = (--selected + scores.size()) % scores.size();
+			selected = (--selected + gameInfo.players.size()) % gameInfo.players.size();
 			changed = true;
 		}
 		else if (events.joystick.axis == 1 && events.joystick.pos > 0.95) {
 			Audio::instance()->menuMove();
-			selected = ++selected % scores.size();
+			selected = ++selected % gameInfo.players.size();
 			changed = true;
 		}
 	}
@@ -75,7 +80,7 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 
 void Scoreboard::draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	Draw::instance()->drawScoreboard(scores, selected);
+	Draw::instance()->drawScoreboard(gameInfo.players, selected);
 	al_flip_display();
 	return;
 }
