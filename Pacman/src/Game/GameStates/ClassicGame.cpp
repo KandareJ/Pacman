@@ -8,7 +8,7 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 	context = c;
 	lastChasePlayer = -1;
 	eq = eq->getInstance();
-	map = new ClassicMap(settings.levels.at(0));
+	map = new ClassicMap(settings.levels.at(settings.levels.size() - 1));
 	ghosts = vector<BasicGhost*>();
 	int numGhosts = settings.numGhosts;
 	int numPlayers = settings.players.size();
@@ -16,6 +16,8 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 	int hue = (numGhosts) ? 300 / numGhosts : 300;
 	int playerHue = 60;
 	int playerX, playerY;
+
+	settings.levels.pop_back();
 
 	/*
 	for (int i = 0; i < numPlayers; i++) {
