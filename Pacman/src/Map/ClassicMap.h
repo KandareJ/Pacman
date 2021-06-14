@@ -47,6 +47,7 @@ private:
 	int frame;
 	bool fruitOut;
 	void initializeDistances();
+	Coordinate houseGate;
 };
 
 #endif

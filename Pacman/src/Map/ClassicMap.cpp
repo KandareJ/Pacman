@@ -42,7 +42,11 @@ ClassicMap::ClassicMap(string level) {
 		istringstream is(line);
 		for (int x = 0; x < width; x++) {
 			is >> map[y][x];
-			if (map[y][x] == 3 || map[y][x] == 2) houseCoords.push_back(Coordinate(x, y));
+			if (map[y][x] == 3) houseCoords.push_back(Coordinate(x, y));
+			else if (map[y][x] == 2) {
+				houseCoords.push_back(Coordinate(x, y));
+				houseGate = Coordinate(x, y);
+			}
 		}
 	}
 
@@ -125,8 +129,8 @@ ClassicMap::~ClassicMap() {
 
 void ClassicMap::initializeDistances() {
 	queue<Coordinate> q;
-	q.push(houseCoords.at(0));
-	distances[houseCoords.at(0).y][houseCoords.at(0).x] = 0;
+	q.push(houseGate);
+	distances[houseGate.y][houseGate.x] = 0;
 	int min;
 
 	while (!q.empty()) {
@@ -154,11 +158,12 @@ void ClassicMap::initializeDistances() {
 	/*
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			cout << distances[y][x] << "\t";
+			cout << setw(8) << distances[y][x];
 		}
 		cout << endl;
 	}
 	*/
+	
 
 	return;
 }
@@ -211,8 +216,8 @@ void ClassicMap::getHouseCoordinates(int &coordX, int &coordY) {
 }
 
 void ClassicMap::getHouseGate(int &coordX, int &coordY) {
-	coordX = houseCoords.at(0).x;
-	coordY = houseCoords.at(0).y;
+	coordX = houseGate.x;
+	coordY = houseGate.y;
 	return;
 }
 

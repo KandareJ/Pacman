@@ -255,7 +255,12 @@ void Draw::drawMap(int **map, int **object, int frame, int h, int w) {
 		for (int x = 0; x < w; x++) {
 			// draw level
 			if (map[y][x] == 1) drawWalls(x, y, h, w, map);
-			else if (map[y][x] == 2) al_draw_line(x * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 0, 255), 3);
+			else if (map[y][x] == 2) {
+				if (y > 0 && map[y-1][x] == 0) al_draw_line(x * tileSize - (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, (x + 1) * tileSize + (tileSize*corner) + xOffset, y * tileSize + (tileSize*corner) + yOffset, al_map_rgb(0, 0, 255), 3);
+				else if (y < h - 1 && map[y+1][x] == 0) al_draw_line(x * tileSize - (tileSize*corner) + xOffset, (y + 1) * tileSize - (tileSize*corner) + yOffset, (x + 1) * tileSize + (tileSize*corner) + xOffset, (y + 1) * tileSize - (tileSize*corner) + yOffset, al_map_rgb(0, 0, 255), 3);
+				else if (x > 0 && map[y][x - 1] == 0) al_draw_line(x*tileSize + xOffset + (tileSize*corner), y*tileSize + yOffset - (tileSize * corner), x * tileSize + (tileSize*corner) + xOffset, (y+1) *tileSize + yOffset + (tileSize * corner), al_map_rgb(0, 0, 255), 3);
+				else if (x < w - 1 && map[y][x + 1] == 0) al_draw_line((x + 1) *tileSize + xOffset - (tileSize*corner), y*tileSize + yOffset - (tileSize * corner), (x + 1)* tileSize - (tileSize*corner) + xOffset, (y+1) *tileSize + yOffset + (tileSize * corner), al_map_rgb(0, 0, 255), 3);
+			}
 			
 			//draw objects
 			if (object[y][x] == 1) drawPellet(x, y);

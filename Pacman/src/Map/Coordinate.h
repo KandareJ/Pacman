@@ -7,6 +7,10 @@ public:
 		this->x = x;
 		this->y = y;
 	}
+	Coordinate() {
+		x = 0;
+		y = 0;
+	}
 	int x;
 	int y;
 };
