@@ -13,6 +13,7 @@ public:
         wins = 0;
         selected = 0;
         nameSelection = 0;
+        returned = true;
     }
     
     int r;
@@ -24,6 +25,8 @@ public:
     std::string name;
     int nameSelection;
     int colorSelection;
+    ALLEGRO_JOYSTICK* joystick;
+    bool returned;
 };
 
 #endif

@@ -1,6 +1,10 @@
 #include "CharacterSelect.h"
+#include "GameSettings.h"
 #include "LevelSelect.h"
 #include "../../Graphics/Audio/Audio.h"
+#include <iostream>
+
+using namespace std;
 
 CharacterSelect::CharacterSelect(GameEngine* c, GameInfo g) {
     context = c;
@@ -36,36 +40,56 @@ CharacterSelect::CharacterSelect(GameEngine* c, GameInfo g) {
 }
 
 bool CharacterSelect::run(ALLEGRO_EVENT events) {
+    if (events.type == ALLEGRO_EVENT_TIMER) {
+        
+		ALLEGRO_JOYSTICK_STATE joystick_state;
 
-    if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
-		switch (events.keyboard.keycode) {
-        case ALLEGRO_KEY_W:
-            Audio::instance()->menuMove();
-            gameInfo.players.at(0).selected--;
-            if (gameInfo.players.at(0).selected < 0) gameInfo.players.at(0).selected = NUM_OPTIONS - 1;
-            draw();
-            break;
-        case ALLEGRO_KEY_S:
-            Audio::instance()->menuMove();
-            gameInfo.players.at(0).selected = (gameInfo.players.at(0).selected + 1) % NUM_OPTIONS;
-            draw();
-            break;
-        case ALLEGRO_KEY_D:
-            Audio::instance()->menuMove();
-            next(0);
-            draw();
-            break;
-        case ALLEGRO_KEY_A:
-            Audio::instance()->menuMove();
-            prev(0);
-            draw();
-            break;
-        case ALLEGRO_KEY_ENTER:
-            Audio::instance()->menuSelect();
-            nextScreen();
-            break;
-		case ALLEGRO_KEY_ESCAPE:
-			return true;
+		for (unsigned int i = 0; i < gameInfo.players.size(); i++) {
+			al_get_joystick_state(gameInfo.players.at(i).joystick, &joystick_state);
+            
+			if (gameInfo.players.at(i).returned && joystick_state.stick[0].axis[0] > 0.95) {
+                Audio::instance()->menuMove();
+                next(i);
+                draw();
+                gameInfo.players.at(i).returned = false;
+            }
+			else if (gameInfo.players.at(i).returned && joystick_state.stick[0].axis[0] < -0.95) {
+                Audio::instance()->menuMove();
+                prev(i);
+                draw();
+                gameInfo.players.at(i).returned = false;
+            }
+			else if (gameInfo.players.at(i).returned && joystick_state.stick[0].axis[1] > 0.95) {
+                Audio::instance()->menuMove();
+                gameInfo.players.at(i).selected = (gameInfo.players.at(i).selected + 1) % NUM_OPTIONS;
+                draw();
+                gameInfo.players.at(i).returned = false;
+            }
+			else if (gameInfo.players.at(i).returned && joystick_state.stick[0].axis[1] < -0.95) {
+                Audio::instance()->menuMove();
+                gameInfo.players.at(i).selected--;
+                if (gameInfo.players.at(i).selected < 0) gameInfo.players.at(i).selected = NUM_OPTIONS - 1;
+                draw();
+                gameInfo.players.at(i).returned = false;
+            }
+            else if (joystick_state.stick[0].axis[1] > -0.2 && joystick_state.stick[0].axis[1] < 0.2 && joystick_state.stick[0].axis[0] > -0.2 && joystick_state.stick[0].axis[0] < 0.2) {
+                gameInfo.players.at(i).returned = true;
+            }
+		}
+	}
+
+    else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
+		Audio::instance()->menuSelect();
+		switch (events.joystick.button) {
+			case 0:
+                Audio::instance()->menuSelect();
+                offset += 4;
+                if (offset >= gameInfo.players.size()) nextScreen();
+                break;
+			case 1:
+                offset -= 4;
+                if (offset < 0) context->changeState(new GameSettings(context, gameInfo));
+				break;
 		}
 	}
 

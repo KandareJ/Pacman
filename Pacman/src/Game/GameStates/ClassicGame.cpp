@@ -19,12 +19,6 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 
 	settings.levels.pop_back();
 
-	/*
-	for (int i = 0; i < numPlayers; i++) {
-		joysticks.push_back(al_get_joystick(i));
-	}
-	*/
-
 	for (int i = 0; i < numPlayers; i++) {
 		map->getPlayerSpawnCoordinates(playerX, playerY);
 		players.push_back(new HumanPlayer(map, playerX, playerY, settings.players.at(i).r, settings.players.at(i).g, settings.players.at(i).b));
@@ -36,6 +30,7 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
 	}
 
 	scatterChase = 360;
+
 	return;
 }
 
@@ -83,12 +78,14 @@ bool ClassicGame::update() {
 		if (ghosts.at(i)->update()) drawNeeded = true;
 	}
 
-	over = true;
+	int survivors = 0;
 	for (unsigned int i = 0; i < players.size(); i++) {
 		if (players.at(i)->update()) drawNeeded = true;
-		if (players.at(i)->isAlive()) over = false;
+		if (players.at(i)->isAlive()) survivors++;
 	}
 
+	if (settings.playmode.compare("lms") == 0 && survivors <= 1) over = true;
+	else if (survivors <= 0) over = true;
 
 	raiseEvents();
 	detectCollisions();
@@ -121,9 +118,9 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 		drawNeeded = update();
 		if (drawNeeded) draw();
 
-		for (unsigned int i = 0; i < joysticks.size(); i++) {
+		for (unsigned int i = 0; i < settings.players.size(); i++) {
 			ALLEGRO_JOYSTICK_STATE joystick_state;
-			al_get_joystick_state(joysticks.at(i), &joystick_state);
+			al_get_joystick_state(settings.players.at(i).joystick, &joystick_state);
 			if (joystick_state.stick[0].axis[0] > 0.95) players.at(i)->changeDirection(RIGHT);
 			if (joystick_state.stick[0].axis[0] < -0.95) players.at(i)->changeDirection(LEFT);
 			if (joystick_state.stick[0].axis[1] > 0.95) players.at(i)->changeDirection(DOWN);

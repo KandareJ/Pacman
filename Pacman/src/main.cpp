@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 	ALLEGRO_EVENT_QUEUE *queue = al_create_event_queue();
 	ALLEGRO_EVENT events;
 	ALLEGRO_TIMER *timer = al_create_timer(1 / FPS);
-	al_register_event_source(queue, al_get_keyboard_event_source());
+	//al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_joystick_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 

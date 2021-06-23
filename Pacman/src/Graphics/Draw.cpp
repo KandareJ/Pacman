@@ -525,7 +525,14 @@ void Draw::drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std:
 	al_draw_text(menuFont, al_map_rgb(0, 0, 0), width / 2, 0, ALLEGRO_ALIGN_CENTRE, title);
 	al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgba(0, 0, 0, 190));
 
-	drawCharacter(players.at(0), x1, y1, (x2 - x1) / 2 + x1, (y2 - y1) / 2 + y1, nameOptions);
+	for (int i = offset; i < offset + 4 && i < players.size(); i++) {
+		if (i % 4 == 0) drawCharacter(players.at(i), x1, y1, (x2 - x1) / 2 + x1, (y2 - y1) / 2 + y1, nameOptions);
+		else if (i % 4 == 1) drawCharacter(players.at(i), (x2 - x1) / 2 + x1, y1, x2, (y2 - y1) / 2 + y1, nameOptions);
+		else if (i % 4 == 2) drawCharacter(players.at(i), x1, (y2 - y1) / 2 + y1, (x2 - x1) / 2 + x1, y2, nameOptions);
+		else drawCharacter(players.at(i), (x2 - x1) / 2 + x1, (y2 - y1) / 2 + y1, x2, y2, nameOptions);
+	}
+
+	
 
 
 	return;

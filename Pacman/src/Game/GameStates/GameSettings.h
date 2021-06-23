@@ -21,6 +21,7 @@ private:
     void increment();
     int numGhosts;
     int numPlayers;
+    int numJoysticks;
     int playmode;
     int selected;
     std::vector<std::string> playmodes;

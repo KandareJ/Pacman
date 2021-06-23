@@ -1,5 +1,6 @@
 #include "LevelSelect.h"
 #include "ClassicGame.h"
+#include "CharacterSelect.h"
 #include "MainMenu.h"
 #include "../../Graphics/Audio/Audio.h"
 #include <iostream>
@@ -39,6 +40,7 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 		if (update()) draw();
 	}
 
+/*
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (events.keyboard.keycode) {
 		case ALLEGRO_KEY_ENTER:
@@ -61,19 +63,24 @@ bool LevelSelect::run(ALLEGRO_EVENT events) {
 			return true;
 		}
 	}
-/*
+	*/
+
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
 		Audio::instance()->menuSelect();
 		switch (events.joystick.button) {
 			case 0:
+				Audio::instance()->menuSelect();
+				if (selected != levels.size() - 1) settings.levels.push_back(levels.at(selected));
+				else settings.levels.push_back(levels.at(rand() % (levels.size() - 1)));
 				context->changeState(new ClassicGame(context, settings));
 				break;
 			case 1:
-				context->changeState(new MainMenu(context));
+				Audio::instance()->menuSelect();
+				context->changeState(new CharacterSelect(context, settings));
 				break;
 		}
 	}
-*/
+
 	else if (events.type == ALLEGRO_EVENT_JOYSTICK_AXIS) {
 		/*
 		if (events.joystick.axis == 0 && events.joystick.pos > 0.9) cout << "Right" << endl;
