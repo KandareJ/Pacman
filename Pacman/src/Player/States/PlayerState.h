@@ -16,8 +16,10 @@ public:
 	virtual void die();
     virtual void powerUp();
 	virtual bool canMove();
+	virtual int getSpeed();
 protected:
     int frame;
+	int speed;
 	HumanPlayer* context;
 };
 

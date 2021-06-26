@@ -25,6 +25,7 @@ CharacterSelect::CharacterSelect(GameEngine* c, GameInfo g) {
     nameOptions.push_back("pico-man");
     nameOptions.push_back("waka flocka");
     nameOptions.push_back("pac-quiao");
+    nameOptions.push_back("hugh janus");
 
     nameOptions.push_back("jace");
     nameOptions.push_back("cass");

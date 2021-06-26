@@ -4,6 +4,7 @@
 
 BigPlayerState::BigPlayerState(HumanPlayer* c) :  PlayerState(c) {
     counter = 0;
+    speed = Draw::instance()->getTileSize() / 7;
     return;
 }
 

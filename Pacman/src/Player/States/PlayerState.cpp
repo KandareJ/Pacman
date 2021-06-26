@@ -2,15 +2,21 @@
 #include "BigPlayerState.h"
 #include "DyingState.h"
 #include "../../Graphics/Audio/Audio.h"
+#include "../../Graphics/Draw.h"
 
 PlayerState::PlayerState(HumanPlayer* c) {
     frame = 0;
     context = c;
+    speed = Draw::instance()->getTileSize() / 8;
     return;
 }
 
 PlayerState::~PlayerState() {
     return;
+}
+
+int PlayerState::getSpeed() {
+    return speed;
 }
 
 bool PlayerState::update() {

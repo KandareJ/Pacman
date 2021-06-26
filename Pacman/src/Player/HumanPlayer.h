@@ -38,7 +38,6 @@ private:
 	int x;
 	int y;
 	int dir;
-	int speed;
 	int r;
 	int g;
 	int b;

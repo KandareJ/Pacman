@@ -19,7 +19,6 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 	y = startY * tileSize + (tileSize / 2);
 	dir = NOT_MOVING;
 	score = 0;
-	speed = tileSize / 8;
 	r = red;
 	g = green;
 	b = blue;
@@ -85,7 +84,7 @@ bool HumanPlayer::moveLeft() {
 	bool change = false;
 	if (map->getMapPos((tileWidth + (getTileX() - 1) % tileWidth) % tileWidth, getTileY()) == 0 || getTileOffsetX() > 0) {
 		if (x <= 0)x = width;
-		x -= speed;
+		x -= state->getSpeed();
 		change = true;
 	}
 	else dir = NOT_MOVING;
@@ -97,7 +96,7 @@ bool HumanPlayer::moveRight() {
 	bool change = false;
 	if (map->getMapPos((tileWidth + (getTileX() + 1) % tileWidth) % tileWidth, getTileY()) == 0 || getTileOffsetX() < 0) {
 		if (x >= width) x = 0;
-		x += speed;
+		x += state->getSpeed();
 		change = true;
 	}
 	else dir = NOT_MOVING;
@@ -109,7 +108,7 @@ bool HumanPlayer::moveUp() {
 	bool change = false;
 	if (map->getMapPos(getTileX(), (tileHeight + (getTileY() - 1) % tileHeight) % tileHeight) == 0 || getTileOffsetY() > 0) {
 		if (y <= 0) y = height;
-		y -= speed;
+		y -= state->getSpeed();
 		change = true;
 	}
 	else dir = NOT_MOVING;
@@ -121,7 +120,7 @@ bool HumanPlayer::moveDown() {
 	bool change = false;
 	if (map->getMapPos(getTileX(), (tileHeight + (getTileY() + 1) % tileHeight) % tileHeight) == 0 || getTileOffsetY() < 0) {
 		if (y >= height) y = 0;
-		y += speed;
+		y += state->getSpeed();
 		 change = true;
 	}
 	else dir = NOT_MOVING;
