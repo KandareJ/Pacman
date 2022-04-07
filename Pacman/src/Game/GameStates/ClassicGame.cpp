@@ -2,26 +2,26 @@
 #include "Scoreboard.h"
 #include "../../Graphics/Audio/Audio.h"
 
-ClassicGame::ClassicGame(GameEngine* c, GameInfo settings) {
+ClassicGame::ClassicGame(GameEngine* c, GameInfo* settings) {
 	this->settings = settings;
 	over = false;
 	context = c;
 	lastChasePlayer = -1;
 	eq = eq->getInstance();
-	map = new ClassicMap(settings.levels.at(settings.levels.size() - 1));
+	map = new ClassicMap(settings->levels.at(settings->levels.size() - 1));
 	ghosts = vector<BasicGhost*>();
-	int numGhosts = settings.numGhosts;
-	int numPlayers = settings.players.size();
+	int numGhosts = settings->numGhosts;
+	int numPlayers = settings->players.size();
 	int r, g, b;
 	int hue = (numGhosts) ? 300 / numGhosts : 300;
 	int playerHue = 60;
 	int playerX, playerY;
 
-	settings.levels.pop_back();
+	settings->levels.pop_back();
 
 	for (int i = 0; i < numPlayers; i++) {
 		map->getPlayerSpawnCoordinates(playerX, playerY);
-		players.push_back(new HumanPlayer(map, playerX, playerY, settings.players.at(i).r, settings.players.at(i).g, settings.players.at(i).b));
+		players.push_back(new HumanPlayer(map, playerX, playerY, settings->players.at(i)->r, settings->players.at(i)->g, settings->players.at(i)->b, i));
 	}
 
 	for (int i = 0; i < numGhosts; i++) {
@@ -53,7 +53,7 @@ void ClassicGame::draw() {
 	map->draw();
 	for (unsigned int i = 0; i < ghosts.size(); i++) ghosts.at(i)->draw();
 	for (unsigned int i = 0; i < players.size(); i++) {
-		Draw::instance()->drawScore(players.at(i)->getScore(), i, players.size(), settings.players.at(i));
+		Draw::instance()->drawScore(players.at(i)->getScore(), i, players.size(), settings->players.at(i));
 		players.at(i)->draw();
 	}
 
@@ -84,7 +84,7 @@ bool ClassicGame::update() {
 		if (players.at(i)->isAlive()) survivors++;
 	}
 
-	if (settings.playmode.compare("lms") == 0 && survivors <= 1) over = true;
+	if (settings->playmode.compare("lms") == 0 && survivors <= 1) over = true;
 	else if (survivors <= 0) over = true;
 
 	raiseEvents();
@@ -118,15 +118,15 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 		drawNeeded = update();
 		if (drawNeeded) draw();
 
-		for (unsigned int i = 0; i < settings.players.size(); i++) {
+		/*for (unsigned int i = 0; i < settings->players.size(); i++) {
 			ALLEGRO_JOYSTICK_STATE joystick_state;
-			al_get_joystick_state(settings.players.at(i).joystick, &joystick_state);
+			al_get_joystick_state(settings->players.at(i)->joystick, &joystick_state);
 			if (joystick_state.stick[0].axis[0] > 0.95) players.at(i)->changeDirection(RIGHT);
 			if (joystick_state.stick[0].axis[0] < -0.95) players.at(i)->changeDirection(LEFT);
 			if (joystick_state.stick[0].axis[1] > 0.95) players.at(i)->changeDirection(DOWN);
 			if (joystick_state.stick[0].axis[1] < -0.95) players.at(i)->changeDirection(UP);
 
-		}
+		}*/
 	}
 
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -149,7 +149,7 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 	}
 
 	for (unsigned int i = 0; i < players.size(); i++) {
-		settings.players.at(i).score = players.at(i)->getScore();
+		settings->players.at(i)->score = players.at(i)->getScore();
 	}
 
 	if (over) context->changeState(new Scoreboard(context, settings));

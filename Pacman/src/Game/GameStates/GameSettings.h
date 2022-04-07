@@ -5,15 +5,17 @@
 #include "../../Graphics/Draw.h"
 #include <allegro5/allegro.h>
 #include "../GameInfo.h"
+#include "../../Drivers/Drivers.h"
 #include <string>
 #include <vector>
 
-class GameSettings : public Game {
+class GameSettings : public Game, public Observer {
 public:
     GameSettings(GameEngine* c);
-    GameSettings(GameEngine* c, GameInfo g);
+    GameSettings(GameEngine* c, GameInfo* g);
     ~GameSettings();
     bool run(ALLEGRO_EVENT events);
+    virtual void observerUpdate(Subject*);
 
 private:
     void draw();
@@ -26,7 +28,7 @@ private:
     int selected;
     std::vector<std::string> playmodes;
 	GameEngine* context;
-    GameInfo settings;
+    GameInfo* settings;
 };
 
 #endif

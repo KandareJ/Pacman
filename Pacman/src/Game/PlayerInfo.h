@@ -2,26 +2,26 @@
 #define PLAYER_INFO_H
 
 #include <string>
+#include "../Utils/Subject.h"
+#include "../Input/JoystickConstants.h"
+#include "../Input/Joystick.h"
+#include "../Graphics/Audio/Audio.h"
 
-class PlayerInfo {
+const int NUM_OPTIONS = 2;
+
+class PlayerInfo : public Observer {
 public:
-    PlayerInfo() {
-        r = 0;
-        g = 0;
-        b = 0;
-        score = 0;
-        wins = 0;
-        selected = 0;
-        nameSelection = 0;
-        returned = true;
-    }
-    
+    PlayerInfo();
+    ~PlayerInfo();
+    virtual void observerUpdate(Subject*);
     int r;
     int g;
     int b;
     int selected;
     int score;
     int wins;
+    int numNames;
+    int numColors;
     std::string name;
     int nameSelection;
     int colorSelection;

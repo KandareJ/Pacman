@@ -1,14 +1,18 @@
 #include "MainMenu.h"
 #include "GameSettings.h"
 #include "../../Graphics/Audio/Audio.h"
-#include <iostream>
 
 MainMenu::MainMenu(GameEngine* c) {
 	context = c;
 	frame = -1;
+
+	Drivers::getDrivers()->getInput()->attachAll(this);
+	
+	exit = false;
 }
 
 MainMenu::~MainMenu() {
+	Drivers::getDrivers()->getInput()->detachAll(this);
 	return;
 }
 
@@ -29,16 +33,18 @@ bool MainMenu::run(ALLEGRO_EVENT events) {
 		if (update()) draw();
 	}
 
-	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
-		switch (events.joystick.button) {
-			case 0:
-				Audio::instance()->menuSelect();
-				context->changeState(new GameSettings(context));
-				return false;
-			case 1:
-				return true;
-		}
+	return exit;
+}
+
+void MainMenu::observerUpdate(Subject* sub) {
+	Joystick* joystick = (Joystick*) sub;
+
+	if (joystick->getPreviousButtonPosition(0) == ButtonPosition::DOWN) {
+		Audio::instance()->menuSelect();
+		context->changeState(new GameSettings(context));
 	}
 
-	return false;
+	else if (joystick->getPreviousButtonPosition(1) == ButtonPosition::DOWN) {
+		exit = true;
+	}
 }

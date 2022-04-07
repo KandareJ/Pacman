@@ -4,14 +4,16 @@
 #include "../Map/Map.h"
 #include "../Graphics/Draw.h"
 #include "../Events/EventQueue.h"
+#include "../Utils/Observer.h"
+#include "../Drivers/Drivers.h"
 //#include "States/PlayerState.h"
 
 //enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };
 class PlayerState;
 
-class HumanPlayer {
+class HumanPlayer : public Observer {
 public:
-	HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue);
+	HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue, int index);
 	~HumanPlayer();
 	bool update();
 	void draw();
@@ -27,6 +29,7 @@ public:
 	void die();
 	friend class PlayerState;
 	void changeState(PlayerState* s);
+	virtual void observerUpdate(Subject*);
 
 private:
 	int tileSize;
@@ -53,6 +56,7 @@ private:
 	void eatPellet();
 	EventQueue* eq;
 	PlayerState* state;
+	int index;
 };
 
 #endif

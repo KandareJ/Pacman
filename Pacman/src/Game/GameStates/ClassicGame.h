@@ -18,7 +18,7 @@ using namespace std;
 
 class ClassicGame : public Game {
 public:
-	ClassicGame(GameEngine* c, GameInfo s);
+	ClassicGame(GameEngine* c, GameInfo* s);
 	~ClassicGame();
 	bool run(ALLEGRO_EVENT events);
 	HumanPlayer* getPlayer();
@@ -41,7 +41,7 @@ private:
 	double getDistance(int tileX1, int tileY1, int tileX2, int tileY2);
 	int getChasePlayer();
 	int lastChasePlayer;
-	GameInfo settings;
+	GameInfo* settings;
 };
 
 #endif

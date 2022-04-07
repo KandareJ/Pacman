@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "../../Graphics/Draw.h"
 #include "../GameInfo.h"
+#include "../../Drivers/Drivers.h"
 #include <allegro5/allegro.h>
 #include <vector>
 #include <string>
@@ -11,12 +12,12 @@
 #include <fstream>
 #include <iostream>
 
-class LevelSelect : public Game {
+class LevelSelect : public Game, public Observer {
 public:
-	LevelSelect(GameEngine* c, GameInfo settings);
+	LevelSelect(GameEngine* c, GameInfo* settings);
 	~LevelSelect();
 	bool run(ALLEGRO_EVENT events);
-
+	virtual void observerUpdate(Subject*);
 private:
 	bool update();
 	void draw();
@@ -24,7 +25,7 @@ private:
 	int selected;
 	bool changed;
 	GameEngine* context;
-	GameInfo settings;
+	GameInfo* settings;
 };
 
 #endif // !LEVELSELECT_H

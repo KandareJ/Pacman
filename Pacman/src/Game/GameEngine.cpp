@@ -12,6 +12,7 @@ GameEngine::~GameEngine() {
 }
 
 bool GameEngine::run(ALLEGRO_EVENT events) {
+	Drivers::getDrivers()->getInput()->update();
 	return state->run(events);
 }
 

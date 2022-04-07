@@ -146,9 +146,9 @@ ALLEGRO_COLOR premul_alpha(ALLEGRO_COLOR color) {
 }
 
 void Draw::drawGlow(int x, int y, int r, int g, int b, int radius, int vibrance) {
-	for (int size = tileSize / 2 + radius; size > tileSize / 2 - 50; size -= 5) {
+	/*for (int size = tileSize / 2 + radius; size > tileSize / 2 - 50; size -= 5) {
 		al_draw_filled_circle(x + xOffset, y + yOffset, size, premul_alpha(al_map_rgba(r, g, b, vibrance)));
-	}
+	}*/
 }
 
 void Draw::drawGhost(int x, int y, int dir, int r, int g, int b) {
@@ -328,10 +328,11 @@ void Draw::drawCherry(int x, int y) {
 }
 
 void Draw::drawGlowingLine(float x1, float y1, float x2, float y2, ALLEGRO_COLOR color, float thickness, int vibrance) {
+	
 	unsigned char r, g, b;
 	al_unmap_rgb(color, &r, &g, &b);
 	
-	for (float f = 1; f < thickness * 12; f+= (tileSize / 12)) al_draw_line(x1, y1, x2, y2, premul_alpha(al_map_rgba(r, g, b, vibrance)), f);
+	//for (float f = 1; f < thickness * 12; f+= (tileSize / 12)) al_draw_line(x1, y1, x2, y2, premul_alpha(al_map_rgba(r, g, b, vibrance)), f);
 	al_draw_line(x1, y1, x2, y2, color, thickness);
 	al_draw_line(x1, y1, x2, y2, al_map_rgb(255, 255, 255), 1);
 	
@@ -414,12 +415,12 @@ void Draw::drawRightWall(int x, int y, int w, int h, int** map) {
 	return;
 }
 
-void Draw::drawScore(int score, int player, int totalPlayers, PlayerInfo p) {
+void Draw::drawScore(int score, int player, int totalPlayers, PlayerInfo* p) {
 	char *text = (char*)malloc(20);
 	int col = (tileWidth - 3) * tileSize / 3;
 	int row = player / 4 * tileSize / 2;
-	sprintf(text, "%s: %d", p.name.c_str(), score);
-	al_draw_text(font, al_map_rgb(p.r, p.g, p.b), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, 0, text);
+	sprintf(text, "%s: %d", p->name.c_str(), score);
+	al_draw_text(font, al_map_rgb(p->r, p->g, p->b), (xOffset+tileSize*corner) + ((player % 4) * col), yOffsetScore + row, 0, text);
 	free(text);
 }
 
@@ -457,7 +458,7 @@ void Draw::drawLevelSelect(std::vector<std::string> levels, int selected) {
 	return;
 }
 
-void Draw::drawScoreboard(std::vector<PlayerInfo> players, int selected) {
+void Draw::drawScoreboard(std::vector<PlayerInfo*> players, int selected) {
 	if (menu) {
 		int imageHeight = al_get_bitmap_height(menu);
 		int imageWidth = al_get_bitmap_width(menu);
@@ -472,11 +473,11 @@ void Draw::drawScoreboard(std::vector<PlayerInfo> players, int selected) {
 		for (unsigned int i = 0; i < players.size() && i < 11; i++) {
 			char score[50];
 			ALLEGRO_COLOR color = (i + offset == selected) 
-				? al_map_rgb(players.at(i).r, players.at(i).g, players.at(i).b)
-				: al_map_rgba(players.at(i).r, players.at(i).g, players.at(i).b, 200);
+				? al_map_rgb(players.at(i)->r, players.at(i)->g, players.at(i)->b)
+				: al_map_rgba(players.at(i)->r, players.at(i)->g, players.at(i)->b, 200);
 
-			sprintf(score, "%d", players.at(i + offset).score);
-			al_draw_text(menuFont, color, width * .25 + height / 40, height / 15 * (2 + i), 0, players.at(i+offset).name.c_str());
+			sprintf(score, "%d", players.at(i + offset)->score);
+			al_draw_text(menuFont, color, width * .25 + height / 40, height / 15 * (2 + i), 0, players.at(i+offset)->name.c_str());
 			al_draw_text(menuFont, color, width * .75 - height / 40, height / 15 * (2 + i), ALLEGRO_ALIGN_RIGHT, score);
 		}
 	}
@@ -512,7 +513,7 @@ void Draw::drawSettings(int numGhosts, int numPlayers, std::string gameMode, int
 	return;
 }
 
-void Draw::drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std::vector<std::string> nameOptions) {
+void Draw::drawCharacterSelect(std::vector<PlayerInfo*> players, int offset, std::vector<std::string> nameOptions) {
 	int imageHeight = al_get_bitmap_height(menu);
 	int imageWidth = al_get_bitmap_width(menu);
 	al_draw_scaled_bitmap(menu, 0, 0, imageWidth, imageHeight, 0, 0, width, height, 0);
@@ -531,38 +532,34 @@ void Draw::drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std:
 		else if (i % 4 == 2) drawCharacter(players.at(i), x1, (y2 - y1) / 2 + y1, (x2 - x1) / 2 + x1, y2, nameOptions);
 		else drawCharacter(players.at(i), (x2 - x1) / 2 + x1, (y2 - y1) / 2 + y1, x2, y2, nameOptions);
 	}
-
 	
-
-
 	return;
 }
 
-void Draw::drawCharacter(PlayerInfo player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions) {
+void Draw::drawCharacter(PlayerInfo* player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions) {
 	//char buf[50];
 	//sprintf(buf, "<   %s   >", nameOptions.at(player.nameSelection).c_str());
 	int i = 0;
 	int j = 0;
 	int w = (x2 - x1) / 2;
 
-	generatePlayerColor(player.r, player.g, player.b, 20 * player.colorSelection);
+	generatePlayerColor(player->r, player->g, player->b, 20 * player->colorSelection);
 
 	// name
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "name:");
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "name:");
 	i++;
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, nameOptions.at(player.nameSelection).c_str());
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, nameOptions.at(player->nameSelection).c_str());
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
 	i+=2;
 	j++;
 
 	// color
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "color:");
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), (x2 - x1) / 2 + x1, y1 + height / 20 * i, ALLEGRO_ALIGN_CENTER, "color:");
 	i++;
-	al_draw_filled_rectangle( x1 + w * .40, y1 + height / 20 * i + 15, x2 - w * .40, y1 + height / 20 * (i + 1), al_map_rgb(player.r, player.g, player.b));
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
-	al_draw_text(characterFont, (player.selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
-
+	al_draw_filled_rectangle( x1 + w * .40, y1 + height / 20 * i + 15, x2 - w * .40, y1 + height / 20 * (i + 1), al_map_rgb(player->r, player->g, player->b));
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x1 + w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_LEFT, "<");
+	al_draw_text(characterFont, (player->selected == j) ? al_map_rgb(255, 255, 255) : al_map_rgb(100, 100, 100), x2 - w * .15, y1 + height / 20 * i, ALLEGRO_ALIGN_RIGHT, ">");
 
 	//al_draw_rectangle(x1, y1, x2, y2, al_map_rgb(255, 0, 0), 5);
 	

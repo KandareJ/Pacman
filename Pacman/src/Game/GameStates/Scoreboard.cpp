@@ -4,16 +4,48 @@
 #include "GameSettings.h"
 #include "../../Graphics/Audio/Audio.h"
 
-Scoreboard::Scoreboard(GameEngine* c, GameInfo g) {
+Scoreboard::Scoreboard(GameEngine* c, GameInfo* g) {
 	context = c;
 	changed = true;
 	selected = 0;
 	gameInfo = g;
+	Drivers::getDrivers()->getInput()->attachAll(this);
 	return;
 }
 
 Scoreboard::~Scoreboard() {
+	Drivers::getDrivers()->getInput()->detachAll(this);
 	return;
+}
+
+void Scoreboard::observerUpdate(Subject* subject) {
+	 Joystick* joystick = (Joystick*) subject;
+
+    if (joystick->getPreviousButtonPosition(0) == ButtonPosition::DOWN) {
+        Audio::instance()->menuSelect();
+		context->changeState(new GameSettings(context, gameInfo));
+    }
+
+    else if (joystick->getPreviousButtonPosition(1) == ButtonPosition::DOWN) {
+        Audio::instance()->menuSelect();
+		delete gameInfo;
+		context->changeState(new MainMenu(context));
+    }
+
+    else {
+        switch (joystick->getPreviousJoystickPosition()) {
+        case JoystickPosition::UP:
+            Audio::instance()->menuMove();
+			selected = (--selected + gameInfo->players.size()) % gameInfo->players.size();
+			changed = true;
+            break;
+        case JoystickPosition::DOWN:
+            Audio::instance()->menuMove();
+			selected = ++selected % gameInfo->players.size();
+			changed = true;
+            break;
+        };
+    }
 }
 
 bool Scoreboard::run(ALLEGRO_EVENT events) {
@@ -21,38 +53,12 @@ bool Scoreboard::run(ALLEGRO_EVENT events) {
 		if (update()) draw();
 	}
 
-	else if (events.type == ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN) {
-		switch (events.joystick.button) {
-			case 0:
-				Audio::instance()->menuSelect();
-				context->changeState(new GameSettings(context, gameInfo));
-				break;
-			case 1:
-				Audio::instance()->menuSelect();
-				context->changeState(new MainMenu(context));
-				break;
-		}
-	}
-
-	else if (events.type == ALLEGRO_EVENT_JOYSTICK_AXIS) {
-		if (events.joystick.axis == 1 && events.joystick.pos < -0.95) {
-			Audio::instance()->menuMove();
-			selected = (--selected + gameInfo.players.size()) % gameInfo.players.size();
-			changed = true;
-		}
-		else if (events.joystick.axis == 1 && events.joystick.pos > 0.95) {
-			Audio::instance()->menuMove();
-			selected = ++selected % gameInfo.players.size();
-			changed = true;
-		}
-	}
-
 	return false;
 }
 
 void Scoreboard::draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	Draw::instance()->drawScoreboard(gameInfo.players, selected);
+	Draw::instance()->drawScoreboard(gameInfo->players, selected);
 	al_flip_display();
 	return;
 }

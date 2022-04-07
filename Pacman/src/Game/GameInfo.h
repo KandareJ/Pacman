@@ -11,10 +11,15 @@ public:
         numGhosts = 4;
         playmode = "classic";
     }
+    ~GameInfo() {
+        for (unsigned int i = 0; i < players.size(); i++) {
+            delete players.at(i);
+        }
+    }
     
     int numGhosts;
     std::vector<std::string> levels;
-    std::vector<PlayerInfo> players;
+    std::vector<PlayerInfo*> players;
     std::string playmode;
 
 };

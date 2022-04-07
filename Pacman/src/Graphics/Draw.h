@@ -28,7 +28,7 @@ public:
 	void drawShrinkingPlayer(int x, int y, int dir, int frame, int r, int g, int b, int size);
 	void drawDyingPlayer(int x, int y, int dir, int frame, int r, int g, int b);
 	void drawMap(int** map, int** object, int frame, int h, int w);
-	void drawScore(int score, int player, int totalPlayers, PlayerInfo p);
+	void drawScore(int score, int player, int totalPlayers, PlayerInfo* p);
 	int getTileSize();
 	int getTileWidth();
 	int getTileHeight();
@@ -37,9 +37,9 @@ public:
 
 	void drawMenu(int frame);
 	void drawLevelSelect(std::vector<std::string> levels, int selected);
-	void drawScoreboard(std::vector<PlayerInfo> players, int selected);
+	void drawScoreboard(std::vector<PlayerInfo*> players, int selected);
 	void drawSettings(int numGhosts, int numPlayers, std::string gameMode, int selected);
-	void drawCharacterSelect(std::vector<PlayerInfo> players, int offset, std::vector<std::string> nameOptions);
+	void drawCharacterSelect(std::vector<PlayerInfo*> players, int offset, std::vector<std::string> nameOptions);
 
 	void highlightTile(int x, int y);
 protected:
@@ -67,7 +67,7 @@ private:
 	void drawCherry(int x, int y);
 	void drawPellet(int x, int y);
 	void drawPowerup(int x, int y, int frame);
-	void drawCharacter(PlayerInfo player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions);
+	void drawCharacter(PlayerInfo* player, float x1, float y1, float x2, float y2, std::vector<std::string> nameOptions);
 	double corner;
 	int thickness;
 	void initializeTileSize();

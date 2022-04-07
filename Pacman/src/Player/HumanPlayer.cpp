@@ -4,7 +4,7 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue) {
+HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue, int index) {
 	eq = eq->getInstance();
 	Draw* draw = Draw::instance();
 	tileSize = draw->getTileSize();
@@ -13,6 +13,7 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 	height = tileHeight * tileSize;
 	width = tileWidth * tileSize;
 	state = new PlayerState(this);
+	Drivers::getDrivers()->getInput()->attach(this, index);
 
 	map = m;
 	x = startX * tileSize + (tileSize / 2);
@@ -22,11 +23,13 @@ HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int
 	r = red;
 	g = green;
 	b = blue;
+	this->index = index;
 
 	return;
 }
 
 HumanPlayer::~HumanPlayer() {
+	Drivers::getDrivers()->getInput()->detach(this, index);
 	delete state;
 	return;
 }
@@ -210,4 +213,33 @@ void HumanPlayer::die() {
 void HumanPlayer::changeState(PlayerState* newState) {
 	delete state;
 	state = newState;
+}
+
+void HumanPlayer::observerUpdate(Subject* subject) {
+	Joystick* _joystick = (Joystick*)subject;
+
+    if (_joystick->getPreviousButtonPosition(0) == ButtonPosition::DOWN) {
+    
+    }
+
+    else if (_joystick->getPreviousButtonPosition(1) == ButtonPosition::DOWN) {
+        
+    }
+
+    else {
+        switch (_joystick->getPreviousJoystickPosition()) {
+        case JoystickPosition::UP:
+            changeDirection(UP);
+            break;
+        case JoystickPosition::DOWN:
+            changeDirection(DOWN);
+            break;
+        case JoystickPosition::LEFT:
+            changeDirection(LEFT);
+            break;
+        case JoystickPosition::RIGHT:
+            changeDirection(RIGHT);
+            break;
+        };
+    }
 }

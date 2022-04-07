@@ -8,7 +8,10 @@ src = $(wildcard src/main.cpp) \
 	  $(wildcard src/Graphics/Audio/*.cpp) \
 	  $(wildcard src/Map/*.cpp) \
 	  $(wildcard src/Player/*.cpp) \
-	  $(wildcard src/Player/States/*.cpp)
+	  $(wildcard src/Player/States/*.cpp) \
+	  $(wildcard src/Utils/*.cpp) \
+	  $(wildcard src/Input/*.cpp) \
+	  $(wildcard src/Drivers/*.cpp)
 
 obj = $(src:.cpp=.o)
 
