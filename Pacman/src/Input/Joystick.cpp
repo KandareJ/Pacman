@@ -2,11 +2,6 @@
 
 Joystick::Joystick(int joystickIndex) {
 	joystickHandle = al_get_joystick(joystickIndex);
-	previousJoystickPosition = JoystickPosition::CENTER;
-
-	for (int i = 0; i < NUM_JOYSTICK_BUTTONS; i++) {
-		previousButtonPositions[i] = ButtonPosition::UP;
-	}
 }
 
 Joystick::~Joystick() {
@@ -47,13 +42,4 @@ JoystickPosition Joystick::axesToPosition(double horizontalAxis, double vertical
 ButtonPosition Joystick::buttonToPosition(double buttonValue) {
 	if (buttonValue) return ButtonPosition::DOWN;
 	else return ButtonPosition::UP;
-}
-
-JoystickPosition Joystick::getPreviousJoystickPosition() {
-	return previousJoystickPosition;
-}
-
-ButtonPosition Joystick::getPreviousButtonPosition(int index) {
-	if (index >= NUM_JOYSTICK_BUTTONS || index < 0) return ButtonPosition::UP;
-	else return previousButtonPositions[index];
 }

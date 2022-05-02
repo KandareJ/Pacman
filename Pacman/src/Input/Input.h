@@ -4,7 +4,9 @@
 #include <vector>
 #include <allegro5/allegro.h>
 
-#include "./Joystick.h"
+#include "./Controller.h"
+#include "KeyboardController.h"
+#include "Joystick.h"
 
 class Input {
 public:
@@ -17,7 +19,7 @@ public:
     void detachAll(Observer*);
     void detach(Observer*, int index);
 private:
-    std::vector<Joystick*> inputDevices;
+    std::vector<Controller*> inputDevices;
 };
 
 #endif

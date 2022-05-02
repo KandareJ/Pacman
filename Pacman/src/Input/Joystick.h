@@ -4,22 +4,17 @@
 #include <queue>
 #include <allegro5/allegro.h>
 
-#include "../Utils/Subject.h"
-#include "JoystickConstants.h"
+#include "./Controller.h"
 
-class Joystick : public Subject {
+class Joystick : public Controller {
 public:
 	Joystick(int);
 	~Joystick();
 	void update();
-	JoystickPosition getPreviousJoystickPosition();
-	ButtonPosition getPreviousButtonPosition(int);
 private:
 	JoystickPosition axesToPosition(double, double);
 	ButtonPosition buttonToPosition(double);
 	ALLEGRO_JOYSTICK* joystickHandle;
-	JoystickPosition previousJoystickPosition;
-	ButtonPosition previousButtonPositions[NUM_JOYSTICK_BUTTONS];
 };
 
 #endif

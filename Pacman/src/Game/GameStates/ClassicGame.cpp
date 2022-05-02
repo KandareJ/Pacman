@@ -117,16 +117,6 @@ bool ClassicGame::run(ALLEGRO_EVENT events) {
 	if (events.type == ALLEGRO_EVENT_TIMER) {
 		drawNeeded = update();
 		if (drawNeeded) draw();
-
-		/*for (unsigned int i = 0; i < settings->players.size(); i++) {
-			ALLEGRO_JOYSTICK_STATE joystick_state;
-			al_get_joystick_state(settings->players.at(i)->joystick, &joystick_state);
-			if (joystick_state.stick[0].axis[0] > 0.95) players.at(i)->changeDirection(RIGHT);
-			if (joystick_state.stick[0].axis[0] < -0.95) players.at(i)->changeDirection(LEFT);
-			if (joystick_state.stick[0].axis[1] > 0.95) players.at(i)->changeDirection(DOWN);
-			if (joystick_state.stick[0].axis[1] < -0.95) players.at(i)->changeDirection(UP);
-
-		}*/
 	}
 
 	else if (events.type == ALLEGRO_EVENT_KEY_DOWN) {

@@ -187,7 +187,7 @@ int ClassicMap::getDistance(int x, int y) {
 
 bool ClassicMap::update() {
 	frame = (++frame) % 30;
-	if (!fruitOut && getPelletPercent() > .5) {
+	if (!fruitOut && getPelletPercent() > .9) {
 		int i = rand() % fruitCoords.size();
 		object[fruitCoords.at(i).y][fruitCoords.at(i).x] = 4;
 		fruitOut = true;
@@ -196,13 +196,6 @@ bool ClassicMap::update() {
 }
 
 void ClassicMap::draw() {
-	/* // Uncomment this for party mode.
-	// You'll need to uncomment the counter variable in the header file too
-	// Also, comment out other al_clear_to_color
-	int r, g, b;
-	counter = (counter + 1) % 300;
-	Draw::generateGhostColor(r, g, b, counter);
-	al_clear_to_color(al_map_rgb(r, g, b));*/
 	Draw* draw = Draw::instance();
 	draw->drawMap(map, object, frame, height, width);
 	return;

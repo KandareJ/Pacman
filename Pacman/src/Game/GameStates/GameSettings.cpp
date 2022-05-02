@@ -10,7 +10,7 @@ const int MAX_NUM_GHOSTS = 20;
 
 GameSettings::GameSettings(GameEngine* c) {
     settings = new GameInfo();
-    numJoysticks = al_get_num_joysticks();
+    numJoysticks = Drivers::getDrivers()->getInput()->getInputDevicesSize();
     context = c;
     numGhosts = 4;
     numPlayers = numJoysticks;
@@ -38,8 +38,7 @@ GameSettings::GameSettings(GameEngine* c, GameInfo* g) {
         if (playmodes.at(i).compare(g->playmode) == 0) playmode = i;
     }
 
-    numJoysticks = al_get_num_joysticks();
-
+    numJoysticks = Drivers::getDrivers()->getInput()->getInputDevicesSize();
     draw();
 }
 
@@ -115,7 +114,10 @@ void GameSettings::draw() {
 }
 
 void GameSettings::decrement() {
-    if (selected == 1) {
+    if (selected == 0) {
+        if (--playmode < 0) playmode = playmodes.size() - 1;
+    }
+    else if (selected == 1) {
         if (--numGhosts < 0) numGhosts = MAX_NUM_GHOSTS;
     }
     else if (selected == 2) {
@@ -128,9 +130,9 @@ void GameSettings::increment() {
         playmode = ++playmode % playmodes.size();
     }
     else if (selected == 1) {
-        numGhosts = ++ numGhosts % (MAX_NUM_GHOSTS + 1);
+        numGhosts = ++numGhosts % (MAX_NUM_GHOSTS + 1);
     }
     else if (selected == 2) {
-        numPlayers = ++numPlayers % numJoysticks + 1;
+        numPlayers = ++numPlayers % (numJoysticks + 1);
     }
 }
