@@ -187,7 +187,7 @@ int ClassicMap::getDistance(int x, int y) {
 
 bool ClassicMap::update() {
 	frame = (++frame) % 30;
-	if (!fruitOut && getPelletPercent() > .9) {
+	if (!fruitOut && getPelletPercent() > .99) {
 		int i = rand() % fruitCoords.size();
 		object[fruitCoords.at(i).y][fruitCoords.at(i).x] = 4;
 		fruitOut = true;

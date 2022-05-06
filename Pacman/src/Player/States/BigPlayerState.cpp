@@ -1,10 +1,11 @@
 #include "BigPlayerState.h"
 #include "ShrinkingPlayerState.h"
+#include "DyingState.h"
 #include "../../Graphics/Audio/Audio.h"
 
 BigPlayerState::BigPlayerState(HumanPlayer* c) :  PlayerState(c) {
     counter = 0;
-    speed = Draw::instance()->getTileSize() / 7;
+    speed = Draw::instance()->getTileSize() / 6;
     return;
 }
 
@@ -30,6 +31,8 @@ void BigPlayerState::powerUp() {
 }
 
 void BigPlayerState::die() {
+    Audio::instance()->death();
+    context->changeState(new DyingState(context));
     return;
 }
 
