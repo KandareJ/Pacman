@@ -10,6 +10,7 @@ src = $(wildcard src/main.cpp) \
 	  $(wildcard src/Player/*.cpp) \
 	  $(wildcard src/Player/States/*.cpp) \
 	  $(wildcard src/Utils/*.cpp) \
+	  $(wildcard src/Utils/Logger/*.cpp) \
 	  $(wildcard src/Input/*.cpp) \
 	  $(wildcard src/Drivers/*.cpp)
 
