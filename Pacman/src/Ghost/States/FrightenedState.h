@@ -7,8 +7,6 @@
 #include "../../Graphics/Draw.h"
 #include <vector>
 
-using namespace std;
-
 class FrightenedState : public GhostState {
 public:
 	FrightenedState(int x, int y, Map* map, HumanPlayer* player, BasicGhost* c);
@@ -18,7 +16,7 @@ public:
 	void frighten();
 	int collision();
 private:
-	int choosePath(vector<int> options);
+	int choosePath(std::vector<int> options);
 	int frame;
 };
 

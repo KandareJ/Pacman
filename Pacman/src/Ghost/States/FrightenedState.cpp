@@ -2,7 +2,6 @@
 #include "ReturnHouseState.h"
 #include "FrightenedEndState.h"
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 
 FrightenedState::FrightenedState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
@@ -35,7 +34,7 @@ void FrightenedState::draw(int r, int g, int b) {
 	return;
 }
 
-int FrightenedState::choosePath(vector<int> options) {
+int FrightenedState::choosePath(std::vector<int> options) {
 	return options.at(rand() % options.size());
 }
 

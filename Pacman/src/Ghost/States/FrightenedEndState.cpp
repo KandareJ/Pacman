@@ -36,7 +36,7 @@ void FrightenedEndState::draw(int r, int g, int b) {
 	return;
 }
 
-int FrightenedEndState::choosePath(vector<int> options) {
+int FrightenedEndState::choosePath(std::vector<int> options) {
 	return options.at(rand() % options.size());
 }
 

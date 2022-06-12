@@ -8,12 +8,13 @@
 
 class ConfigParser {
 public:
-    Config parse(string path);
+    Config parse(std::string path);
+    //Config parse(const char* path);
 private:
-    void parseLine(string line);
-    string stripWhitespace(string line);
-    bool isComment(string line);
-    bool isValid(string line);
+    void parseLine(std::string line);
+    std::string stripWhitespace(std::string line);
+    bool isComment(std::string line);
+    bool isValid(std::string line);
     Config config;
 };
 

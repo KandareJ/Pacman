@@ -6,12 +6,12 @@
 
 class ReleaseLogger : public FileLogger {
 public:
-    ReleaseLogger();
+    ReleaseLogger(std::string filepath);
     ~ReleaseLogger();
-    void debug(string message);
-    void info(string message);
+    void debug(std::string message);
+    void info(std::string message);
 private:
-    string getFileName();
+    std::string getFileName();
 };
 
 #endif

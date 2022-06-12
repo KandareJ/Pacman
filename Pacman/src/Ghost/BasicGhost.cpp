@@ -4,7 +4,6 @@
 #include "States/FrightenedState.h"
 #include "BasicGhost.h"
 #include "allegro5/allegro_primitives.h"
-#include <iostream>
 
 BasicGhost::BasicGhost(Map* map, HumanPlayer* player, double pelletPercent, int r, int g, int b) {
 	state = new GhostHouseState(map, player, this);

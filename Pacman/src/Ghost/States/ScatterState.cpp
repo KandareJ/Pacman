@@ -1,6 +1,5 @@
 #include "ScatterState.h"
 #include "ChaseState.h"
-#include <iostream>
 
 ScatterState::ScatterState(int startX, int startY, Map* m, HumanPlayer* target, int targetX, int targetY, BasicGhost* c) {
 	Draw* draw = Draw::instance();
@@ -33,8 +32,8 @@ void ScatterState::draw(int r, int g, int b) {
 	return;
 }
 
-int ScatterState::choosePath(vector<int> options) {
-	vector<double> distances = vector<double>();
+int ScatterState::choosePath(std::vector<int> options) {
+	std::vector<double> distances;
 	int index = 0;
 	double min = 1000000000000;
 

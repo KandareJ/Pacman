@@ -1,7 +1,4 @@
 #include "Subject.h"
-#include <iostream>
-
-using namespace std;
 
 Subject::Subject() {
 
@@ -20,7 +17,6 @@ void Subject::detach(Observer* o) {
 
 	for (unsigned int i = 0; i < size; i++) {
 		if (observers.at(i) == o) {
-			cout << "detaching!" << endl;
 			observers.erase(observers.begin() + i);
 			break;
 		}

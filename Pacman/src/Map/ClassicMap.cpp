@@ -1,13 +1,10 @@
 #include "ClassicMap.h"
 #include <sstream>
 #include <fstream>
-#include <iostream>
 #include <queue>
 
-using namespace std;
-
-ClassicMap::ClassicMap(string level) {
-	ifstream mapData("levels/" + level + ".pac");
+ClassicMap::ClassicMap(std::string level) {
+	std::ifstream mapData("levels/" + level + ".pac");
 	pellets = 0.0;
 	pelletsEaten = 0.0;
 	option = -1;
@@ -15,9 +12,9 @@ ClassicMap::ClassicMap(string level) {
 	lastSpawnCoord = -1;
 	srand(time(NULL));
 
-	string line;
+	std::string line;
 	getline(mapData, line);
-	istringstream is(line);
+	std::istringstream is(line);
 	is >> height >> width;
 	Draw::instance()->initializeMapProportions(width, height);
 
@@ -39,7 +36,7 @@ ClassicMap::ClassicMap(string level) {
 
 	for (int y = 0; y < height; y++) {
 		getline(mapData, line);
-		istringstream is(line);
+		std::istringstream is(line);
 		for (int x = 0; x < width; x++) {
 			is >> map[y][x];
 			if (map[y][x] == 3) houseCoords.push_back(Coordinate(x, y));
@@ -51,7 +48,7 @@ ClassicMap::ClassicMap(string level) {
 	}
 
 	getline(mapData, line);
-	istringstream is2(line);
+	std::istringstream is2(line);
 	is2 >> numOptions;
 
 	objectOptions = new int**[numOptions];
@@ -65,7 +62,7 @@ ClassicMap::ClassicMap(string level) {
 	for (int i = 0; i < numOptions; i++) {
 		for (int y = 0; y < height; y++) {
 			getline(mapData, line);
-			istringstream is(line);
+			std::istringstream is(line);
 			for (int x = 0; x < width; x++) {
 				is >> objectOptions[i][y][x];
 			}
@@ -74,24 +71,24 @@ ClassicMap::ClassicMap(string level) {
 
 	int coords;
 	getline(mapData, line);
-	istringstream is3(line);
+	std::istringstream is3(line);
 	is3 >> coords;
 
 	for (int i = 0; i < coords; i++) {
 		getline(mapData, line);
-		istringstream is(line);
+		std::istringstream is(line);
 		int tempX, tempY;
 		is >> tempX >> tempY;
 		playerSpawnCoords.push_back(Coordinate(tempX, tempY));
 	}
 
 	getline(mapData, line);
-	istringstream is4(line);
+	std::istringstream is4(line);
 	is4 >> coords;
 
 	for (int i = 0; i < coords; i++) {
 		getline(mapData, line);
-		istringstream is(line);
+		std::istringstream is(line);
 		int tempX, tempY;
 		is >> tempX >> tempY;
 		fruitCoords.push_back(Coordinate(tempX, tempY));
@@ -128,7 +125,7 @@ ClassicMap::~ClassicMap() {
 }
 
 void ClassicMap::initializeDistances() {
-	queue<Coordinate> q;
+	std::queue<Coordinate> q;
 	q.push(houseGate);
 	distances[houseGate.y][houseGate.x] = 0;
 	int min;

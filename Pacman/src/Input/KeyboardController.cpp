@@ -1,9 +1,5 @@
 #include "KeyboardController.h"
 
-#include <iostream>
-
-using namespace std;
-
 KeyboardController::KeyboardController(KeyMapping keyMapping) {
     this->keyMapping = keyMapping;
 }

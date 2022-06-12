@@ -2,8 +2,6 @@
 #include "States/PlayerState.h"
 #include "../Graphics/Audio/Audio.h"
 
-using namespace std;
-
 HumanPlayer::HumanPlayer(Map* m, int startX, int startY, int red, int green, int blue, int index) {
 	eq = eq->getInstance();
 	Draw* draw = Draw::instance();

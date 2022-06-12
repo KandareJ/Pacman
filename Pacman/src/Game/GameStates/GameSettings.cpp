@@ -2,9 +2,6 @@
 #include "MainMenu.h"
 #include "../../Graphics/Audio/Audio.h"
 #include "CharacterSelectMenu.h"
-#include <iostream>
-
-using namespace std;
 
 const int MAX_NUM_GHOSTS = 20;
 

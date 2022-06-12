@@ -3,19 +3,17 @@
 #include "CharacterSelectMenu.h"
 #include "MainMenu.h"
 #include "../../Graphics/Audio/Audio.h"
-#include <iostream>
-using namespace std;
 
 LevelSelect::LevelSelect(GameEngine* c, GameInfo* settings) {
 	context = c;
 	Drivers::getDrivers()->getInput()->attachAll(this);
 	int numLevels;
 	this->settings = settings;
-	ifstream registry("levels/REGISTRY.pacr");
-	string line;
+	std::ifstream registry("levels/REGISTRY.pacr");
+	std::string line;
 	getline(registry, line);
 
-	istringstream is(line);
+	std::istringstream is(line);
 	is >> numLevels;
 
 	for (int i = 0; i < numLevels; i++) {

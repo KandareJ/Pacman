@@ -8,9 +8,8 @@
 #include <vector>
 #include <string>
 
+#include "../State/State.h"
 #include "../Game/PlayerInfo.h"
-
-using namespace std;
 
 const float PI = 3.1415927;
 enum DIRECTION { RIGHT, DOWN, LEFT, UP, NOT_MOVING };

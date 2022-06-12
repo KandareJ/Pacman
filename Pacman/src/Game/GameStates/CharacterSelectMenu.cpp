@@ -2,9 +2,6 @@
 #include "GameSettings.h"
 #include "LevelSelect.h"
 #include "../../Graphics/Audio/Audio.h"
-#include <iostream>
-
-using namespace std;
 
 CharacterSelectMenu::CharacterSelectMenu(GameEngine* c, GameInfo* g) {
     context = c;

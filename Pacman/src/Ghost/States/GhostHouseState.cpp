@@ -1,8 +1,5 @@
 #include "GhostHouseState.h"
-#include <iostream>
 #include "LeaveHouseState.h"
-
-using namespace std;
 
 GhostHouseState::GhostHouseState(Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
@@ -42,7 +39,7 @@ bool GhostHouseState::update(double pelletPercent) {
 	return false;
 }
 
-int GhostHouseState::choosePath(vector<int> options) {
+int GhostHouseState::choosePath(std::vector<int> options) {
 	return -1;
 }
 

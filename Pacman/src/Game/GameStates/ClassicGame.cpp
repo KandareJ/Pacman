@@ -9,7 +9,7 @@ ClassicGame::ClassicGame(GameEngine* c, GameInfo* settings) {
 	lastChasePlayer = -1;
 	eq = eq->getInstance();
 	map = new ClassicMap(settings->levels.at(settings->levels.size() - 1));
-	ghosts = vector<BasicGhost*>();
+	ghosts = std::vector<BasicGhost*>();
 	int numGhosts = settings->numGhosts;
 	int numPlayers = settings->players.size();
 	int r, g, b;
@@ -217,7 +217,7 @@ double ClassicGame::getDistance(int tileX1, int tileY1, int tileX2, int tileY2) 
 }
 
 int ClassicGame::getChasePlayer() {
-	vector<int> living;
+	std::vector<int> living;
 
 	for (unsigned int i = 0; i < players.size(); i++) {
 		if (players.at(i)->isAlive()) living.push_back(i);

@@ -40,8 +40,8 @@ bool ReturnHouseState::isValidTile(int tileX, int tileY) {
 	return (tile == 0 || tile == 2 || tile == 3);
 }
 
-int ReturnHouseState::choosePath(vector<int> options) {
-	vector<double> distances = vector<double>();
+int ReturnHouseState::choosePath(std::vector<int> options) {
+	std::vector<double> distances;
 	int index = 0;
 	double min = 1000000000000;
 

@@ -1,12 +1,10 @@
 #include "ConfigParser.h"
 
-#include <iostream>
-
-Config ConfigParser::parse(string path) {
+Config ConfigParser::parse(std::string path) {
     config = Config();
-    ifstream configFile(path.c_str());
+    std::ifstream configFile(path.c_str());
 
-    string line;
+    std::string line;
 
     while (getline(configFile, line)) {
         parseLine(line);
@@ -17,8 +15,8 @@ Config ConfigParser::parse(string path) {
     return config;
 }
 
-void ConfigParser::parseLine(string line) {
-    string strippedLine = stripWhitespace(line);
+void ConfigParser::parseLine(std::string line) {
+    std::string strippedLine = stripWhitespace(line);
 
     if (!isComment(strippedLine)) {
         int index = strippedLine.find('=');
@@ -28,13 +26,13 @@ void ConfigParser::parseLine(string line) {
     }
 }
 
-string ConfigParser::stripWhitespace(string line) {
+std::string ConfigParser::stripWhitespace(std::string line) {
     line.erase(remove(line.begin(), line.end(), ' '), line.end());
     line.erase(remove(line.begin(), line.end(), '\r'), line.end());
     line.erase(remove(line.begin(), line.end(), '\t'), line.end());
     return line;
 }
 
-bool ConfigParser::isComment(string line) {
+bool ConfigParser::isComment(std::string line) {
     return line.size() > 0 && line.at(0) == '#';
 }

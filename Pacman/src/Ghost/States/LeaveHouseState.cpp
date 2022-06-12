@@ -1,8 +1,5 @@
 #include "LeaveHouseState.h"
 #include "ChaseState.h"
-#include <iostream>
-
-using namespace std;
 
 LeaveHouseState::LeaveHouseState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
@@ -42,7 +39,7 @@ bool LeaveHouseState::isValidTile(int tileX, int tileY) {
 	return true;
 }
 
-int LeaveHouseState::choosePath(vector<int> options) {
+int LeaveHouseState::choosePath(std::vector<int> options) {
 	if (map->getMapPos(getTileX(), getTileY()) == 2) {
 		if (map->getMapPos(getTileX(), getTileY() + 1) == 0) return DOWN;
 		else if (map->getMapPos(getTileX(), getTileY() - 1) == 0) return UP;
@@ -50,13 +47,13 @@ int LeaveHouseState::choosePath(vector<int> options) {
 		else return RIGHT;
 	}
 	else {
-		options = vector<int>();
+		options = std::vector<int>();
 		options.push_back(UP);
 		options.push_back(DOWN);
 		options.push_back(LEFT);
 		options.push_back(RIGHT);
 
-		vector<double> distances = vector<double>();
+		std::vector<double> distances;
 		int index = 0;
 		double min = 1000000000000;
 

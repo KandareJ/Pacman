@@ -1,12 +1,12 @@
 #include "DefaultLogFormatter.h"
 
-string DefaultLogFormatter::format(string level, string message) {
+std::string DefaultLogFormatter::format(std::string level, std::string message) {
    
 
     return getTimestamp() + " [" + level + "] " + message;
 }
 
-string DefaultLogFormatter::getTimestamp() {
+std::string DefaultLogFormatter::getTimestamp() {
     time_t rawtime;
     tm* timeinfo;
     char timestamp[12];

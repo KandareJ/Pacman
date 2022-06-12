@@ -10,7 +10,6 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <iostream>
 
 class LevelSelect : public Game, public Observer {
 public:

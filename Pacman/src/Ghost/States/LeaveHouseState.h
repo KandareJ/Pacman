@@ -8,8 +8,6 @@
 #include "../../Graphics/Draw.h"
 #include <vector>
 
-using namespace std;
-
 class LeaveHouseState : public GhostState {
 public:
 	LeaveHouseState(int x, int y, Map* map, HumanPlayer* player, BasicGhost* c);
@@ -17,7 +15,7 @@ public:
 	void draw(int r, int g, int b);
 	bool update(double pelletPercent);
 private:
-	int choosePath(vector<int> options);
+	int choosePath(std::vector<int> options);
 	bool moveUp();
 	bool isValidTile(int tileX, int tileY);
 };

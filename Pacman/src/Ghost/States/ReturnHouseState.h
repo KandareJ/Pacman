@@ -12,7 +12,7 @@ public:
 	bool update(double pelletPercent);
 	int collision();
 private:
-	int choosePath(vector<int> options);
+	int choosePath(std::vector<int> options);
 	bool isValidTile(int tileX, int tileY);
 	int targetX;
 	int targetY;

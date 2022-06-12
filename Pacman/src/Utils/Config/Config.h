@@ -5,16 +5,14 @@
 #include <map>
 #include <stdlib.h>
 
-using namespace std;
-
 class Config {
 public:
-    void addKey(string key, string value);
-    int getIntegerValue(string key);
-    string getStringValue(string key);
+    void addKey(std::string key, std::string value);
+    int getIntegerValue(std::string key);
+    std::string getStringValue(std::string key);
     void print();
 private:
-    map<string, string> configMap;
+    std::map<std::string, std::string> configMap;
 };
 
 #endif

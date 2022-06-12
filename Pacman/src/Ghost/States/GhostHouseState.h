@@ -8,8 +8,6 @@
 #include "../../Graphics/Draw.h"
 #include <vector>
 
-using namespace std;
-
 class GhostHouseState : public GhostState {
 public:
 	GhostHouseState(Map* map, HumanPlayer* player, BasicGhost* c);
@@ -18,7 +16,7 @@ public:
 	bool update(double pelletPercent);
 	void frighten();
 private:
-	int choosePath(vector<int> options);
+	int choosePath(std::vector<int> options);
 	int time;
 };
 

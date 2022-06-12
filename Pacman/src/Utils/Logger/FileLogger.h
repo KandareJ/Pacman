@@ -10,15 +10,15 @@ class FileLogger : public Logger {
 public:
     FileLogger();
     ~FileLogger();
-    virtual void debug(string message);
-    virtual void info(string message);
-    virtual void warn(string message);
-    virtual void error(string message);
+    virtual void debug(std::string message);
+    virtual void info(std::string message);
+    virtual void warn(std::string message);
+    virtual void error(std::string message);
     void setFile(FILE* fd);
 protected:
     FILE* file;
     LogFormatter* logFormatter;
-    void printLog(string level, string message);
+    void printLog(std::string level, std::string message);
 };
 
 #endif

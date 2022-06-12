@@ -1,7 +1,8 @@
 #include "ReleaseLogger.h"
 
-ReleaseLogger::ReleaseLogger() {
-    FILE* file = fopen(getFileName().c_str(), "a");
+ReleaseLogger::ReleaseLogger(std::string filepath) {
+    std::string fileName = filepath + getFileName();
+    FILE* file = fopen(fileName.c_str(), "a");
     this->setFile(file);
 }
 
@@ -9,15 +10,15 @@ ReleaseLogger::~ReleaseLogger() {
 
 }
 
-void ReleaseLogger::debug(string message) {
+void ReleaseLogger::debug(std::string message) {
     return;
 }
 
-void ReleaseLogger::info(string message) {
+void ReleaseLogger::info(std::string message) {
     return;
 }
 
-string ReleaseLogger::getFileName() {
+std::string ReleaseLogger::getFileName() {
     time_t rawtime;
     tm* timeinfo;
     char filename[32];

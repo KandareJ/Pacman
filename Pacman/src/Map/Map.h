@@ -3,8 +3,6 @@
 
 #include <string>
 
-using namespace std;
-
 class Map {
 public:
 	virtual void draw() = 0;

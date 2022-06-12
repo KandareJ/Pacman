@@ -1,9 +1,5 @@
 #include "PlayerInfo.h"
 
-#include <iostream>
-
-using namespace std;
-
 PlayerInfo::PlayerInfo() {
     r = 0;
     g = 0;
@@ -64,5 +60,4 @@ void PlayerInfo::observerUpdate(Subject* subject) {
             break;
         };
     }
-    
 }

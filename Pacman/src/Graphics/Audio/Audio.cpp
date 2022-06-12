@@ -1,7 +1,4 @@
 #include "Audio.h"
-#include <iostream>
-
-using namespace std;
 
 Audio* Audio::_instance = 0;
 

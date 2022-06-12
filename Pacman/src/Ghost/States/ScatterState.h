@@ -7,8 +7,6 @@
 #include <vector>
 #include "../../Graphics/Draw.h"
 
-using namespace std;
-
 class ScatterState : public GhostState {
 public:
 	ScatterState(int x, int y, Map* map, HumanPlayer* target, int targetX, int targetY, BasicGhost* c);
@@ -18,7 +16,7 @@ public:
 	void chase(HumanPlayer* target);
 
 private:
-	int choosePath(vector<int> options);
+	int choosePath(std::vector<int> options);
 	int targetX;
 	int targetY;
 };

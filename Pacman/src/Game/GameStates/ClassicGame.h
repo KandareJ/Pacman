@@ -11,10 +11,7 @@
 #include "../../Map/Map.h"
 #include "../../Events/EventQueue.h"
 #include "../GameInfo.h"
-#include <iostream>
 #include <string>
-
-using namespace std;
 
 class ClassicGame : public Game {
 public:
@@ -30,8 +27,8 @@ private:
 	GameEngine* context;
 	bool over;
 	Map* map;
-	vector<HumanPlayer*> players;
-	vector<BasicGhost*> ghosts;
+	std::vector<HumanPlayer*> players;
+	std::vector<BasicGhost*> ghosts;
 	bool update();
 	void draw();
 	EventQueue* eq;

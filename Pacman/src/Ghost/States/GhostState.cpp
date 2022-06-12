@@ -103,7 +103,7 @@ bool GhostState::moveDown() {
 }
 
 void GhostState::changeDirection() {
-	vector<int> options = getOptions(getTileX(), getTileY());
+	std::vector<int> options = getOptions(getTileX(), getTileY());
 	lastTileX = getTileX();
 	lastTileY = getTileY();
 
@@ -115,8 +115,8 @@ bool GhostState::isValidTile(int tileX, int tileY) {
 	return (map->getMapPos((tileWidth + tileX % tileWidth) % tileWidth, (tileHeight + tileY % tileHeight) % tileHeight) == 0);
 }
 
-vector<int> GhostState::getOptions(int tileX, int tileY) {
-	vector<int> options = vector<int>();
+std::vector<int> GhostState::getOptions(int tileX, int tileY) {
+	std::vector<int> options;
 	if (dir != LEFT && isValidTile(tileX + 1, tileY)) {
 		options.push_back(RIGHT);
 	}

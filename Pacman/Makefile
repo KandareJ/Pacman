@@ -11,6 +11,8 @@ src = $(wildcard src/main.cpp) \
 	  $(wildcard src/Player/States/*.cpp) \
 	  $(wildcard src/Utils/*.cpp) \
 	  $(wildcard src/Utils/Logger/*.cpp) \
+	  $(wildcard src/Utils/Config/*.cpp) \
+	  $(wildcard src/State/*.cpp) \
 	  $(wildcard src/Input/*.cpp) \
 	  $(wildcard src/Drivers/*.cpp)
 

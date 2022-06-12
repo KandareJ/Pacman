@@ -3,11 +3,9 @@
 
 #include <string>
 
-using namespace std;
-
 class LogFormatter {
 public:
-    virtual string format(string level, string message) = 0;
+    virtual std::string format(std::string level, std::string message) = 0;
 };
 
 #endif

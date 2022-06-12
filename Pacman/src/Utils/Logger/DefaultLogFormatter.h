@@ -7,9 +7,9 @@
 
 class DefaultLogFormatter : public LogFormatter {
 public:
-    string format(string level, string message);
+    std::string format(std::string level, std::string message);
 private:
-    string getTimestamp();
+    std::string getTimestamp();
 };
 
 #endif

@@ -23,7 +23,7 @@ public:
 
 protected:
 	void changeState(GhostState* s);
-	virtual int choosePath(vector<int> options) = 0;
+	virtual int choosePath(std::vector<int> options) = 0;
 	HumanPlayer* target;
 	int x;
 	int y;
@@ -45,7 +45,7 @@ protected:
 	void changeDirection();
 	double getDistance(int tileX, int tileY, int tileX2, int tileY2);
 	virtual bool isValidTile(int tileX, int tileY);
-	vector<int> getOptions(int tileX, int tileY);
+	std::vector<int> getOptions(int tileX, int tileY);
 	BasicGhost* context;
 	int height;
 	int width;

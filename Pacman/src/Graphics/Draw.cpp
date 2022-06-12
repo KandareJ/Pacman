@@ -1,10 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Draw.h"
-#include <iostream>
 #include <stdio.h>
 #include <math.h>
-
-using namespace std;
 
 Draw* Draw::_instance = 0;
 
@@ -73,6 +70,7 @@ int Draw::getWidth() {
 }
 
 void Draw::generateGhostColor(int& r, int& g, int& b, int hue) {
+	State::getState()->getLogger()->error("generating ghost color");
 	double h = hue;
 	if (h > 210) h += 60; //skip blue colors
 	double s = 0.99;

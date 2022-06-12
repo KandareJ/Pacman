@@ -1,5 +1,3 @@
-#include "Game/GameEngine.h"
-#include "Graphics/Draw.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
@@ -7,7 +5,12 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <string>
 
+#include "Game/GameEngine.h"
+#include "Graphics/Draw.h"
+#include "Utils/Config/ConfigParser.h"
+#include "Utils/Config/Config.h"
 #include "Graphics/Audio/Audio.h"
 
 const double FPS = 30.0;

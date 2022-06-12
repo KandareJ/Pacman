@@ -1,14 +1,14 @@
 #include "Config.h"
 
-void Config::addKey(string key, string value) {
+void Config::addKey(std::string key, std::string value) {
     configMap[key] = value;
 }
 
-int Config::getIntegerValue(string key) {
+int Config::getIntegerValue(std::string key) {
     return atoi(getStringValue(key).c_str());
 }
 
-string Config::getStringValue(string key) {
+std::string Config::getStringValue(std::string key) {
     if (configMap.find(key) == configMap.end()) {
         return "default";
     }

@@ -1,7 +1,6 @@
 #include "ChaseState.h"
 #include "ScatterState.h"
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 
 ChaseState::ChaseState(int startX, int startY, Map* m, HumanPlayer* player, BasicGhost* c) {
 	Draw* draw = Draw::instance();
@@ -32,8 +31,8 @@ void ChaseState::draw(int r, int g, int b) {
 	return;
 }
 
-int ChaseState::choosePath(vector<int> options) {
-	vector<double> distances = vector<double>();
+int ChaseState::choosePath(std::vector<int> options) {
+	std::vector<double> distances;
 	int index = 0;
 	double min = 1000000000000;
 
